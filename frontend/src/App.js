@@ -1,26 +1,26 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Home from "./components/pages/Home";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <img src="https://wallpapercave.com/wp/wp4914369.jpg" width="100%" />
-      </div>
 
-      <Switch>
-        <Route path="/about">
-          <h1>About</h1>
-        </Route>
-        <Route path="/users">
-          <h1>Users</h1>
-        </Route>
-        <Route exact path="/">
-          <h1>Home</h1>
-        </Route>
-      </Switch>
+        <Switch>
+          <Route path="/browse">
+            <h1>Browse</h1>
+          </Route>
+          <Route path="/notes">
+            <h1>Notes</h1>
+          </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   );
 }

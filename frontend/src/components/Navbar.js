@@ -4,9 +4,8 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 const navbarLinks = [
   { url: "/", title: "Home" },
-  { url: "/about", title: "Browse" },
-  { url: "#", title: "Edit Notes" },
-  { url: "#", title: "About Us" },
+  { url: "/browse", title: "Browse" },
+  { url: "/notes", title: "Edit Notes" },
 ];
 
 const Navbar = () => {
