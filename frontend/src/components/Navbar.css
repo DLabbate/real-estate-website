@@ -1,6 +1,6 @@
 .navbarContainer {
   display: flex;
-  background-color: rgba(235, 235, 235, 0.137);
+  background-color: rgba(0, 0, 0, 0);
   height: 70px;
   justify-content: space-between;
   align-items: center;
@@ -8,6 +8,7 @@
   padding: 0px 30px 0px 30px;
   position: sticky;
   top: 0px;
+  z-index: 5;
 }
 
 .navbarLogo {
@@ -38,7 +39,7 @@
 }
 
 .navbarLink:hover {
-  background: rgb(177, 225, 253);
+  background: rgb(99, 179, 255);
   transition: 250ms;
 }
 

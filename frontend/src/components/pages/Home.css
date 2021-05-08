@@ -1,3 +1,19 @@
-.welcomeImage {
+.welcomeImageContainer {
   margin-top: -70px;
+  position: relative;
+  left: 0px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.welcomeImage {
+}
+
+.welcomeText {
+  position: absolute;
+  top: 10%;
+  right: 25%;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.459);
+  font-size: 3.5rem;
+  padding: 15px;
 }
