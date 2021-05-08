@@ -17,20 +17,30 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbarContainer">
-      <h1 className="navbarLogo">acasa</h1>
+    <nav className="navbar">
+      <h1 className="navbar__logo">acasa</h1>
 
       {menuClicked ? (
-        <FiX size={25} className={"menuIcon"} onClick={toggleMenuClick} />
+        <FiX size={25} className={"navbar__icon"} onClick={toggleMenuClick} />
       ) : (
-        <FiMenu size={25} className={"menuIcon"} onClick={toggleMenuClick} />
+        <FiMenu
+          size={25}
+          className={"navbar__icon"}
+          onClick={toggleMenuClick}
+        />
       )}
 
-      <ul className={menuClicked ? "navbarLinks active" : "navbarLinks"}>
+      <ul
+        className={
+          menuClicked ? "navbar__list navbar__list--active" : "navbar__list"
+        }
+      >
         {navbarLinks.map((item, index) => {
           return (
-            <li className="navbarLink" key={index}>
-              <a href={item.url}>{item.title}</a>
+            <li className="navbar__item" key={index}>
+              <a className="navbar__link" href={item.url}>
+                {item.title}
+              </a>
             </li>
           );
         })}

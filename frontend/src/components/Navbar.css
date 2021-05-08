@@ -1,4 +1,4 @@
-.navbarContainer {
+.navbar {
   display: flex;
   background-color: rgba(0, 0, 0, 0);
   height: 70px;
@@ -11,49 +11,55 @@
   z-index: 5;
 }
 
-.navbarLogo {
+.navbar__logo {
   color: white;
 }
 
-.navbarLinks {
+/*
+This is the container for all the navbar links ( <ul> )
+*/
+.navbar__list {
   display: flex;
   list-style: none;
 }
 
-.navbarLink {
-  margin: 0px 5px;
+/*
+This is a single item ( <li> ) in the list
+*/
+.navbar__item {
   white-space: nowrap;
-  padding: 10px;
-  border-radius: 5px;
 }
 
-/* .navbarLink:hover {
-  background-color: red;
-} */
-
-.navbarLink a {
+/*
+The anchor tag ( <a> ) for the navbar links
+*/
+.navbar__link {
   font-size: 0.85rem;
   text-decoration: none;
   color: rgb(255, 255, 255);
   text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0px 5px;
 }
 
-.navbarLink:hover {
+.navbar__link:hover {
   background: rgb(99, 179, 255);
   transition: 250ms;
 }
 
-.menuIcon {
+.navbar__icon {
+  color: white;
   display: none;
   cursor: pointer;
 }
 
 @media screen and (max-width: 960px) {
-  .navbarContainer {
+  .navbar {
     position: relative;
   }
 
-  .navbarLinks {
+  .navbar__list {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -66,17 +72,17 @@
     transition: all 0.5s ease;
   }
 
-  .navbarLinks.active {
+  .navbar__list--active {
     display: flex;
     left: 0;
     /* transition: all 0.5s ease; */
   }
 
-  .menuIcon {
+  .navbar__icon {
     display: block;
   }
 
-  .navbarLink {
+  .navbar__item {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -85,11 +91,14 @@
     flex: 1;
   }
 
-  .navbarLink a {
+  .navbar__link {
     display: flex;
     height: 100%;
     width: 100%;
     justify-content: center;
     align-items: center;
+    margin: 0px;
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }

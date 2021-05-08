@@ -3,14 +3,14 @@ import "./Home.css";
 
 const Home = () => {
   return (
-    <div className="welcomeImageContainer">
+    <div className="welcome">
       <img
         src="https://wallpapercave.com/wp/wp4914369.jpg"
         width="100%"
         alt=""
-        className="welcomeImage"
+        className="welcome__image"
       />
-      <h1 className="welcomeText">Find your dream home.</h1>
+      <h1 className="welcome__text">Find your dream home.</h1>
     </div>
   );
 };
