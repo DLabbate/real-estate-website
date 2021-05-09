@@ -8,16 +8,33 @@ const navbarLinks = [
   { url: "/notes", title: "Edit Notes" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ transparentEffect }) => {
   // Determines if the "menu icon" was clicked or not. Note that this icon is only visible when the window width is small.
   const [menuClicked, setMenuClicked] = useState(false);
+
+  const [isTransparent, setIsTransparent] = useState(
+    transparentEffect ? true : false
+  );
 
   const toggleMenuClick = () => {
     setMenuClicked(!menuClicked);
   };
 
+  if (transparentEffect) {
+    const changeBackground = () => {
+      if (window.scrollY >= 70) {
+        setIsTransparent(false);
+      } else {
+        setIsTransparent(true);
+      }
+      console.log(isTransparent);
+    };
+
+    window.addEventListener("scroll", changeBackground);
+  }
+
   return (
-    <nav className="navbar">
+    <nav className={isTransparent ? "navbar" : "navbar navbar--opaque"}>
       <h1 className="navbar__logo">acasa</h1>
 
       {menuClicked ? (
