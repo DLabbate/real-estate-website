@@ -2,6 +2,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./components/pages/Home";
+import Browse from "./components/pages/Browse";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
         <Switch>
           <Route path="/browse">
             <Navbar />
-            <h1>Browse</h1>
+            <Browse />
           </Route>
           <Route path="/notes">
             <Navbar />

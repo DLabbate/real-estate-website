@@ -8,6 +8,10 @@
 .welcome__image {
 }
 
+.properties {
+  display: flex;
+}
+
 .welcome__text {
   position: absolute;
   top: 10%;
