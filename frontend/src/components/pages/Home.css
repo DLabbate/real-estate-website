@@ -12,27 +12,28 @@
   display: flex;
 }
 
-.welcome__text {
+.welcome__banner {
   position: absolute;
   top: 10%;
   right: 22.5%;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
+.welcome__text {
+  color: white;
   font-size: 3.5rem;
   padding: 15px;
   transition: 400ms;
 }
 
 .welcome__btn {
-  position: absolute;
-  top: 20%;
-  right: 35%;
   background-color: transparent;
   color: white;
-
   font-size: 1.5rem;
   padding: 15px;
-
   border-style: solid;
   border-width: 1px;
   border-color: white;
