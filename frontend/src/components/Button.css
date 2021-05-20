@@ -1,0 +1,40 @@
+.btn {
+  color: black;
+  font-size: 1.5rem;
+  padding: 15px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: white;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.btn--small {
+  font-size: 0.85rem;
+}
+
+.btn--medium {
+  font-size: 1.25rem;
+}
+
+.btn--large {
+  font-size: 1.65rem;
+}
+
+.btn--solid {
+  color: white;
+  border-color: black;
+  background-color: black;
+}
+
+.btn--transparent {
+  background-color: transparent;
+  color: black;
+  border-color: black;
+}
+
+.btn--white {
+  background-color: transparent;
+  border-color: white;
+  color: white;
+}
