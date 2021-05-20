@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../Button";
 import "./Home.css";
 
 const Home = () => {
@@ -12,7 +13,11 @@ const Home = () => {
       />
       <div className="welcome__banner">
         <h1 className="welcome__text">Find your dream home.</h1>
-        <button className="welcome__btn">Start Browsing</button>
+        <Button
+          modifiers={"btn-large btn--transparent btn--white"}
+          margin={10}
+          text={"Start Browsing"}
+        />
       </div>
     </div>
   );
