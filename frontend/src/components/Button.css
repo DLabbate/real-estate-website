@@ -29,12 +29,14 @@
 
 .btn--transparent {
   background-color: transparent;
+}
+
+.btn--black {
   color: black;
   border-color: black;
 }
 
 .btn--white {
-  background-color: transparent;
   border-color: white;
   color: white;
 }

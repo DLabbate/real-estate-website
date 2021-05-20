@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { FiMenu, FiX } from "react-icons/fi";
 
 const navbarLinks = [
-  { url: "/", title: "Home" },
+  { url: "/home", title: "Home" },
   { url: "/browse", title: "Browse" },
   { url: "/notes", title: "Edit Notes" },
 ];

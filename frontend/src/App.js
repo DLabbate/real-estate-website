@@ -1,8 +1,15 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import Home from "./components/pages/Home";
 import Browse from "./components/pages/Browse";
+import Login from "./components/pages/Login";
 
 function App() {
   return (
@@ -17,9 +24,15 @@ function App() {
             <Navbar />
             <h1>Notes</h1>
           </Route>
-          <Route exact path="/">
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/home">
             <Navbar transparentEffect />
             <Home />
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/login" />
           </Route>
         </Switch>
       </div>
