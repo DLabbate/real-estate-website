@@ -14,7 +14,7 @@ const Home = () => {
       <div className="welcome__banner">
         <h1 className="welcome__text">Find your dream home.</h1>
         <Button
-          modifiers={"btn-large btn--transparent btn--white"}
+          modifiers={"btn--large btn--transparent btn--white"}
           margin={10}
           text={"Start Browsing"}
         />

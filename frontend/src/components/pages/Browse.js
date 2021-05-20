@@ -1,7 +1,7 @@
 import React from "react";
 import "./Browse.css";
 import { FiHeart } from "react-icons/fi";
-import Card from "../Card";
+import Listing from "../Listing";
 import { mockProperties } from "../../constants/mock.js";
 
 const Browse = () => {
@@ -31,7 +31,7 @@ const Browse = () => {
       </div>
       <div className="properties">
         {mockProperties.map((item) => (
-          <Card data={item} />
+          <Listing data={item} />
         ))}
       </div>
     </>

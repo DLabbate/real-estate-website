@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import "./Card.css";
+import "./Listing.css";
 import { FiHeart } from "react-icons/fi";
 
-const Card = ({ data }) => {
+const Listing = ({ data }) => {
   const { price, type, address, extraInfo } = data;
 
   return (
-    <div className="card">
+    <div className="listing">
       <img
         alt="Property for Sale"
         src="http://cdn.home-designing.com/wp-content/uploads/2017/05/wood-white-and-charcoal-modern-exterior-paint-themes.jpg"
-        className="card__image"
+        className="listing__image"
       ></img>
-      <div className="card__details">
+      <div className="listing__details">
         <h3>{price}</h3>
         <h5>{type}</h5>
         <h5>{address}</h5>
         <h6>{extraInfo}</h6>
       </div>
 
-      <FiHeart size={35} className={"card__icon"} />
+      <FiHeart size={35} className={"listing__icon"} />
     </div>
   );
 };
 
-export default Card;
+export default Listing;
