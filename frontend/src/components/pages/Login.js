@@ -2,6 +2,7 @@ import React from "react";
 import video from "../../assets/video1.mp4";
 import Button from "../Button";
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -23,18 +24,17 @@ const Login = () => {
             placeholder="Password"
           ></input>
         </form>
-        <Button
-          text="Login"
-          width={"90%"}
-          margin={"10px"}
-          modifiers={"btn--solid btn--white"}
-        />
-        <Button
-          text="Sign Up"
-          width={"90%"}
-          margin={"10px"}
-          modifiers={"btn--solid btn--white"}
-        />
+        <Link className="login__link" to="/home">
+          <Button
+            text="Login"
+            width={"90%"}
+            margin={"10px"}
+            modifiers={"btn--solid btn--white"}
+          />
+        </Link>
+        <Link className="login__link" to="/signup">
+          <p className="login__alternative">Don't have an account? Sign Up.</p>
+        </Link>
       </div>
     </div>
   );

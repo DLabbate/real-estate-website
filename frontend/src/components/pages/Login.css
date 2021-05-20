@@ -51,3 +51,21 @@
   border: none;
   width: 90%;
 }
+
+.login__link {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.login__alternative {
+  color: white;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 555.56px) {
+  .login__container {
+    width: 90vw;
+  }
+}
