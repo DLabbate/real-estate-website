@@ -10,6 +10,7 @@ import {
 import Home from "./components/pages/Home";
 import Browse from "./components/pages/Browse";
 import Login from "./components/pages/Login";
+import Signup from "./components/pages/Signup";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
           <Route path="/home">
             <Navbar transparentEffect />

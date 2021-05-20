@@ -1,13 +1,14 @@
 import React from "react";
-import video from "../../assets/video1.mp4";
 import Button from "../Button";
-import "./Login.css";
+import "./Signup.css";
 import { Link } from "react-router-dom";
 import VideoBackground from "../VideoBackground";
 import Form from "../Form";
 
-const Login = () => {
+const Signup = () => {
   const fields = [
+    { placeholder: "Name", type: "text" },
+    { placeholder: "Lastname", type: "text" },
     { placeholder: "Email", type: "text" },
     { placeholder: "Password", type: "password" },
   ];
@@ -16,13 +17,13 @@ const Login = () => {
       <h1 className="logo">acasa</h1>
       <Form
         fieldInfo={fields}
-        buttonText="Login"
-        alternativeText={"Don't have an account? Sign Up."}
+        buttonText="Sign Up"
+        alternativeText={"Already have an account? Login."}
         navigationPath={"/home"}
-        navigationAlternative={"/signup"}
+        navigationAlternative={"/login"}
       />
     </VideoBackground>
   );
 };
 
-export default Login;
+export default Signup;
