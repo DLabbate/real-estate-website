@@ -3,6 +3,7 @@ import Button from "./Button";
 import "./VideoBackground.css";
 import { Link } from "react-router-dom";
 import "./Form.css";
+import update from "immutability-helper";
 
 const Form = ({
   fields,
@@ -10,8 +11,14 @@ const Form = ({
   alternativeText,
   navigationPath,
   navigationAlternative,
-  onChange,
+  setFields,
 }) => {
+  const handleChange = (name, newValue) => {
+    const index = fields.findIndex((item) => item.name === name);
+    let newFields = update(fields, { [index]: { value: { $set: newValue } } });
+    setFields(newFields);
+  };
+
   return (
     <div className="form">
       <form className="form__container">
@@ -22,7 +29,7 @@ const Form = ({
               type={item.type}
               placeholder={item.placeholder}
               value={item.value}
-              onChange={(event) => onChange(item.name, event.target.value)}
+              onChange={(event) => handleChange(item.name, event.target.value)}
             ></input>
           );
         })}
