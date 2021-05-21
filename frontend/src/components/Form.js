@@ -5,21 +5,24 @@ import { Link } from "react-router-dom";
 import "./Form.css";
 
 const Form = ({
-  fieldInfo,
+  fields,
   buttonText,
   alternativeText,
   navigationPath,
   navigationAlternative,
+  onChange,
 }) => {
   return (
     <div className="form">
       <form className="form__container">
-        {fieldInfo.map((item, index) => {
+        {fields.map((item, index) => {
           return (
             <input
               className="form__field"
               type={item.type}
               placeholder={item.placeholder}
+              value={item.value}
+              onChange={(event) => onChange(item.name, event.target.value)}
             ></input>
           );
         })}
