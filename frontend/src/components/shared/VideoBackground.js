@@ -1,5 +1,5 @@
 import React from "react";
-import video from "../assets/video1.mp4";
+import video from "../../assets/video1.mp4";
 import Button from "./Button";
 import "./VideoBackground.css";
 import { Link } from "react-router-dom";

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Button from "../Button";
+import Button from "../shared/Button";
 import "./Signup.css";
 import { Link } from "react-router-dom";
-import VideoBackground from "../VideoBackground";
-import Form from "../Form";
+import VideoBackground from "../shared/VideoBackground";
+import Form from "../shared/Form";
 import update from "immutability-helper";
 
 const Signup = () => {

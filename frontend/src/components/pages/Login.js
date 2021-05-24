@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import video from "../../assets/video1.mp4";
-import Button from "../Button";
+import Button from "../shared/Button";
 import "./Login.css";
 import { Link } from "react-router-dom";
-import VideoBackground from "../VideoBackground";
-import Form from "../Form";
+import VideoBackground from "../shared/VideoBackground";
+import Form from "../shared/Form";
 import update from "immutability-helper";
 
 const Login = () => {
