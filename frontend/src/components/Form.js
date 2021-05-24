@@ -7,11 +7,11 @@ import update from "immutability-helper";
 
 const Form = ({
   fields,
+  setFields,
   buttonText,
   alternativeText,
   navigationPath,
   navigationAlternative,
-  setFields,
 }) => {
   const handleChange = (name, newValue) => {
     const index = fields.findIndex((item) => item.name === name);

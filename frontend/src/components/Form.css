@@ -40,7 +40,7 @@
   text-decoration: underline;
 }
 
-@media screen and (max-width: 555.56px) {
+@media screen and (max-width: calc(500px / 0.9)) {
   .form {
     width: 90vw;
   }
