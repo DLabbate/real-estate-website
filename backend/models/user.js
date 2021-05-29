@@ -12,6 +12,9 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true },
   phoneNumber: { type: String, required: true },
+  favoriteListings: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Listing", default: [] },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);
