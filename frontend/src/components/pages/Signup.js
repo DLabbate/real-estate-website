@@ -5,25 +5,25 @@ import { Link } from "react-router-dom";
 import VideoBackground from "../shared/VideoBackground";
 import Form from "../shared/Form";
 import update from "immutability-helper";
+import {
+  signupFieldInfo,
+  initialSignupFormState,
+} from "../../utils/FormConfig";
 
 const Signup = () => {
-  const [fields, setFields] = useState([
-    { name: "Name", placeholder: "Name", type: "text", value: "" },
-    { name: "Lastname", placeholder: "Lastname", type: "text", value: "" },
-    { name: "Email", placeholder: "Email", type: "text", value: "" },
-    { name: "Password", placeholder: "Password", type: "password", value: "" },
-  ]);
+  const [fieldState, setFieldState] = useState(initialSignupFormState);
 
   return (
     <VideoBackground>
       <h1 className="logo">acasa</h1>
       <Form
-        fields={fields}
+        fieldInfo={signupFieldInfo}
+        fieldState={fieldState}
         buttonText="Sign Up"
         alternativeText={"Already have an account? Login."}
         navigationPath={"/home"}
         navigationAlternative={"/login"}
-        setFields={setFields}
+        setFields={setFieldState}
       />
     </VideoBackground>
   );
