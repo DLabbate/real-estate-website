@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authentication = require("../middleware/authentication");
 require("dotenv").config();
 
 router.post("/signup", (req, res, net) => {
@@ -72,7 +73,13 @@ router.post("/login", (req, res, next) => {
         if (result) {
           // If we made it here --> Good Password!
           const token = jwt.sign(
-            { email: user.email, userId: user._id },
+            // Put user info inside the payload
+            {
+              _id: user._id,
+              email: user.email,
+              favoriteListings: user.favoriteListings,
+              phoneNumber: user.phoneNumber,
+            },
             process.env.JWT_KEY,
             { expiresIn: "24h" }
           );
@@ -83,6 +90,34 @@ router.post("/login", (req, res, next) => {
         }
         res.status(401).json({ message: "Auth failed" });
       });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
+/**
+ * This method can be used to update the "favoriteListings" of a user
+ */
+router.patch("/edit", authentication, (req, res, next) => {
+  // From JWT
+  const userData = req.userData;
+  console.log(req.userData);
+
+  // From body
+  const newUserData = req.body;
+  console.log(newUserData);
+
+  User.updateOne(
+    { _id: userData._id },
+    { $set: { favoriteListings: newUserData.favoriteListings } }
+  )
+    .exec()
+    .then((result) => {
+      const user = new User({ ...result });
+      console.log(result);
+      res.status(200).json({ message: "Updated user info" });
     })
     .catch((err) => {
       console.log(err);

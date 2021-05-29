@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
-const checkAuth = require("../middleware/authentication");
+const authentication = require("../middleware/authentication");
 
-router.post("/", checkAuth, (req, res, next) => {
+router.post("/", authentication, (req, res, next) => {
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
     ...req.body,
