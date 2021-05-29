@@ -52,4 +52,42 @@ router.post("/signup", (req, res, net) => {
   });
 });
 
+router.post("/login", (req, res, next) => {
+  User.find({ email: req.body.email })
+    .exec()
+    .then((users) => {
+      if (users.length < 1) {
+        // In this case, no user account is associated with the specified email
+        return res.status(401).json({ message: "Auth failed" });
+      }
+      // If we find an email, we should check if the password is correct
+      const user = users[0];
+
+      bcrypt.compare(req.body.password, user.password, (err, result) => {
+        console.log(result);
+        if (err) {
+          // If we made it here --> Wrong Password!
+          return res.status(401).json({ message: "Auth failed" });
+        }
+        if (result) {
+          // If we made it here --> Good Password!
+          const token = jwt.sign(
+            { email: user.email, userId: user._id },
+            process.env.JWT_KEY,
+            { expiresIn: "24h" }
+          );
+          return res.status(200).json({
+            message: "Auth successful",
+            token: token,
+          });
+        }
+        res.status(401).json({ message: "Auth failed" });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
