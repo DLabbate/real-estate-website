@@ -16,6 +16,7 @@ const mongoose = require("mongoose");
 
 // Routes
 const listingRoutes = require("./routes/listings");
+const userRoutes = require("./routes/users");
 
 // Environment variables
 require("dotenv").config();
@@ -29,13 +30,16 @@ mongoose.connect(DB_CONNECTION_STRING, {
 });
 mongoose.Promise = global.Promise;
 
+// Use JSON
 app.use(express.json());
 
 app.get("/", (req, res, next) => {
   res.status(200).json({});
 });
 
+// Use routes
 app.use("/listings", listingRoutes);
+app.use("/users", userRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
