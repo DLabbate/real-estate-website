@@ -6,8 +6,13 @@ const Listing = require("../models/listing");
 router.post("/", (req, res, next) => {
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
-    address: req.body.address,
-    price: req.body.price,
+    // address: req.body.address,
+    // price: req.body.price,
+    // coordinates: {
+    //   latitude: req.body.coordinates.latitude,
+    //   longitude: req.body.coordinates.longitude,
+    // },
+    ...req.body,
   });
 
   listing
@@ -21,7 +26,7 @@ router.post("/", (req, res, next) => {
     .catch((err) => {
       console.log(err);
       res.status(500).json({
-        error: { message: err },
+        error: err,
       });
     });
 });
