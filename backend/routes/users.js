@@ -7,6 +7,9 @@ const jwt = require("jsonwebtoken");
 const authentication = require("../middleware/authentication");
 require("dotenv").config();
 
+/**
+ * User signup. Email must be unique!
+ */
 router.post("/signup", (req, res, net) => {
   // First check if the email already exists
   User.find({ email: req.body.email })
@@ -53,12 +56,16 @@ router.post("/signup", (req, res, net) => {
   });
 });
 
+/**
+ * Login, and if successful respond with a JWT + user info
+ */
 router.post("/login", (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
     .then((users) => {
       if (users.length < 1) {
         // In this case, no user account is associated with the specified email
+        console.log("hello");
         return res.status(401).json({ message: "Auth failed" });
       }
       // If we find an email, we should check if the password is correct
@@ -84,7 +91,10 @@ router.post("/login", (req, res, next) => {
             { expiresIn: "24h" }
           );
           return res.status(200).json({
-            message: "Auth successful",
+            //message: "Auth successful",
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            favoriteListings: user.favoriteListings,
             token: token,
           });
         }
