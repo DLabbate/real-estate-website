@@ -5,6 +5,8 @@ const Listing = require("../models/listing");
 const authentication = require("../middleware/authentication");
 
 router.post("/", authentication, (req, res, next) => {
+  const userData = authentication.userData;
+
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
     ...req.body,
@@ -29,6 +31,9 @@ router.post("/", authentication, (req, res, next) => {
 router.delete("/:listingId", authentication, (req, res, next) => {
   const listingId = req.params.listingId;
 
+  // We should verify that this listing in fact belongs to the user making the request
+  // Listing.findOne();
+
   Listing.deleteOne({ _id: listingId })
     .exec()
     .then((result) =>
@@ -37,7 +42,7 @@ router.delete("/:listingId", authentication, (req, res, next) => {
         .json({ message: "Listing deleted" })
         .catch((error) => {
           console.log(error);
-          res.status(500).json({ error: err });
+          return res.status(500).json({ error: err });
         })
     );
 });
