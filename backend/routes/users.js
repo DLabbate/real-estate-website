@@ -104,7 +104,7 @@ router.patch("/edit", authentication, async (req, res, next) => {
     const newUserData = req.body;
     console.log(newUserData);
 
-    let result = User.updateOne(
+    let result = await User.updateOne(
       { _id: userData._id },
       { $set: { favoriteListings: newUserData.favoriteListings } }
     ).exec();
