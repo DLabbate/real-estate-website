@@ -17,7 +17,7 @@ router.post("/signup", async (req, res, net) => {
     console.log(user);
     if (user) {
       // If a user already exists, return an error
-      return res.status(409).json({ message: "Email exists!" });
+      return res.status(409).json({ error: { message: "Email exists!" } });
     } else {
       const hash = await bcrypt.hash(req.body.password, 10);
 
@@ -52,13 +52,13 @@ router.post("/login", async (req, res, next) => {
     if (!user) {
       // In this case, no user account is associated with the specified email
       console.log("hello");
-      return res.status(401).json({ message: "Auth failed" });
+      return res.status(401).json({ error: { message: "Auth failed" } });
     }
 
     let result = await bcrypt.compare(req.body.password, user.password);
 
     if (!result) {
-      return res.status(401).json({ message: "Auth failed" });
+      return res.status(401).json({ error: { message: "Auth failed" } });
     } else {
       // If we made it here --> Good Password!
       const token = jwt.sign(

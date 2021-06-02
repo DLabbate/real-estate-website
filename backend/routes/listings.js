@@ -15,7 +15,9 @@ router.post("/", authentication, async (req, res, next) => {
     if (exists) {
       return res
         .status(409)
-        .json({ message: "User can only have one listing at a time!" });
+        .json({
+          error: { message: "User can only have one listing at a time!" },
+        });
     }
 
     const listing = new Listing({
