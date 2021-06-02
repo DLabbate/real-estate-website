@@ -68,13 +68,13 @@ router.delete("/", authentication, async (req, res, next) => {
     console.log("Preparing to delete listing: ", listing);
 
     // We should delete the listing that belongs to the user making the request
-    await Listing.deleteOne({ _id: listingId });
+    await Listing.deleteOne({ _id: listingId }).exec();
 
     // Next, we should remove the listing reference from the user document
     await User.updateMany(
       { publishedListing: listingId },
       { $unset: { publishedListing: listingId } }
-    );
+    ).exec();
 
     // Once this completes, we should delete this listing from the favorited listings of all users (given that it does not exist anymore)
     await User.updateMany(
