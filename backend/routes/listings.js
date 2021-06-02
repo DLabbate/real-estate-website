@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
+const User = require("../models/user");
 const authentication = require("../middleware/authentication");
 
 /**
@@ -32,6 +33,12 @@ router.post("/", authentication, async (req, res, next) => {
 
     if (result) {
       console.log("Listing created");
+
+      let userDocument = await User.updateOne(
+        { _id: userData._id },
+        { $set: { publishedListing: result._id } }
+      ).exec();
+
       return res.status(201).json({
         message: "Listing created",
       });
