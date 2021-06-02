@@ -39,9 +39,7 @@ router.post("/", authentication, async (req, res, next) => {
       { $set: { publishedListing: result._id } }
     ).exec();
 
-    return res.status(201).json({
-      message: "Listing created",
-    });
+    return res.status(201).json(listing);
   } catch (err) {
     console.log("Error with listing post", err);
     return res.status(500).json({ error: err });

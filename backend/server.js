@@ -27,6 +27,7 @@ const port = process.env.PORT || 3000;
 mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 mongoose.Promise = global.Promise;
 

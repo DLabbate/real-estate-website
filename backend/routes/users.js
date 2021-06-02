@@ -34,7 +34,7 @@ router.post("/signup", async (req, res, net) => {
 
       await user.save();
       console.log("Successfully saved user with hashed password");
-      return res.status(201).json({ message: "Successfully created user" });
+      return res.status(201).json(user);
     }
   } catch (err) {
     console.log("Error with user signup", err);
@@ -69,6 +69,7 @@ router.post("/login", async (req, res, next) => {
           email: user.email,
           favoriteListings: user.favoriteListings,
           phoneNumber: user.phoneNumber,
+          publishedListing: user.publishedListing,
         },
         process.env.JWT_KEY,
         { expiresIn: "24h" }
@@ -101,12 +102,14 @@ router.patch("/edit", authentication, async (req, res, next) => {
     const newUserData = req.body;
     console.log(newUserData);
 
-    await User.updateOne(
+    let updatedUser = await User.findOneAndUpdate(
       { _id: userData._id },
-      { $set: { favoriteListings: newUserData.favoriteListings } }
+      { $set: { favoriteListings: newUserData.favoriteListings } },
+      { new: true }
     ).exec();
+
     console.log("Successfully updated user");
-    res.status(200).json({ message: "Updated user info" });
+    res.status(200).json(updatedUser);
   } catch (err) {
     console.log("Error with user edit", err);
     return res.status(500).json({ error: err });
