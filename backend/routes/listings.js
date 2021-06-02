@@ -40,10 +40,10 @@ router.post("/", authentication, async (req, res, next) => {
 
 router.delete("/", authentication, async (req, res, next) => {
   try {
+    // User Data from JWT
     const userData = req.userData;
-    // We should verify that this listing in fact belongs to the user making the request
-    // Listing.findOne();
 
+    // We should delete the listing that belongs to the user making the request
     let result = await Listing.deleteOne({ owner: userData._id });
 
     if (result) {
