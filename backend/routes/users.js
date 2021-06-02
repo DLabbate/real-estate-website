@@ -14,10 +14,13 @@ router.post("/signup", async (req, res, net) => {
   try {
     // First check if the email already exists
     let user = await User.findOne({ email: req.body.email }).exec();
-    console.log(user);
+    console.log(`Checking if user exists with email ${req.body.email}:`, user);
+
     if (user) {
       // If a user already exists, return an error
-      return res.status(409).json({ error: { message: "Email exists!" } });
+      return res
+        .status(409)
+        .json({ error: { message: "Email already exists!" } });
     } else {
       const hash = await bcrypt.hash(req.body.password, 10);
 
@@ -32,12 +35,12 @@ router.post("/signup", async (req, res, net) => {
       let result = await user.save();
 
       if (result) {
-        console.log(result);
+        console.log("Successfully saved user with hashed password");
         return res.status(201).json(result);
       }
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error with user signup", err);
     return res.status(500).json({ error: err });
   }
 });
@@ -48,16 +51,17 @@ router.post("/signup", async (req, res, net) => {
 router.post("/login", async (req, res, next) => {
   try {
     let user = await User.findOne({ email: req.body.email });
-
+    console.log(`Checking if user exists with email ${req.body.email}:`, user);
     if (!user) {
       // In this case, no user account is associated with the specified email
-      console.log("hello");
+      console.log("No user account is associated with the specified email");
       return res.status(401).json({ error: { message: "Auth failed" } });
     }
 
     let result = await bcrypt.compare(req.body.password, user.password);
 
     if (!result) {
+      console.log("Incorrect Password!");
       return res.status(401).json({ error: { message: "Auth failed" } });
     } else {
       // If we made it here --> Good Password!
@@ -72,6 +76,7 @@ router.post("/login", async (req, res, next) => {
         process.env.JWT_KEY,
         { expiresIn: "24h" }
       );
+      console.log("Correct Password!");
       return res.status(200).json({
         //message: "Auth successful",
         email: user.email,
@@ -81,7 +86,7 @@ router.post("/login", async (req, res, next) => {
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error with user login", err);
     return res.status(500).json({ error: err });
   }
 });
@@ -105,11 +110,11 @@ router.patch("/edit", authentication, async (req, res, next) => {
     ).exec();
 
     if (result) {
-      console.log(result);
+      console.log("Successfully updated user");
       res.status(200).json({ message: "Updated user info" });
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error with user edit", err);
     return res.status(500).json({ error: err });
   }
 });

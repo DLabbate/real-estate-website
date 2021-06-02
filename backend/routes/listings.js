@@ -4,6 +4,9 @@ const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const authentication = require("../middleware/authentication");
 
+/**
+ * Creating a new listing. Note a user can only have 1 active listing at a time.
+ */
 router.post("/", authentication, async (req, res, next) => {
   try {
     // User Data from JWT
@@ -13,11 +16,10 @@ router.post("/", authentication, async (req, res, next) => {
 
     // Ensure that a user can have only one listing at a time
     if (exists) {
-      return res
-        .status(409)
-        .json({
-          error: { message: "User can only have one listing at a time!" },
-        });
+      console.log("User can only have one listing at a time!");
+      return res.status(409).json({
+        error: { message: "User can only have one listing at a time!" },
+      });
     }
 
     const listing = new Listing({
@@ -29,17 +31,20 @@ router.post("/", authentication, async (req, res, next) => {
     let result = await listing.save();
 
     if (result) {
-      console.log(listing);
+      console.log("Listing created");
       return res.status(201).json({
         message: "Listing created",
       });
     }
   } catch (err) {
-    console.log(err);
+    console.log("Error with listing post", err);
     return res.status(500).json({ error: err });
   }
 });
 
+/**
+ * Deleting a user's listing.
+ */
 router.delete("/", authentication, async (req, res, next) => {
   try {
     // User Data from JWT
@@ -49,12 +54,13 @@ router.delete("/", authentication, async (req, res, next) => {
     let result = await Listing.deleteOne({ owner: userData._id });
 
     if (result) {
+      console.log("Listing deleted");
       return res.status(201).json({
         message: "Listing deleted",
       });
     }
   } catch (err) {
-    onsole.log(err);
+    console.log("Error with listing delete", err);
     return res.status(500).json({ error: err });
   }
 });
