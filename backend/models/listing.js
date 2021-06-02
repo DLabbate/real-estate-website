@@ -8,6 +8,7 @@ const listingSchema = mongoose.Schema({
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
   },
+  owner: { type: mongoose.Schema.ObjectId, ref: "User", required: true },
 });
 
 module.exports = mongoose.model("Listing", listingSchema);
