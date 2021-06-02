@@ -56,8 +56,31 @@ router.delete("/", authentication, async (req, res, next) => {
     // User Data from JWT
     const userData = req.userData;
 
+    // Find the listing that belongs to the user making the request
+    const listing = await Listing.findOne({ owner: userData._id });
+    if (!listing) {
+      console.log("User does not have a published listing");
+      return res
+        .status(404)
+        .json({ error: { message: "User does not have a published listing" } });
+    }
+    const listingId = listing._id;
+    console.log("Preparing to delete listing: ", listing);
+
     // We should delete the listing that belongs to the user making the request
-    await Listing.deleteOne({ owner: userData._id });
+    await Listing.deleteOne({ _id: listingId });
+
+    // Next, we should remove the listing reference from the user document
+    await User.updateMany(
+      { publishedListing: listingId },
+      { $unset: { publishedListing: listingId } }
+    );
+
+    // Once this completes, we should delete this listing from the favorited listings of all users (given that it does not exist anymore)
+    await User.updateMany(
+      { favoriteListings: listingId },
+      { $pull: { favoriteListings: listingId } }
+    ).exec();
 
     console.log("Listing deleted");
     return res.status(201).json({
