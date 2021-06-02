@@ -77,9 +77,11 @@ router.post("/login", async (req, res, next) => {
       console.log("Correct Password!");
       return res.status(200).json({
         //message: "Auth successful",
+        _id: user._id,
         email: user.email,
-        phoneNumber: user.phoneNumber,
         favoriteListings: user.favoriteListings,
+        phoneNumber: user.phoneNumber,
+        publishedListing: user.publishedListing,
         token: token,
       });
     }
