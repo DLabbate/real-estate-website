@@ -29,20 +29,19 @@ router.post("/", authentication, async (req, res, next) => {
       owner: userData._id,
     });
 
+    // Create a new listing
     let result = await listing.save();
+    console.log("Listing created");
 
-    if (result) {
-      console.log("Listing created");
+    // We should now update the reference in the User model
+    await User.updateOne(
+      { _id: userData._id },
+      { $set: { publishedListing: result._id } }
+    ).exec();
 
-      let userDocument = await User.updateOne(
-        { _id: userData._id },
-        { $set: { publishedListing: result._id } }
-      ).exec();
-
-      return res.status(201).json({
-        message: "Listing created",
-      });
-    }
+    return res.status(201).json({
+      message: "Listing created",
+    });
   } catch (err) {
     console.log("Error with listing post", err);
     return res.status(500).json({ error: err });
@@ -58,14 +57,12 @@ router.delete("/", authentication, async (req, res, next) => {
     const userData = req.userData;
 
     // We should delete the listing that belongs to the user making the request
-    let result = await Listing.deleteOne({ owner: userData._id });
+    await Listing.deleteOne({ owner: userData._id });
 
-    if (result) {
-      console.log("Listing deleted");
-      return res.status(201).json({
-        message: "Listing deleted",
-      });
-    }
+    console.log("Listing deleted");
+    return res.status(201).json({
+      message: "Listing deleted",
+    });
   } catch (err) {
     console.log("Error with listing delete", err);
     return res.status(500).json({ error: err });

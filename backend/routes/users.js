@@ -32,12 +32,9 @@ router.post("/signup", async (req, res, net) => {
         phoneNumber: req.body.phoneNumber,
       });
 
-      let result = await user.save();
-
-      if (result) {
-        console.log("Successfully saved user with hashed password");
-        return res.status(201).json(result);
-      }
+      await user.save();
+      console.log("Successfully saved user with hashed password");
+      return res.status(201).json({ message: "Successfully created user" });
     }
   } catch (err) {
     console.log("Error with user signup", err);
@@ -104,15 +101,12 @@ router.patch("/edit", authentication, async (req, res, next) => {
     const newUserData = req.body;
     console.log(newUserData);
 
-    let result = await User.updateOne(
+    await User.updateOne(
       { _id: userData._id },
       { $set: { favoriteListings: newUserData.favoriteListings } }
     ).exec();
-
-    if (result) {
-      console.log("Successfully updated user");
-      res.status(200).json({ message: "Updated user info" });
-    }
+    console.log("Successfully updated user");
+    res.status(200).json({ message: "Updated user info" });
   } catch (err) {
     console.log("Error with user edit", err);
     return res.status(500).json({ error: err });
