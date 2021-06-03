@@ -65,20 +65,36 @@ router.delete("/", authentication, async (req, res, next) => {
     const listingId = listing._id;
     console.log("Preparing to delete listing: ", listing);
 
+    /*
+    When we delete a listing, we must do the following
+    1) Remove the listing document itself
+    2) Unset the "publishedListing" field in the user document (of the user that owns the listing)
+    3) Remove this listingId the favoriteListings array of ALL users
+
+    This can be executed with 3 promises done in parallel
+    */
+
     // We should delete the listing that belongs to the user making the request
-    await Listing.deleteOne({ _id: listingId }).exec();
+    const deleteListingPromise = Listing.deleteOne({ _id: listingId }).exec();
 
     // Next, we should remove the listing reference from the user document
-    await User.updateMany(
+    const updateUserListingPromise = User.updateOne(
       { publishedListing: listingId },
       { $unset: { publishedListing: listingId } }
     ).exec();
 
     // Once this completes, we should delete this listing from the favorited listings of all users (given that it does not exist anymore)
-    await User.updateMany(
+    const updateUserFavoritesPromise = User.updateMany(
       { favoriteListings: listingId },
       { $pull: { favoriteListings: listingId } }
     ).exec();
+
+    // We execute all promises at the same time
+    await Promise.all([
+      deleteListingPromise,
+      updateUserListingPromise,
+      updateUserFavoritesPromise,
+    ]);
 
     console.log("Listing deleted");
     return res.status(201).json({
