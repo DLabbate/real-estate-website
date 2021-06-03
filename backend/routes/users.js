@@ -34,7 +34,11 @@ router.post("/signup", async (req, res, net) => {
 
       await user.save();
       console.log("Successfully saved user with hashed password");
-      return res.status(201).json(user);
+
+      let userObject = user.toObject();
+      // Don't show hashed password in the response
+      delete userObject.password;
+      return res.status(201).json(userObject);
     }
   } catch (err) {
     console.log("Error with user signup", err);
@@ -75,13 +79,13 @@ router.post("/login", async (req, res, next) => {
         { expiresIn: "24h" }
       );
       console.log("Correct Password!");
+
+      let userObject = user.toObject();
+      delete userObject.password;
+      delete userObject.__v;
       return res.status(200).json({
         //message: "Auth successful",
-        _id: user._id,
-        email: user.email,
-        favoriteListings: user.favoriteListings,
-        phoneNumber: user.phoneNumber,
-        publishedListing: user.publishedListing,
+        ...userObject,
         token: token,
       });
     }
@@ -110,8 +114,12 @@ router.patch("/edit", authentication, async (req, res, next) => {
       { new: true }
     ).exec();
 
+    updatedUserObject = updatedUser.toObject();
+    delete updatedUserObject.password;
+    delete updatedUserObject.__v;
+
     console.log("Successfully updated user");
-    res.status(200).json(updatedUser);
+    res.status(200).json(updatedUserObject);
   } catch (err) {
     console.log("Error with user edit", err);
     return res.status(500).json({ error: err });
