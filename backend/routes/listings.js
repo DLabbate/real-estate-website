@@ -97,11 +97,24 @@ router.delete("/", authentication, async (req, res, next) => {
     ]);
 
     console.log("Listing deleted");
-    return res.status(201).json({
+    return res.status(200).json({
       message: "Listing deleted",
     });
   } catch (err) {
     console.log("Error with listing delete", err);
+    return res.status(500).json({ error: err });
+  }
+});
+
+/**
+ * Search for listings
+ */
+router.get("/search", async (req, res, next) => {
+  try {
+    const listings = await Listing.find().exec();
+    return res.status(200).json(listings);
+  } catch (err) {
+    console.log("Error with searching for listings", err);
     return res.status(500).json({ error: err });
   }
 });
