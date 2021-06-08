@@ -111,10 +111,16 @@ router.delete("/", authentication, async (req, res, next) => {
  */
 router.get("/search", async (req, res, next) => {
   try {
+    // Optional filter for listings
     const filter = {};
     if (req.query.ownerId) {
       filter.owner = req.query.ownerId;
     }
+    if (req.query.minPrice) {
+      filter.price = { $gt: req.query.minPrice };
+    }
+
+    console.log("Searching for listings with the following filter: ", filter);
     const listings = await Listing.find(filter).exec();
     return res.status(200).json(listings);
   } catch (err) {
