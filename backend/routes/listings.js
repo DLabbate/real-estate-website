@@ -117,9 +117,13 @@ router.get("/search", async (req, res, next) => {
       filter.owner = req.query.ownerId;
     }
     if (req.query.minPrice) {
-      filter.price = { $gt: req.query.minPrice };
+      filter.price = { $gte: req.query.minPrice };
+    }
+    if (req.query.maxPrice) {
+      filter.price = { ...filter.price, $lte: req.query.maxPrice };
     }
 
+    // Search for all listings that match the filter
     console.log("Searching for listings with the following filter: ", filter);
     const listings = await Listing.find(filter).exec();
     return res.status(200).json(listings);
