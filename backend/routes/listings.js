@@ -111,7 +111,11 @@ router.delete("/", authentication, async (req, res, next) => {
  */
 router.get("/search", async (req, res, next) => {
   try {
-    const listings = await Listing.find().exec();
+    const filter = {};
+    if (req.query.ownerId) {
+      filter.owner = req.query.ownerId;
+    }
+    const listings = await Listing.find(filter).exec();
     return res.status(200).json(listings);
   } catch (err) {
     console.log("Error with searching for listings", err);
