@@ -123,6 +123,7 @@ exports.listingSearch = async (req, res, next) => {
               type: "Point",
               coordinates: coordinatesArray,
             },
+            // In metres
             $maxDistance: maxDistanceInteger,
           },
         },
