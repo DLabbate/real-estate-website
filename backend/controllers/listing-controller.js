@@ -1,9 +1,6 @@
-const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const User = require("../models/user");
-const authentication = require("../middleware/authentication");
 
 exports.listingCreateNew = async (req, res, next) => {
   try {
