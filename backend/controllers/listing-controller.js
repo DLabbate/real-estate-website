@@ -134,7 +134,9 @@ exports.listingSearch = async (req, res, next) => {
 
     // Search for all listings that match the filter
     console.log("Searching for listings with the following filter: ", filter);
-    const listings = await Listing.find(filter).exec();
+    const listings = await Listing.find(filter)
+      .populate("owner", "email phoneNumber")
+      .exec();
     return res.status(200).json(listings);
   } catch (err) {
     console.log("Error with searching for listings", err);
