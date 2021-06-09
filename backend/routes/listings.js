@@ -113,6 +113,8 @@ router.get("/search", async (req, res, next) => {
   try {
     // Optional filter for listings
     const filter = {};
+
+    // We have several optional query parameters
     if (req.query.ownerId) {
       filter.owner = req.query.ownerId;
     }
