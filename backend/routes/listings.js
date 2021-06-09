@@ -123,6 +123,24 @@ router.get("/search", async (req, res, next) => {
       filter.price = { ...filter.price, $lte: req.query.maxPrice };
     }
 
+    if (req.query.coordinates && req.query.radius) {
+      const coordinatesArray = req.query.coordinates.split(",");
+      const maxDistanceInteger = parseInt(req.query.radius);
+      const radiusQuery = {
+        location: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: coordinatesArray,
+            },
+            $maxDistance: maxDistanceInteger,
+          },
+        },
+      };
+
+      filter.location = radiusQuery.location;
+    }
+
     // Search for all listings that match the filter
     console.log("Searching for listings with the following filter: ", filter);
     const listings = await Listing.find(filter).exec();
