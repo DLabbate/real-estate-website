@@ -2,36 +2,24 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userService = require("../services/user-service");
 require("dotenv").config();
 
 exports.userSignup = async (req, res, net) => {
   try {
+    const userData = req.body;
+
     // First check if the email already exists
-    let user = await User.findOne({ email: req.body.email }).exec();
-    console.log(`Checking if user exists with email ${req.body.email}:`, user);
+    let user = await userService.getUser(userData);
 
     if (user) {
       // If a user already exists, return an error
+      console.log(`Email ${userData.email} already exists!`);
       return res
         .status(409)
         .json({ error: { message: "Email already exists!" } });
     } else {
-      const hash = await bcrypt.hash(req.body.password, 10);
-
-      const user = new User({
-        _id: new mongoose.Types.ObjectId(),
-        email: req.body.email,
-        // Can't store the RAW password in the database!
-        password: hash,
-        phoneNumber: req.body.phoneNumber,
-      });
-
-      await user.save();
-      console.log("Successfully saved user with hashed password");
-
-      let userObject = user.toObject();
-      // Don't show hashed password in the response
-      delete userObject.password;
+      const userObject = await userService.createNewUser(userData);
       return res.status(201).json(userObject);
     }
   } catch (err) {
