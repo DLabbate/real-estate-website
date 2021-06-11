@@ -19,8 +19,9 @@ exports.userSignup = async (req, res, net) => {
         .status(409)
         .json({ error: { message: "Email already exists!" } });
     } else {
-      const userObject = await userService.createNewUser(userData);
-      return res.status(201).json(userObject);
+      // Create a new user
+      const newUser = await userService.createNewUser(userData);
+      return res.status(201).json(newUser);
     }
   } catch (err) {
     console.log("Error with user signup", err);
@@ -30,41 +31,39 @@ exports.userSignup = async (req, res, net) => {
 
 exports.userLogin = async (req, res, next) => {
   try {
-    let user = await User.findOne({ email: req.body.email });
-    console.log(`Checking if user exists with email ${req.body.email}:`, user);
-    if (!user) {
+    const userLoginData = req.body;
+
+    let userSavedData = await userService.getUser(userLoginData);
+
+    console.log(
+      `Checking if user exists with email ${userLoginData.email}:`,
+      userSavedData
+    );
+    if (!userSavedData) {
       // In this case, no user account is associated with the specified email
       console.log("No user account is associated with the specified email");
       return res.status(401).json({ error: { message: "Auth failed" } });
     }
 
-    let result = await bcrypt.compare(req.body.password, user.password);
+    // Check if password is correct
+    let result = await userService.validatePassword(
+      userLoginData,
+      userSavedData
+    );
 
     if (!result) {
       console.log("Incorrect Password!");
       return res.status(401).json({ error: { message: "Auth failed" } });
     } else {
       // If we made it here --> Good Password!
-      const token = jwt.sign(
-        // Put user info inside the payload
-        {
-          _id: user._id,
-          email: user.email,
-          favoriteListings: user.favoriteListings,
-          phoneNumber: user.phoneNumber,
-          publishedListing: user.publishedListing,
-        },
-        process.env.JWT_KEY,
-        { expiresIn: "24h" }
-      );
+      let token = await userService.getJWT(userLoginData);
       console.log("Correct Password!");
 
-      let userObject = user.toObject();
-      delete userObject.password;
-      delete userObject.__v;
+      // Format the user for the response
+      let formattedUser = await userService.formatUser(userSavedData);
       return res.status(200).json({
         //message: "Auth successful",
-        ...userObject,
+        ...formattedUser,
         token: token,
       });
     }

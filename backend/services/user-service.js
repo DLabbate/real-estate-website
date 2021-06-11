@@ -7,7 +7,19 @@ require("dotenv").config();
 exports.getUser = async (userData) => {
   console.log(`Finding user with email: ${userData.email}`);
   let user = await User.findOne({ email: userData.email }).exec();
-  return user;
+
+  if (user) {
+    return user.toObject();
+  }
+
+  return null;
+};
+
+exports.formatUser = async (userObject) => {
+  delete userObject.password;
+  delete userObject.__v;
+
+  return userObject;
 };
 
 exports.createNewUser = async (userData) => {
@@ -29,4 +41,30 @@ exports.createNewUser = async (userData) => {
   delete userObject.password;
   delete userObject.__v;
   return userObject;
+};
+
+exports.validatePassword = async (userLoginData, userSavedData) => {
+  // Check if password is correct
+  let result = await bcrypt.compare(
+    userLoginData.password,
+    userSavedData.password
+  );
+
+  return result;
+};
+
+exports.getJWT = async (userData) => {
+  const token = jwt.sign(
+    // Put user info inside the payload
+    {
+      _id: userData._id,
+      email: userData.email,
+      favoriteListings: userData.favoriteListings,
+      phoneNumber: userData.phoneNumber,
+      publishedListing: userData.publishedListing,
+    },
+    process.env.JWT_KEY,
+    { expiresIn: "24h" }
+  );
+  return token;
 };
