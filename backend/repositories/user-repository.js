@@ -65,7 +65,7 @@ exports.removeFavoriteListingFromAllUsers = async (listingId) => {
 exports.addFavoriteListing = async (userId, listingId) => {
   return await User.findOneAndUpdate(
     { _id: userId },
-    { $push: { favoriteListings: listingId } },
+    { $addToSet: { favoriteListings: listingId } },
     { new: true }
   );
 };
