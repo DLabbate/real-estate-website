@@ -56,7 +56,7 @@ exports.userLogin = async (req, res, next) => {
       return res.status(401).json({ error: { message: "Auth failed" } });
     } else {
       // If we made it here --> Good Password!
-      let token = await userService.getJWT(userLoginData);
+      let token = await userService.getJWT(userSavedData);
       console.log("Correct Password!");
 
       // Format the user for the response
@@ -83,15 +83,10 @@ exports.userEdit = async (req, res, next) => {
     const newUserData = req.body;
     console.log(newUserData);
 
-    let updatedUser = await User.findOneAndUpdate(
-      { _id: userData._id },
-      { $set: { favoriteListings: newUserData.favoriteListings } },
-      { new: true }
-    ).exec();
-
-    updatedUserObject = updatedUser.toObject();
-    delete updatedUserObject.password;
-    delete updatedUserObject.__v;
+    let updatedUserObject = await userService.editUserInfo(
+      userData,
+      newUserData
+    );
 
     console.log("Successfully updated user");
     res.status(200).json(updatedUserObject);

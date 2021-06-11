@@ -68,3 +68,17 @@ exports.getJWT = async (userData) => {
   );
   return token;
 };
+
+exports.editUserInfo = async (oldUserData, newUserData) => {
+  let updatedUser = await User.findOneAndUpdate(
+    { _id: oldUserData._id },
+    { $set: { favoriteListings: newUserData.favoriteListings } },
+    { new: true }
+  ).exec();
+
+  updatedUserObject = updatedUser.toObject();
+  delete updatedUserObject.password;
+  delete updatedUserObject.__v;
+
+  return updatedUserObject;
+};
