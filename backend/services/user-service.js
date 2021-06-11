@@ -5,6 +5,9 @@ const jwt = require("jsonwebtoken");
 const userRepository = require("../repositories/user-repository");
 require("dotenv").config();
 
+/**
+ * Gets a user by email
+ */
 exports.getUserByEmail = async (userEmail) => {
   console.log(`Finding user with email: ${userEmail}`);
   let user = await userRepository.getUserByEmail(userEmail);
@@ -16,6 +19,9 @@ exports.getUserByEmail = async (userEmail) => {
   return null;
 };
 
+/**
+ * Formats the user object to contain only relevant information.
+ */
 exports.formatUser = async (userObject) => {
   delete userObject.password;
   delete userObject.__v;
@@ -23,6 +29,9 @@ exports.formatUser = async (userObject) => {
   return userObject;
 };
 
+/**
+ * Creates a new user
+ */
 exports.createNewUser = async (userData) => {
   const hash = await bcrypt.hash(userData.password, 10);
 
@@ -42,6 +51,9 @@ exports.createNewUser = async (userData) => {
   return this.formatUser(userObject);
 };
 
+/**
+ * Checks if a user's password matches the corresponding hash
+ */
 exports.validatePassword = async (userLoginData, userSavedData) => {
   // Check if password is correct
   let result = await bcrypt.compare(
@@ -52,6 +64,9 @@ exports.validatePassword = async (userLoginData, userSavedData) => {
   return result;
 };
 
+/**
+ * Returns a JWT token holding the user's info
+ */
 exports.getJWT = async (userData) => {
   const token = jwt.sign(
     // Put user info inside the payload
@@ -68,6 +83,9 @@ exports.getJWT = async (userData) => {
   return token;
 };
 
+/**
+ * Edit a user's info, such as "favoriteListings"
+ */
 exports.editUserInfo = async (oldUserData, newUserData) => {
   let updatedUser = await userRepository.editUserInfoById(
     oldUserData._id,
