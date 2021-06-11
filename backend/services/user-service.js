@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userRepository = require("../repositories/user-repository");
 require("dotenv").config();
 
-exports.getUser = async (userData) => {
-  console.log(`Finding user with email: ${userData.email}`);
-  let user = await User.findOne({ email: userData.email }).exec();
+exports.getUserByEmail = async (userEmail) => {
+  console.log(`Finding user with email: ${userEmail}`);
+  let user = await userRepository.getUserByEmail(userEmail);
 
   if (user) {
     return user.toObject();
@@ -33,14 +34,12 @@ exports.createNewUser = async (userData) => {
     phoneNumber: userData.phoneNumber,
   });
 
-  await user.save();
+  await userRepository.createNewUser(user);
   console.log("Successfully saved user with hashed password");
 
   let userObject = user.toObject();
   // Don't show hashed password in the response
-  delete userObject.password;
-  delete userObject.__v;
-  return userObject;
+  return this.formatUser(userObject);
 };
 
 exports.validatePassword = async (userLoginData, userSavedData) => {
@@ -70,15 +69,11 @@ exports.getJWT = async (userData) => {
 };
 
 exports.editUserInfo = async (oldUserData, newUserData) => {
-  let updatedUser = await User.findOneAndUpdate(
-    { _id: oldUserData._id },
-    { $set: { favoriteListings: newUserData.favoriteListings } },
-    { new: true }
-  ).exec();
+  let updatedUser = await userRepository.editUserInfoById(
+    oldUserData._id,
+    newUserData
+  );
 
   updatedUserObject = updatedUser.toObject();
-  delete updatedUserObject.password;
-  delete updatedUserObject.__v;
-
-  return updatedUserObject;
+  return this.formatUser(updatedUserObject);
 };

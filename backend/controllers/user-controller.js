@@ -1,7 +1,3 @@
-const mongoose = require("mongoose");
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const userService = require("../services/user-service");
 require("dotenv").config();
 
@@ -10,7 +6,7 @@ exports.userSignup = async (req, res, net) => {
     const userData = req.body;
 
     // First check if the email already exists
-    let user = await userService.getUser(userData);
+    let user = await userService.getUserByEmail(userData.email);
 
     if (user) {
       // If a user already exists, return an error
@@ -33,7 +29,7 @@ exports.userLogin = async (req, res, next) => {
   try {
     const userLoginData = req.body;
 
-    let userSavedData = await userService.getUser(userLoginData);
+    let userSavedData = await userService.getUserByEmail(userLoginData.email);
 
     console.log(
       `Checking if user exists with email ${userLoginData.email}:`,
