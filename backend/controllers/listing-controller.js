@@ -19,17 +19,16 @@ exports.listingCreateNew = async (req, res, next) => {
       });
     }
 
-    const listing = new Listing({
-      _id: new mongoose.Types.ObjectId(),
-      ...req.body,
-      owner: userData._id,
-    });
+    const listingData = req.body;
 
     // Create a new listing
-    let result = await listingService.createNewListing(userData._id, listing);
+    let result = await listingService.createNewListing(
+      userData._id,
+      listingData
+    );
     console.log("Listing created");
 
-    return res.status(201).json(listing);
+    return res.status(201).json(result);
   } catch (err) {
     console.log("Error with listing post", err);
     return res.status(500).json({ error: err });

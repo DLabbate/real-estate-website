@@ -12,7 +12,17 @@ exports.getUserByEmail = async (userEmail) => {
 /**
  * Creates a new user document
  */
-exports.createNewUser = async (user) => {
+exports.createNewUser = async (userData, hash) => {
+  const user = new User({
+    _id: new mongoose.Types.ObjectId(),
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    email: userData.email,
+    // Can't store the RAW password in the database!
+    password: hash,
+    phoneNumber: userData.phoneNumber,
+  });
+
   return await user.save();
 };
 

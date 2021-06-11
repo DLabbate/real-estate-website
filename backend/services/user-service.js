@@ -35,17 +35,7 @@ exports.formatUser = async (userObject) => {
 exports.createNewUser = async (userData) => {
   const hash = await bcrypt.hash(userData.password, 10);
 
-  const user = new User({
-    _id: new mongoose.Types.ObjectId(),
-    firstName: userData.firstName,
-    lastName: userData.lastName,
-    email: userData.email,
-    // Can't store the RAW password in the database!
-    password: hash,
-    phoneNumber: userData.phoneNumber,
-  });
-
-  await userRepository.createNewUser(user);
+  const user = await userRepository.createNewUser(userData, hash);
   console.log("Successfully saved user with hashed password");
 
   let userObject = user.toObject();

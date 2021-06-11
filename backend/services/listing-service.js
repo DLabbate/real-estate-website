@@ -15,8 +15,14 @@ exports.getListingByOwnerId = async (ownerId) => {
  * Creates a new listing
  */
 exports.createNewListing = async (ownerId, listingData) => {
+  const listing = new Listing({
+    _id: new mongoose.Types.ObjectId(),
+    ...listingData,
+    owner: ownerId,
+  });
+
   // Create a new listing
-  let newListing = await listingRepository.createNewListing(listingData);
+  let newListing = await listingRepository.createNewListing(listing);
 
   // We should now update the reference in the User model
   await userRepository.updatePublishedListingReference(ownerId, newListing._id);
