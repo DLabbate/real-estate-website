@@ -43,7 +43,7 @@ exports.updatePublishedListingReference = async (ownerId, listingId) => {
  * Removes the published listing of a user
  */
 exports.removePublishedListingReference = async (listingId) => {
-  User.updateOne(
+  await User.updateOne(
     { publishedListing: listingId },
     { $unset: { publishedListing: listingId } }
   ).exec();
@@ -53,7 +53,7 @@ exports.removePublishedListingReference = async (listingId) => {
  * Removes a single listing from a user's "favoriteListings" array
  */
 exports.removeFavoriteListing = async (listingId) => {
-  return User.updateMany(
+  return await User.updateMany(
     { favoriteListings: listingId },
     { $pull: { favoriteListings: listingId } }
   ).exec();
