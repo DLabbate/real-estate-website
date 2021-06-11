@@ -41,7 +41,7 @@ exports.createNewUser = async (userData) => {
 
   let userObject = user.toObject();
   // Don't show hashed password in the response
-  return this.formatUser(userObject);
+  return await this.formatUser(userObject);
 };
 
 /**
@@ -88,7 +88,7 @@ exports.editUserInfo = async (oldUserData, newUserData) => {
   );
 
   updatedUserObject = updatedUser.toObject();
-  return this.formatUser(updatedUserObject);
+  return await this.formatUser(updatedUserObject);
 };
 
 /**
@@ -107,7 +107,7 @@ exports.addFavoriteListing = async (userId, listingId) => {
   }
 
   updatedUserObject = updatedUser.toObject();
-  return this.formatUser(updatedUserObject);
+  return await this.formatUser(updatedUserObject);
 };
 
 /**
@@ -123,5 +123,5 @@ exports.removeFavoriteListing = async (userId, listingId) => {
   await noteRepository.deleteNote(userId, listingId);
 
   updatedUserObject = updatedUser.toObject();
-  return this.formatUser(updatedUserObject);
+  return await this.formatUser(updatedUserObject);
 };
