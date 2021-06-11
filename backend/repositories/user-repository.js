@@ -40,7 +40,7 @@ exports.updatePublishedListingReference = async (ownerId, listingId) => {
 };
 
 /**
- * Removes the published listing of a user
+ * When a user deletes their published listing, we should therefore remove the "publishedListing" field accordingly
  */
 exports.removePublishedListingReference = async (listingId) => {
   await User.updateOne(
