@@ -67,44 +67,7 @@ exports.listingDelete = async (req, res, next) => {
 
 exports.listingSearch = async (req, res, next) => {
   try {
-    // Optional filter for listings
-    const filter = {};
-
-    // We have several optional query parameters
-    if (req.query.ownerId) {
-      filter.owner = req.query.ownerId;
-    }
-    if (req.query.minPrice) {
-      filter.price = { $gte: req.query.minPrice };
-    }
-    if (req.query.maxPrice) {
-      filter.price = { ...filter.price, $lte: req.query.maxPrice };
-    }
-
-    if (req.query.coordinates && req.query.radius) {
-      const coordinatesArray = req.query.coordinates.split(",");
-      const maxDistanceInteger = parseInt(req.query.radius);
-      const radiusQuery = {
-        location: {
-          $near: {
-            $geometry: {
-              type: "Point",
-              coordinates: coordinatesArray,
-            },
-            // In metres
-            $maxDistance: maxDistanceInteger,
-          },
-        },
-      };
-
-      filter.location = radiusQuery.location;
-    }
-
-    // Search for all listings that match the filter
-    console.log("Searching for listings with the following filter: ", filter);
-    const listings = await Listing.find(filter)
-      .populate("owner", "email phoneNumber")
-      .exec();
+    const listings = await listingService.searchListings(req.query);
     return res.status(200).json(listings);
   } catch (err) {
     console.log("Error with searching for listings", err);

@@ -33,7 +33,7 @@ exports.deleteListing = async (listingId) => {
       1) Delete the listing that belongs to the user making the request
       2) Unset the "publishedListing" field in the user document (of the user that owns the listing)
       3) Delete this listingId from the favoritedListings array of all users
-      
+
       */
 
   // #1) Delete the listing that belongs to the user making the request
@@ -44,4 +44,11 @@ exports.deleteListing = async (listingId) => {
 
   // #3) Delete this listingId from the favoritedListings array of all users
   await userRepository.removeFavoriteListing(listingId);
+};
+
+/**
+ * Search for listings with optional query parameters
+ */
+exports.searchListings = async (filter) => {
+  return await listingRepository.searchListings(filter);
 };
