@@ -42,7 +42,8 @@ exports.listingDelete = async (req, res, next) => {
     const userData = req.userData;
 
     // Find the listing that belongs to the user making the request
-    const listing = await Listing.findOne({ owner: userData._id });
+    const listing = await listingService.getListingByOwnerId(userData._id);
+
     if (!listing) {
       console.log("User does not have a published listing");
       return res
@@ -52,36 +53,7 @@ exports.listingDelete = async (req, res, next) => {
     const listingId = listing._id;
     console.log("Preparing to delete listing: ", listing);
 
-    /*
-      When we delete a listing, we must do the following
-      1) Delete the listing that belongs to the user making the request
-      2) Unset the "publishedListing" field in the user document (of the user that owns the listing)
-      3) Delete this listingId from the favoritedListings array of all users
-  
-      This can be executed with 3 promises done in parallel
-      */
-
-    // Promise #1) Delete the listing that belongs to the user making the request
-    const deleteListingPromise = Listing.deleteOne({ _id: listingId }).exec();
-
-    // Promise #2) Unset the "publishedListing" ref in the user document (of the user that owns the listing)
-    const updateUserListingPromise = User.updateOne(
-      { publishedListing: listingId },
-      { $unset: { publishedListing: listingId } }
-    ).exec();
-
-    // Promise #3) Delete this listingId from the favoritedListings array of all users
-    const updateUserFavoritesPromise = User.updateMany(
-      { favoriteListings: listingId },
-      { $pull: { favoriteListings: listingId } }
-    ).exec();
-
-    // We execute all promises at the same time
-    await Promise.all([
-      deleteListingPromise,
-      updateUserListingPromise,
-      updateUserFavoritesPromise,
-    ]);
+    listingService.deleteListing(listingId);
 
     console.log("Listing deleted");
     return res.status(200).json({
