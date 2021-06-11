@@ -14,12 +14,16 @@ exports.createNewNote = async (userId, listingId) => {
 };
 
 exports.deleteNote = async (userId, listingId) => {
-  return await Note.deleteOne({ user: userId, listing: listingId });
+  return await Note.deleteOne({ user: userId, listing: listingId }).exec();
 };
 
 /**
  * Finds a note with the matching user and listing
  */
 exports.findNote = async (userId, listingId) => {
-  return Note.findOne({ user: userId, listing: listingId });
+  return Note.findOne({ user: userId, listing: listingId }).exec();
+};
+
+exports.getNotesByUserId = async (userId) => {
+  return Note.find({ user: userId }).exec();
 };

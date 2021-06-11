@@ -77,7 +77,7 @@ exports.addFavoriteListing = async (userId, listingId) => {
     { _id: userId },
     { $addToSet: { favoriteListings: listingId } },
     { new: true }
-  );
+  ).exec();
 };
 
 /**
@@ -88,5 +88,5 @@ exports.removeFavoriteListing = async (userId, listingId) => {
     { _id: userId },
     { $pull: { favoriteListings: listingId } },
     { new: true }
-  );
+  ).exec();
 };

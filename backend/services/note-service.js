@@ -6,7 +6,7 @@ const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 
 exports.formatNote = async (noteDocument) => {
-  noteObject = noteDocument.noteObject();
+  noteObject = noteDocument.toObject();
   delete noteObject.__v;
 };
 
@@ -14,3 +14,9 @@ exports.formatNote = async (noteDocument) => {
 //   let note = await noteRepository.createNewNote(userId, listingId);
 //   return this.formatNote(note);
 // };
+
+exports.getNotesByUserId = async (userId) => {
+  return await noteRepository.getNotesByUserId(userId);
+};
+
+exports.editNoteCategory = async (noteData, newNoteCategory) => {};
