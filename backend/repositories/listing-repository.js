@@ -63,7 +63,7 @@ exports.searchListings = async (queryParams) => {
   // Search for all listings that match the filter
   console.log("Searching for listings with the following filter: ", filter);
   const listings = await Listing.find(filter)
-    .populate("owner", "email phoneNumber")
+    .populate("owner", "firstName lastName email phoneNumber")
     .exec();
   return listings;
 };

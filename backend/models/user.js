@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
   // Email does not do any validation. It is only used for optimization
   email: {
     type: String,

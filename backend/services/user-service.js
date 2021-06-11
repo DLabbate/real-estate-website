@@ -37,6 +37,8 @@ exports.createNewUser = async (userData) => {
 
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
+    firstName: userData.firstName,
+    lastName: userData.lastName,
     email: userData.email,
     // Can't store the RAW password in the database!
     password: hash,
@@ -72,6 +74,8 @@ exports.getJWT = async (userData) => {
     // Put user info inside the payload
     {
       _id: userData._id,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
       email: userData.email,
       favoriteListings: userData.favoriteListings,
       phoneNumber: userData.phoneNumber,
