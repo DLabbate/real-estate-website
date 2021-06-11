@@ -95,3 +95,26 @@ exports.editUserInfo = async (oldUserData, newUserData) => {
   updatedUserObject = updatedUser.toObject();
   return this.formatUser(updatedUserObject);
 };
+
+/**
+ * Adds a single listing to the "favoriteListings" array of ONE user
+ */
+exports.addFavoriteListing = async (userId, listingId) => {
+  let updatedUser = await userRepository.addFavoriteListing(userId, listingId);
+
+  updatedUserObject = updatedUser.toObject();
+  return this.formatUser(updatedUserObject);
+};
+
+/**
+ * Deletes a listing from a single user's favorites
+ */
+exports.removeFavoriteListing = async (userId, listingId) => {
+  let updatedUser = await userRepository.removeFavoriteListing(
+    userId,
+    listingId
+  );
+
+  updatedUserObject = updatedUser.toObject();
+  return this.formatUser(updatedUserObject);
+};

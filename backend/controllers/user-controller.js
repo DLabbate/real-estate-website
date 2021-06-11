@@ -91,3 +91,43 @@ exports.userEdit = async (req, res, next) => {
     return res.status(500).json({ error: err });
   }
 };
+
+exports.addFavoriteListing = async (req, res, next) => {
+  try {
+    // From JWT
+    const userData = req.userData;
+    console.log(req.userData);
+
+    const listingId = req.params.listingId;
+
+    let updatedUserObject = await userService.addFavoriteListing(
+      userData._id,
+      listingId
+    );
+    console.log("Successfully added favoriteListing for user");
+    res.status(200).json(updatedUserObject);
+  } catch (err) {
+    console.log("Error with adding listing to user favorites", err);
+    return res.status(500).json({ error: err });
+  }
+};
+
+exports.removeFavoriteListing = async (req, res, next) => {
+  try {
+    // From JWT
+    const userData = req.userData;
+    console.log(req.userData);
+
+    const listingId = req.params.listingId;
+
+    let updatedUserObject = await userService.removeFavoriteListing(
+      userData._id,
+      listingId
+    );
+    console.log("Successfully removed favoriteListing for user");
+    res.status(200).json(updatedUserObject);
+  } catch (err) {
+    console.log("Error with adding listing to user favorites", err);
+    return res.status(500).json({ error: err });
+  }
+};

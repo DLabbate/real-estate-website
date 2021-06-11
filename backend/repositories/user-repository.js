@@ -50,11 +50,33 @@ exports.removePublishedListingReference = async (listingId) => {
 };
 
 /**
- * Removes a single listing from a user's "favoriteListings" array
+ * Removes a single listing from the "favoriteListings" array of ALL users
  */
-exports.removeFavoriteListing = async (listingId) => {
+exports.removeFavoriteListingFromAllUsers = async (listingId) => {
   return await User.updateMany(
     { favoriteListings: listingId },
     { $pull: { favoriteListings: listingId } }
   ).exec();
+};
+
+/**
+ * Adds a single listing to the "favoriteListings" array of ONE user
+ */
+exports.addFavoriteListing = async (userId, listingId) => {
+  return await User.findOneAndUpdate(
+    { _id: userId },
+    { $push: { favoriteListings: listingId } },
+    { new: true }
+  );
+};
+
+/**
+ * Deletes a listing from a single user's favorites
+ */
+exports.removeFavoriteListing = async (userId, listingId) => {
+  return await User.findOneAndUpdate(
+    { _id: userId },
+    { $pull: { favoriteListings: listingId } },
+    { new: true }
+  );
 };

@@ -43,7 +43,7 @@ exports.deleteListing = async (listingId) => {
   await userRepository.removePublishedListingReference(listingId);
 
   // #3) Delete this listingId from the favoritedListings array of all users
-  await userRepository.removeFavoriteListing(listingId);
+  await userRepository.removeFavoriteListingFromAllUsers(listingId);
 };
 
 /**
