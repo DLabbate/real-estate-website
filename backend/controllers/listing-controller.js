@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const User = require("../models/user");
+const listingService = require("../services/listing-service");
+const userService = require("../services/user-service");
 
 exports.listingCreateNew = async (req, res, next) => {
   try {
     // User Data from JWT
     const userData = req.userData;
 
-    let exists = await Listing.findOne({ owner: userData._id });
+    let exists = await listingService.getListingByOwnerId(userData._id);
 
     // Ensure that a user can have only one listing at a time
     if (exists) {
@@ -24,14 +26,8 @@ exports.listingCreateNew = async (req, res, next) => {
     });
 
     // Create a new listing
-    let result = await listing.save();
+    let result = await listingService.createNewListing(userData._id, listing);
     console.log("Listing created");
-
-    // We should now update the reference in the User model
-    await User.updateOne(
-      { _id: userData._id },
-      { $set: { publishedListing: result._id } }
-    ).exec();
 
     return res.status(201).json(listing);
   } catch (err) {
