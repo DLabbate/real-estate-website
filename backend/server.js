@@ -17,6 +17,7 @@ const mongoose = require("mongoose");
 // Routes
 const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
+const noteRoutes = require("./routes/notes");
 
 // Environment variables
 require("dotenv").config();
@@ -41,6 +42,7 @@ app.get("/", (req, res, next) => {
 // Use routes
 app.use("/listings", listingRoutes);
 app.use("/users", userRoutes);
+app.use("/notes", noteRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

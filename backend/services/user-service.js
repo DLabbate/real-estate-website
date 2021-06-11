@@ -3,6 +3,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRepository = require("../repositories/user-repository");
+const noteRepository = require("../repositories/note-repository");
 require("dotenv").config();
 
 /**
@@ -96,6 +97,15 @@ exports.editUserInfo = async (oldUserData, newUserData) => {
 exports.addFavoriteListing = async (userId, listingId) => {
   let updatedUser = await userRepository.addFavoriteListing(userId, listingId);
 
+  // A note will also be created for this user
+
+  // First check if one already exists for the corresponding userId and listingId
+  const note = await noteRepository.findNote(userId, listingId);
+
+  if (!note) {
+    await noteRepository.createNewNote(userId, listingId);
+  }
+
   updatedUserObject = updatedUser.toObject();
   return this.formatUser(updatedUserObject);
 };
@@ -108,6 +118,9 @@ exports.removeFavoriteListing = async (userId, listingId) => {
     userId,
     listingId
   );
+
+  // The corresponding note must be removed
+  await noteRepository.deleteNote(userId, listingId);
 
   updatedUserObject = updatedUser.toObject();
   return this.formatUser(updatedUserObject);
