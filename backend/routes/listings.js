@@ -2,11 +2,17 @@ const express = require("express");
 const router = express.Router();
 const authentication = require("../middleware/authentication");
 const listingController = require("../controllers/listing-controller");
-
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 /**
  * Creating a new listing. Note a user can only have 1 active listing at a time.
  */
-router.post("/", authentication, listingController.listingCreateNew);
+router.post(
+  "/",
+  authentication,
+  upload.single("image"),
+  listingController.listingCreateNew
+);
 
 /**
  * Deleting a user's listing.

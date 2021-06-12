@@ -9,6 +9,14 @@ exports.listingCreateNew = async (req, res, next) => {
     // User Data from JWT
     const userData = req.userData;
 
+    // Files
+    let file = req.file;
+    console.log("Image File", req.file);
+
+    // Listing Data (e.g. address, location, ...)
+    let listingData = JSON.parse(req.body.data);
+    console.log("Listing Data", listingData);
+
     let exists = await listingService.getListingByOwnerId(userData._id);
 
     // Ensure that a user can have only one listing at a time
@@ -19,7 +27,7 @@ exports.listingCreateNew = async (req, res, next) => {
       });
     }
 
-    const listingData = req.body;
+    //const listingData = req.body;
 
     // Create a new listing
     let result = await listingService.createNewListing(
