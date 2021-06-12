@@ -1,8 +1,3 @@
-const mongoose = require("mongoose");
-const Listing = require("../models/listing");
-const User = require("../models/user");
-const listingRepository = require("../repositories/listing-repository");
-const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 
 /**

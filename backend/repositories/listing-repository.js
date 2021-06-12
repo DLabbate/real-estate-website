@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
 const Listing = require("../models/listing");
-const User = require("../models/user");
 
 /**
  * Queries a single listing via the ownerId

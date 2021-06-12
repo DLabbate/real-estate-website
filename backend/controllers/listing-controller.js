@@ -1,8 +1,4 @@
-const mongoose = require("mongoose");
-const Listing = require("../models/listing");
-const User = require("../models/user");
 const listingService = require("../services/listing-service");
-const userService = require("../services/user-service");
 const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
 
