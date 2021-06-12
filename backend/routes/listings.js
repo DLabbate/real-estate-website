@@ -3,7 +3,9 @@ const router = express.Router();
 const authentication = require("../middleware/authentication");
 const listingController = require("../controllers/listing-controller");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 /**
  * Creating a new listing. Note a user can only have 1 active listing at a time.
  */

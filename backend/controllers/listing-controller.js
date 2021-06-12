@@ -3,6 +3,13 @@ const Listing = require("../models/listing");
 const User = require("../models/user");
 const listingService = require("../services/listing-service");
 const userService = require("../services/user-service");
+const AWS = require("aws-sdk");
+const { v4: uuidv4 } = require("uuid");
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ID,
+  secretAccessKey: process.env.AWS_SECRET,
+});
 
 exports.listingCreateNew = async (req, res, next) => {
   try {
@@ -10,8 +17,20 @@ exports.listingCreateNew = async (req, res, next) => {
     const userData = req.userData;
 
     // Files
-    let file = req.file;
+    let image = req.file;
     console.log("Image File", req.file);
+
+    let fileName = image.originalname.split(".");
+    let fileType = fileName[fileName.length - 1];
+    console.log("File Type: ", fileType);
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `${uuidv4()}.${fileType}`,
+      Body: image.buffer,
+    };
+
+    s3.upload(params, (error, data) => {});
 
     // Listing Data (e.g. address, location, ...)
     let listingData = JSON.parse(req.body.data);
