@@ -15,11 +15,12 @@ exports.getListingByOwnerId = async (ownerId) => {
 /**
  * Creates a new listing
  */
-exports.createNewListing = async (ownerId, listingData) => {
+exports.createNewListing = async (ownerId, listingData, imageUrl) => {
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
     ...listingData,
     owner: ownerId,
+    imageUrl: imageUrl,
   });
 
   // Create a new listing

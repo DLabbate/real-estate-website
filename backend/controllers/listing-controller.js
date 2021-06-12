@@ -24,13 +24,14 @@ exports.listingCreateNew = async (req, res, next) => {
     let fileType = fileName[fileName.length - 1];
     console.log("File Type: ", fileType);
 
+    // Generate a unique Key --> e.g. "9d387198-5504-48da-bd51-09da33c58082.jpg"
+    let uniqueKey = `${uuidv4()}.${fileType}`;
+
     const params = {
       Bucket: process.env.AWS_BUCKET_NAME,
-      Key: `${uuidv4()}.${fileType}`,
+      Key: uniqueKey,
       Body: image.buffer,
     };
-
-    s3.upload(params, (error, data) => {});
 
     // Listing Data (e.g. address, location, ...)
     let listingData = JSON.parse(req.body.data);
@@ -46,12 +47,17 @@ exports.listingCreateNew = async (req, res, next) => {
       });
     }
 
-    //const listingData = req.body;
+    s3.upload(params, (error, data) => {
+      console.log("Image Data", data);
+    });
+
+    const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
 
     // Create a new listing
     let result = await listingService.createNewListing(
       userData._id,
-      listingData
+      listingData,
+      imageUrl
     );
     console.log("Listing created");
 
