@@ -1,8 +1,3 @@
-const mongoose = require("mongoose");
-const Listing = require("../models/listing");
-const User = require("../models/user");
-const listingRepository = require("../repositories/listing-repository");
-const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 
 /**
@@ -33,8 +28,7 @@ exports.formatNotesArray = async (noteArray) => {
  */
 exports.getNotesByUserId = async (userId) => {
   let notes = await noteRepository.getNotesByUserId(userId);
-  let i = 0;
-  return await this.formatNotesArray(notes);
+  return notes;
 };
 
 /**
@@ -42,5 +36,5 @@ exports.getNotesByUserId = async (userId) => {
  */
 exports.editNote = async (userId, noteId, newNoteData) => {
   let note = await noteRepository.editNote(userId, noteId, newNoteData);
-  return await this.formatNote(note);
+  return note;
 };

@@ -18,6 +18,7 @@ const listingSchema = mongoose.Schema({
     },
   },
   owner: { type: mongoose.Schema.ObjectId, ref: "User", required: true },
+  imageUrl: { type: String, required: true },
 });
 
 // Create geospatial index

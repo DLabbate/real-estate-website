@@ -4,6 +4,17 @@ const User = require("../models/user");
 const listingRepository = require("../repositories/listing-repository");
 const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
+const AWS = require("aws-sdk");
+
+/**
+ * Formats a listing document (for instance, removes unused fields such as "__v")
+ */
+exports.formatListingDocument = async (listingDocument) => {
+  let listingObject = listingDocument.toObject();
+  delete listingObject.__v;
+
+  return listingObject;
+};
 
 /**
  * Get a listing via owner ID
@@ -15,11 +26,12 @@ exports.getListingByOwnerId = async (ownerId) => {
 /**
  * Creates a new listing
  */
-exports.createNewListing = async (ownerId, listingData) => {
+exports.createNewListing = async (ownerId, listingData, imageUrl) => {
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
     ...listingData,
     owner: ownerId,
+    imageUrl: imageUrl,
   });
 
   // Create a new listing
@@ -28,13 +40,13 @@ exports.createNewListing = async (ownerId, listingData) => {
   // We should now update the reference in the User model
   await userRepository.updatePublishedListingReference(ownerId, newListing._id);
 
-  return newListing;
+  return await this.formatListingDocument(newListing);
 };
 
 /**
  * Deletes a listing
  */
-exports.deleteListing = async (listingId) => {
+exports.deleteListing = async (listingId, imageUrl) => {
   /*   
       When we delete a listing, we must do the following
       1) Delete the listing that belongs to the user making the request
@@ -64,6 +76,39 @@ exports.deleteListing = async (listingId) => {
     promiseRemoveFavoriteListingsRef,
     promiseDeleteNote,
   ]);
+
+  // The image file should also be removed from AWS S3
+  await this.deleteS3Object(imageUrl);
+};
+
+/**
+ * Deletes the listing image from AWS S3 Bucket
+ */
+exports.deleteS3Object = async (imageUrl) => {
+  const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET,
+  });
+
+  // Delete AWS S3 image object
+  const keyArray = imageUrl.split("/");
+
+  // Get the filename to delete
+  const uniqueKey = keyArray[keyArray.length - 1];
+
+  console.log("Attempting to delete S3 Object with name: ", uniqueKey);
+
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: uniqueKey,
+  };
+
+  s3.deleteObject(params, (error, data) => {
+    if (error) {
+      console.log("Error deleting S3 Object", error);
+    }
+    console.log(data);
+  });
 };
 
 /**

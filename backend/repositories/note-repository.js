@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 const Note = require("../models/note");
-const User = require("../models/user");
-const Listing = require("../models/listing");
 
 /**
  * Creates a single new note
@@ -20,14 +18,16 @@ exports.createNewNote = async (userId, listingId) => {
  * Finds a note with the matching user and listing
  */
 exports.findNote = async (userId, listingId) => {
-  return Note.findOne({ user: userId, listing: listingId }).exec();
+  return Note.findOne({ user: userId, listing: listingId })
+    .select("-__v")
+    .exec();
 };
 
 /**
  * Get a user's notes
  */
 exports.getNotesByUserId = async (userId) => {
-  return Note.find({ user: userId }).exec();
+  return Note.find({ user: userId }).select("-__v").exec();
 };
 
 /**
@@ -38,7 +38,9 @@ exports.editNote = async (userId, noteId, newNoteData) => {
     { _id: noteId, user: userId },
     { $set: { category: newNoteData.category } },
     { new: true }
-  ).exec();
+  )
+    .select("-__v")
+    .exec();
 };
 
 /**

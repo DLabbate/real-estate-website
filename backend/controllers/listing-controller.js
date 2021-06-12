@@ -1,13 +1,37 @@
-const mongoose = require("mongoose");
-const Listing = require("../models/listing");
-const User = require("../models/user");
 const listingService = require("../services/listing-service");
-const userService = require("../services/user-service");
+const AWS = require("aws-sdk");
+const { v4: uuidv4 } = require("uuid");
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ID,
+  secretAccessKey: process.env.AWS_SECRET,
+});
 
 exports.listingCreateNew = async (req, res, next) => {
   try {
     // User Data from JWT
     const userData = req.userData;
+
+    // Files
+    let image = req.file;
+    console.log("Image File", req.file);
+
+    let fileName = image.originalname.split(".");
+    let fileType = fileName[fileName.length - 1];
+    console.log("File Type: ", fileType);
+
+    // Generate a unique Key --> e.g. "9d387198-5504-48da-bd51-09da33c58082.jpg"
+    let uniqueKey = `${uuidv4()}.${fileType}`;
+
+    const params = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: uniqueKey,
+      Body: image.buffer,
+    };
+
+    // Listing Data (e.g. address, location, ...)
+    let listingData = JSON.parse(req.body.data);
+    console.log("Listing Data", listingData);
 
     let exists = await listingService.getListingByOwnerId(userData._id);
 
@@ -19,12 +43,17 @@ exports.listingCreateNew = async (req, res, next) => {
       });
     }
 
-    const listingData = req.body;
+    s3.upload(params, (error, data) => {
+      console.log("Image Data", data);
+    });
+
+    const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
 
     // Create a new listing
     let result = await listingService.createNewListing(
       userData._id,
-      listingData
+      listingData,
+      imageUrl
     );
     console.log("Listing created");
 
@@ -50,9 +79,10 @@ exports.listingDelete = async (req, res, next) => {
         .json({ error: { message: "User does not have a published listing" } });
     }
     const listingId = listing._id;
+    const imageUrl = listing.imageUrl;
     console.log("Preparing to delete listing: ", listing);
 
-    listingService.deleteListing(listingId);
+    listingService.deleteListing(listingId, imageUrl);
 
     console.log("Listing deleted");
     return res.status(200).json({
