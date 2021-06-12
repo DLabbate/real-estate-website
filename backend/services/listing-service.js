@@ -6,6 +6,9 @@ const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 const AWS = require("aws-sdk");
 
+/**
+ * Formats a listing document (for instance, removes unused fields such as "__v")
+ */
 exports.formatListingDocument = async (listingDocument) => {
   let listingObject = listingDocument.toObject();
   delete listingObject.__v;

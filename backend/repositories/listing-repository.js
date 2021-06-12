@@ -4,7 +4,7 @@ const Listing = require("../models/listing");
  * Queries a single listing via the ownerId
  */
 exports.getListingByOwnerId = async (ownerId) => {
-  return await Listing.findOne({ owner: ownerId });
+  return await Listing.findOne({ owner: ownerId }).select("-__v").exec();
 };
 
 /**
@@ -62,6 +62,7 @@ exports.searchListings = async (queryParams) => {
   console.log("Searching for listings with the following filter: ", filter);
   const listings = await Listing.find(filter)
     .populate("owner", "firstName lastName email phoneNumber")
+    .select("-__v")
     .exec();
   return listings;
 };
