@@ -6,6 +6,13 @@ const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 const AWS = require("aws-sdk");
 
+exports.formatListingDocument = async (listingDocument) => {
+  let listingObject = listingDocument.toObject();
+  delete listingObject.__v;
+
+  return listingObject;
+};
+
 /**
  * Get a listing via owner ID
  */
@@ -30,7 +37,7 @@ exports.createNewListing = async (ownerId, listingData, imageUrl) => {
   // We should now update the reference in the User model
   await userRepository.updatePublishedListingReference(ownerId, newListing._id);
 
-  return newListing;
+  return await this.formatListingDocument(newListing);
 };
 
 /**
