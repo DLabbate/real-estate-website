@@ -3,8 +3,8 @@ const AWS = require("aws-sdk");
 const { v4: uuidv4 } = require("uuid");
 
 const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_ID,
-  secretAccessKey: process.env.AWS_SECRET,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
 exports.listingCreateNew = async (req, res, next) => {
@@ -44,6 +44,10 @@ exports.listingCreateNew = async (req, res, next) => {
     }
 
     s3.upload(params, (error, data) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Failed to upload to AWS S3" });
+      }
       console.log("Image Data", data);
     });
 
