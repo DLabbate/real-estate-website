@@ -26,7 +26,7 @@ exports.editNote = async (req, res, next) => {
 
     const noteId = req.params.noteId;
 
-    let notes = await noteService.editNote(noteId, req.body);
+    let notes = await noteService.editNote(userData._id, noteId, req.body);
 
     return res.status(201).json(notes);
   } catch (err) {

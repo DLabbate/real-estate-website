@@ -28,9 +28,9 @@ exports.getNotesByUserId = async (userId) => {
   return Note.find({ user: userId }).exec();
 };
 
-exports.editNote = async (noteId, newNoteData) => {
+exports.editNote = async (userId, noteId, newNoteData) => {
   return await Note.findOneAndUpdate(
-    { _id: noteId },
+    { _id: noteId, user: userId },
     { $set: { category: newNoteData.category } },
     { new: true }
   ).exec();

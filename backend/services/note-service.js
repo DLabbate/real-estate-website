@@ -33,7 +33,7 @@ exports.getNotesByUserId = async (userId) => {
   return await this.formatNotesArray(notes);
 };
 
-exports.editNote = async (noteId, newNoteData) => {
-  let note = await noteRepository.editNote(noteId, newNoteData);
+exports.editNote = async (userId, noteId, newNoteData) => {
+  let note = await noteRepository.editNote(userId, noteId, newNoteData);
   return await this.formatNote(note);
 };
