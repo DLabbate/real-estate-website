@@ -86,8 +86,8 @@ exports.deleteListing = async (listingId, imageUrl) => {
  */
 exports.deleteS3Object = async (imageUrl) => {
   const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ID,
-    secretAccessKey: process.env.AWS_SECRET,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
 
   // Delete AWS S3 image object
@@ -106,6 +106,9 @@ exports.deleteS3Object = async (imageUrl) => {
   s3.deleteObject(params, (error, data) => {
     if (error) {
       console.log("Error deleting S3 Object", error);
+      return res
+        .status(500)
+        .json({ error: "Failed to delete image from AWS S3" });
     }
     console.log(data);
   });
