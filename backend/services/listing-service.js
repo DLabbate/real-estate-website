@@ -71,6 +71,9 @@ exports.deleteListing = async (listingId, imageUrl) => {
   await this.deleteS3Object(imageUrl);
 };
 
+/**
+ * Deletes the listing image from AWS S3 Bucket
+ */
 exports.deleteS3Object = async (imageUrl) => {
   const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ID,
