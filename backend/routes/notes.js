@@ -5,4 +5,6 @@ const noteController = require("../controllers/note-controller");
 
 router.get("/", authentication, noteController.getNotes);
 
+router.patch("/:noteId", authentication, noteController.editNote);
+
 module.exports = router;

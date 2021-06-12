@@ -18,3 +18,19 @@ exports.getNotes = async (req, res, next) => {
     return res.status(500).json({ error: err });
   }
 };
+
+exports.editNote = async (req, res, next) => {
+  try {
+    // User Data from JWT
+    const userData = req.userData;
+
+    const noteId = req.params.noteId;
+
+    let notes = await noteService.editNote(noteId, req.body);
+
+    return res.status(201).json(notes);
+  } catch (err) {
+    console.log("Error with editing user's notes", err);
+    return res.status(500).json({ error: err });
+  }
+};

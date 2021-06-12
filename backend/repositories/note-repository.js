@@ -27,3 +27,11 @@ exports.findNote = async (userId, listingId) => {
 exports.getNotesByUserId = async (userId) => {
   return Note.find({ user: userId }).exec();
 };
+
+exports.editNote = async (noteId, newNoteData) => {
+  return await Note.findOneAndUpdate(
+    { _id: noteId },
+    { $set: { category: newNoteData.category } },
+    { new: true }
+  ).exec();
+};
