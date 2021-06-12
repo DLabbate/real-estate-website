@@ -3,6 +3,7 @@ const Listing = require("../models/listing");
 const User = require("../models/user");
 const listingRepository = require("../repositories/listing-repository");
 const userRepository = require("../repositories/user-repository");
+const noteRepository = require("../repositories/note-repository");
 
 /**
  * Get a listing via owner ID
@@ -39,17 +40,30 @@ exports.deleteListing = async (listingId) => {
       1) Delete the listing that belongs to the user making the request
       2) Unset the "publishedListing" field in the user document (of the user that owns the listing)
       3) Delete this listingId from the favoritedListings array of all users
+      4) Delete all notes related to this listing
 
       */
 
   // #1) Delete the listing that belongs to the user making the request
-  await listingRepository.deleteListing(listingId);
+  const promiseDeleteListing = listingRepository.deleteListing(listingId);
 
   // #2) Unset the "publishedListing" ref in the user document (of the user that owns the listing)
-  await userRepository.removePublishedListingReference(listingId);
+  const promiseRemovePublisedListingRef =
+    userRepository.removePublishedListingReference(listingId);
 
   // #3) Delete this listingId from the favoritedListings array of all users
-  await userRepository.removeFavoriteListingFromAllUsers(listingId);
+  const promiseRemoveFavoriteListingsRef =
+    userRepository.removeFavoriteListingFromAllUsers(listingId);
+
+  // #4) Delete all notes related to this listing
+  const promiseDeleteNote = noteRepository.deleteNotesByListingId(listingId);
+
+  await Promise.all([
+    promiseDeleteListing,
+    promiseRemovePublisedListingRef,
+    promiseRemoveFavoriteListingsRef,
+    promiseDeleteNote,
+  ]);
 };
 
 /**

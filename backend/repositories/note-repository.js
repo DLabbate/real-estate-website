@@ -13,10 +13,6 @@ exports.createNewNote = async (userId, listingId) => {
   return await note.save();
 };
 
-exports.deleteNote = async (userId, listingId) => {
-  return await Note.deleteOne({ user: userId, listing: listingId }).exec();
-};
-
 /**
  * Finds a note with the matching user and listing
  */
@@ -34,4 +30,18 @@ exports.editNote = async (userId, noteId, newNoteData) => {
     { $set: { category: newNoteData.category } },
     { new: true }
   ).exec();
+};
+
+/**
+ * Deletes a single note where the "user" and "listingId" fields match the corresponding arguments
+ */
+exports.deleteNote = async (userId, listingId) => {
+  return await Note.deleteOne({ user: userId, listing: listingId }).exec();
+};
+
+/**
+ * Deletes all notes where the "listingId" matches
+ */
+exports.deleteNotesByListingId = async (listingId) => {
+  return await Note.deleteMany({ listing: listingId }).exec();
 };
