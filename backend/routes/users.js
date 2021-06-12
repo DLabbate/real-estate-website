@@ -19,4 +19,22 @@ router.post("/login", userController.userLogin);
  */
 router.patch("/edit", authentication, userController.userEdit);
 
+/**
+ * Adds a single listing to the user's "favoriteListings" array
+ */
+router.patch(
+  "/favorites/:listingId",
+  authentication,
+  userController.addFavoriteListing
+);
+
+/**
+ * Deletes a single listing from the user's "favoriteListings" array
+ */
+router.delete(
+  "/favorites/:listingId",
+  authentication,
+  userController.removeFavoriteListing
+);
+
 module.exports = router;
