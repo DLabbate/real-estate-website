@@ -4,6 +4,7 @@ const User = require("../models/user");
 const listingRepository = require("../repositories/listing-repository");
 const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
+const AWS = require("aws-sdk");
 
 /**
  * Get a listing via owner ID
@@ -35,7 +36,7 @@ exports.createNewListing = async (ownerId, listingData, imageUrl) => {
 /**
  * Deletes a listing
  */
-exports.deleteListing = async (listingId) => {
+exports.deleteListing = async (listingId, imageUrl) => {
   /*   
       When we delete a listing, we must do the following
       1) Delete the listing that belongs to the user making the request
@@ -65,6 +66,36 @@ exports.deleteListing = async (listingId) => {
     promiseRemoveFavoriteListingsRef,
     promiseDeleteNote,
   ]);
+
+  // The image file should also be removed from AWS S3
+  await this.deleteS3Object(imageUrl);
+};
+
+exports.deleteS3Object = async (imageUrl) => {
+  const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET,
+  });
+
+  // Delete AWS S3 image object
+  const keyArray = imageUrl.split("/");
+
+  // Get the filename to delete
+  const uniqueKey = keyArray[keyArray.length - 1];
+
+  console.log("Attempting to delete S3 Object with name: ", uniqueKey);
+
+  const params = {
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: uniqueKey,
+  };
+
+  s3.deleteObject(params, (error, data) => {
+    if (error) {
+      console.log("Error deleting S3 Object", error);
+    }
+    console.log(data);
+  });
 };
 
 /**

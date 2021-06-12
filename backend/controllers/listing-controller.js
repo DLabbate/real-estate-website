@@ -83,9 +83,10 @@ exports.listingDelete = async (req, res, next) => {
         .json({ error: { message: "User does not have a published listing" } });
     }
     const listingId = listing._id;
+    const imageUrl = listing.imageUrl;
     console.log("Preparing to delete listing: ", listing);
 
-    listingService.deleteListing(listingId);
+    listingService.deleteListing(listingId, imageUrl);
 
     console.log("Listing deleted");
     return res.status(200).json({
