@@ -5,6 +5,9 @@ const listingService = require("../services/listing-service");
 const userService = require("../services/user-service");
 const noteService = require("../services/note-service");
 
+/**
+ * Get a user's notes
+ */
 exports.getNotes = async (req, res, next) => {
   try {
     // User Data from JWT
@@ -19,6 +22,9 @@ exports.getNotes = async (req, res, next) => {
   }
 };
 
+/**
+ * Edit a user's note (e.g. change its category)
+ */
 exports.editNote = async (req, res, next) => {
   try {
     // User Data from JWT

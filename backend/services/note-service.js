@@ -5,6 +5,9 @@ const listingRepository = require("../repositories/listing-repository");
 const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 
+/**
+ * Formats a mongoose document
+ */
 exports.formatNote = async (noteDocument) => {
   noteObject = noteDocument.toObject();
   delete noteObject.__v;
@@ -12,6 +15,9 @@ exports.formatNote = async (noteDocument) => {
   return noteObject;
 };
 
+/**
+ * Formats an array of mongoose documents
+ */
 exports.formatNotesArray = async (noteArray) => {
   let formattedArray = [];
   for (const index in noteArray) {
@@ -22,17 +28,18 @@ exports.formatNotesArray = async (noteArray) => {
   return formattedArray;
 };
 
-// exports.createNewNote = async (userId, listingId) => {
-//   let note = await noteRepository.createNewNote(userId, listingId);
-//   return this.formatNote(note);
-// };
-
+/**
+ * Get a user's notes
+ */
 exports.getNotesByUserId = async (userId) => {
   let notes = await noteRepository.getNotesByUserId(userId);
   let i = 0;
   return await this.formatNotesArray(notes);
 };
 
+/**
+ * Edit a user's note (e.g. change its category)
+ */
 exports.editNote = async (userId, noteId, newNoteData) => {
   let note = await noteRepository.editNote(userId, noteId, newNoteData);
   return await this.formatNote(note);

@@ -3,6 +3,9 @@ const Note = require("../models/note");
 const User = require("../models/user");
 const Listing = require("../models/listing");
 
+/**
+ * Creates a single new note
+ */
 exports.createNewNote = async (userId, listingId) => {
   const note = new Note({
     _id: new mongoose.Types.ObjectId(),
@@ -20,10 +23,16 @@ exports.findNote = async (userId, listingId) => {
   return Note.findOne({ user: userId, listing: listingId }).exec();
 };
 
+/**
+ * Get a user's notes
+ */
 exports.getNotesByUserId = async (userId) => {
   return Note.find({ user: userId }).exec();
 };
 
+/**
+ * Edit a user's note (e.g. change its category)
+ */
 exports.editNote = async (userId, noteId, newNoteData) => {
   return await Note.findOneAndUpdate(
     { _id: noteId, user: userId },
