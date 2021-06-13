@@ -3,24 +3,17 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./SignupForm.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const SignupForm = () => {
+  let history = useHistory();
+
   const initalValues = {
     firstName: "",
     lastName: "",
     phoneNumber: "",
     email: "",
     password: "",
-  };
-  const handleValidation = (values) => {
-    const errors = {};
-    if (!values.email) {
-      errors.email = "Required";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-      errors.email = "Invalid email address";
-    }
-    return errors;
   };
 
   const validate = Yup.object({
@@ -43,27 +36,20 @@ const SignupForm = () => {
       .required("Password is required"),
   });
 
-  return (
-    // <Formik
-    //   initialValues={{
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //   }}
-    // ></Formik>
+  const onSubmit = (values, { setSubmitting }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+      history.push("/login");
+    }, 400);
+  };
 
+  return (
     <div className="form">
       <Formik
         initialValues={initalValues}
         validationSchema={validate}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
-        }}
+        onSubmit={onSubmit}
       >
         {({ isSubmitting }) => (
           <Form className="form__container">
