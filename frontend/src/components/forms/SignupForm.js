@@ -25,7 +25,7 @@ const SignupForm = () => {
 
   const validate = Yup.object({
     firstName: Yup.string()
-      .max(15, "Must be 15 characters or less")
+      .max(20, "Must be 15 characters or less")
       .required("First Name is required"),
     lastName: Yup.string()
       .max(20, "Must be 20 characters or less")
@@ -35,9 +35,11 @@ const SignupForm = () => {
       .required("Phone Number is required"),
     email: Yup.string()
       .email("Invalid email addresss")
+      .max(40, "Must be 20 characters or less")
       .required("Email is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
+      .max(20, "Must be 20 characters or less")
       .required("Password is required"),
   });
 
@@ -70,6 +72,7 @@ const SignupForm = () => {
               name="firstName"
               className="form__field"
               placeholder="First Name"
+              maxLength={20}
             />
             <ErrorMessage
               name="firstName"
@@ -81,6 +84,7 @@ const SignupForm = () => {
               name="lastName"
               className="form__field"
               placeholder="Last Name"
+              maxLength={20}
             />
             <ErrorMessage
               name="lastName"
@@ -92,6 +96,7 @@ const SignupForm = () => {
               name="phoneNumber"
               className="form__field"
               placeholder="Phone Number"
+              maxLength={20}
             />
             <ErrorMessage
               name="phoneNumber"
@@ -103,6 +108,7 @@ const SignupForm = () => {
               name="email"
               className="form__field"
               placeholder="Email"
+              maxLength={40}
             />
             <ErrorMessage
               name="email"
@@ -114,16 +120,13 @@ const SignupForm = () => {
               name="password"
               className="form__field"
               placeholder="Password"
+              maxLength={20}
             />
             <ErrorMessage
               name="password"
               component="div"
               className="form__error"
             />
-            {/* <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button> */}
-
             <Button
               text={"Signup"}
               width={"90%"}
