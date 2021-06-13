@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./SignupForm.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
+import { FiCheckCircle } from "react-icons/fi";
 
 const SignupForm = () => {
+  // This state keeps track of if the user has submitted a request to the REST API
+  const [submitted, setSubmitted] = useState(false);
+
+  // This state keeps track of whether or not the REST API returns a successful response
+  const [success, setSuccess] = useState(false);
+
   let history = useHistory();
 
   const initalValues = {
@@ -37,98 +44,108 @@ const SignupForm = () => {
   });
 
   const onSubmit = (values, { setSubmitting }) => {
+    setSubmitted(true);
+    setSuccess(true);
     setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
+      //alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
+
       history.push("/login");
-    }, 400);
+    }, 2000);
   };
 
   return (
-    <div className="form">
-      <Formik
-        initialValues={initalValues}
-        validationSchema={validate}
-        onSubmit={onSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form className="form__container">
-            <Field
-              type="text"
-              name="firstName"
-              className="form__field"
-              placeholder="First Name"
-              maxLength={20}
-            />
-            <ErrorMessage
-              name="firstName"
-              component="div"
-              className="form__error"
-            />
-            <Field
-              type="text"
-              name="lastName"
-              className="form__field"
-              placeholder="Last Name"
-              maxLength={20}
-            />
-            <ErrorMessage
-              name="lastName"
-              component="div"
-              className="form__error"
-            />
-            <Field
-              type="text"
-              name="phoneNumber"
-              className="form__field"
-              placeholder="Phone Number"
-              maxLength={20}
-            />
-            <ErrorMessage
-              name="phoneNumber"
-              component="div"
-              className="form__error"
-            />
-            <Field
-              type="email"
-              name="email"
-              className="form__field"
-              placeholder="Email"
-              maxLength={40}
-            />
-            <ErrorMessage
-              name="email"
-              component="div"
-              className="form__error"
-            />
-            <Field
-              type="password"
-              name="password"
-              className="form__field"
-              placeholder="Password"
-              maxLength={20}
-            />
-            <ErrorMessage
-              name="password"
-              component="div"
-              className="form__error"
-            />
-            <Button
-              text={"Signup"}
-              width={"90%"}
-              margin={"10px"}
-              modifiers={"btn--text-white btn--background-black"}
-              buttonHandler={() => {}}
-            />
-            <Link className="form__link" to={"/login"}>
-              <p className="form__alternative">
-                {"Already have an account? Login."}
-              </p>
-            </Link>
-          </Form>
-        )}
-      </Formik>
-    </div>
+    <>
+      <div className="form">
+        <Formik
+          initialValues={initalValues}
+          validationSchema={validate}
+          onSubmit={onSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="form__container">
+              <Field
+                type="text"
+                name="firstName"
+                className="form__field"
+                placeholder="First Name"
+                maxLength={20}
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                className="form__error"
+              />
+              <Field
+                type="text"
+                name="lastName"
+                className="form__field"
+                placeholder="Last Name"
+                maxLength={20}
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                className="form__error"
+              />
+              <Field
+                type="text"
+                name="phoneNumber"
+                className="form__field"
+                placeholder="Phone Number"
+                maxLength={20}
+              />
+              <ErrorMessage
+                name="phoneNumber"
+                component="div"
+                className="form__error"
+              />
+              <Field
+                type="email"
+                name="email"
+                className="form__field"
+                placeholder="Email"
+                maxLength={40}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="form__error"
+              />
+              <Field
+                type="password"
+                name="password"
+                className="form__field"
+                placeholder="Password"
+                maxLength={20}
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="form__error"
+              />
+              <Button
+                text={"Signup"}
+                width={"90%"}
+                margin={"10px"}
+                modifiers={"btn--text-white btn--background-black"}
+                buttonHandler={() => {}}
+              />
+              <Link className="form__link" to={"/login"}>
+                <p className="form__alternative">
+                  {"Already have an account? Login."}
+                </p>
+              </Link>
+            </Form>
+          )}
+        </Formik>
+      </div>
+
+      <div className={submitted && success ? "result" : "result result--none"}>
+        <FiCheckCircle size={35} className={"icon-success"} />
+        <p>Signup success!</p>
+      </div>
+    </>
   );
 };
 
