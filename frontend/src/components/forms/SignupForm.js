@@ -4,7 +4,7 @@ import "./SignupForm.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
-import { FiCheckCircle } from "react-icons/fi";
+import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 const SignupForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
@@ -141,9 +141,26 @@ const SignupForm = () => {
         </Formik>
       </div>
 
-      <div className={submitted && success ? "result" : "result result--none"}>
+      <div
+        className={
+          submitted && success
+            ? "result-success"
+            : "result-success result-success--hidden"
+        }
+      >
         <FiCheckCircle size={35} className={"icon-success"} />
         <p>Signup success!</p>
+      </div>
+
+      <div
+        className={
+          submitted && !success
+            ? "result-error"
+            : "result-error result-error--hidden"
+        }
+      >
+        <FiXCircle size={35} className={"icon-error"} />
+        <p>Error: Email already taken!</p>
       </div>
     </>
   );

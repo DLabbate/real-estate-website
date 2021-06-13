@@ -47,7 +47,7 @@
   margin-left: 32px;
 }
 
-.result {
+.result-success {
   z-index: 1;
   background-color: lightgreen;
   /* width: 300px; */
@@ -60,7 +60,7 @@
   transition: all 0.5s ease;
 }
 
-.result--none {
+.result-success--hidden {
   visibility: hidden;
   transition: all 0.5s ease;
   opacity: 0;
@@ -68,6 +68,30 @@
 
 .icon-success {
   color: green;
+  margin-right: 5px;
+}
+
+.result-error {
+  z-index: 1;
+  background-color: lightpink;
+  /* width: 300px; */
+  border-radius: 100px;
+  opacity: 0.75;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.result-error--hidden {
+  visibility: hidden;
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.icon-error {
+  color: lightcoral;
   margin-right: 5px;
 }
 
