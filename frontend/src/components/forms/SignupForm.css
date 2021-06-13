@@ -43,6 +43,8 @@
 .form__error {
   color: #ed4337;
   /* font-weight: bold; */
+  align-self: flex-start;
+  margin-left: 32px;
 }
 
 @media screen and (max-width: calc(500px / 0.9)) {

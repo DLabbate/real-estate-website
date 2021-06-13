@@ -41,7 +41,7 @@ const Form = ({
         text={buttonText}
         width={"90%"}
         margin={"10px"}
-        modifiers={"btn--solid btn--white"}
+        modifiers={"btn--text-white btn--background-black"}
         buttonHandler={onSubmit}
       />
       {/* </Link> */}
