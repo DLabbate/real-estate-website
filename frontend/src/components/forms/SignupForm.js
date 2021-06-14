@@ -54,6 +54,31 @@ const SignupForm = () => {
     }, 2000);
   };
 
+  const renderResultMessage = () => {
+    if (submitted && success) {
+      return (
+        <div className={"result result--background-lightgreen"}>
+          <FiCheckCircle size={35} className={"icon icon--green"} />
+          <p>Signup success!</p>
+        </div>
+      );
+    } else if (submitted && !success) {
+      return (
+        <div className={"result result--background-lightpink"}>
+          <FiXCircle size={35} className={"icon icon--pink"} />
+          <p>Error: Email already taken!</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className={"result result--hidden"}>
+          <FiXCircle size={35} className={"icon"} />
+          <p>Error: Email already taken!</p>
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       <div className="form">
@@ -140,28 +165,7 @@ const SignupForm = () => {
           )}
         </Formik>
       </div>
-
-      <div
-        className={
-          submitted && success
-            ? "result-success"
-            : "result-success result-success--hidden"
-        }
-      >
-        <FiCheckCircle size={35} className={"icon-success"} />
-        <p>Signup success!</p>
-      </div>
-
-      <div
-        className={
-          submitted && !success
-            ? "result-error"
-            : "result-error result-error--hidden"
-        }
-      >
-        <FiXCircle size={35} className={"icon-error"} />
-        <p>Error: Email already taken!</p>
-      </div>
+      {renderResultMessage()}
     </>
   );
 };

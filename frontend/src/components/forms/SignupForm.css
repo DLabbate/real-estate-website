@@ -47,52 +47,43 @@
   margin-left: 32px;
 }
 
-.result-success {
+.result {
   z-index: 1;
+  /* width: 300px; */
+  border-radius: 100px;
+  opacity: 0.75;
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+  opacity: 1;
+}
+
+.result--background-lightgreen {
   background-color: lightgreen;
-  /* width: 300px; */
-  border-radius: 100px;
-  opacity: 0.75;
-  display: flex;
-  padding: 10px;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease;
 }
 
-.result-success--hidden {
-  visibility: hidden;
-  transition: all 0.5s ease;
-  opacity: 0;
-}
-
-.icon-success {
-  color: green;
-  margin-right: 5px;
-}
-
-.result-error {
-  z-index: 1;
+.result--background-lightpink {
   background-color: lightpink;
-  /* width: 300px; */
-  border-radius: 100px;
-  opacity: 0.75;
-  display: flex;
-  padding: 10px;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease;
 }
 
-.result-error--hidden {
+.result--hidden {
   visibility: hidden;
   transition: all 0.5s ease;
   opacity: 0;
 }
 
-.icon-error {
-  color: lightcoral;
+.icon {
   margin-right: 5px;
+}
+
+.icon--green {
+  color: green;
+}
+
+.icon--pink {
+  color: lightcoral;
 }
 
 @media screen and (max-width: calc(500px / 0.9)) {
