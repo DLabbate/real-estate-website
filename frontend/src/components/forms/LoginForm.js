@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 
-const SignupForm = () => {
+const LoginForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
   const [submitted, setSubmitted] = useState(false);
 
@@ -16,23 +16,11 @@ const SignupForm = () => {
   let history = useHistory();
 
   const initalValues = {
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
     email: "",
     password: "",
   };
 
   const validate = Yup.object({
-    firstName: Yup.string()
-      .max(20, "Must be 15 characters or less")
-      .required("First Name is required"),
-    lastName: Yup.string()
-      .max(20, "Must be 20 characters or less")
-      .required("Last Name is required"),
-    phoneNumber: Yup.string()
-      .max(20, "Must be 20 characters or less")
-      .required("Phone Number is required"),
     email: Yup.string()
       .email("Invalid email addresss")
       .max(30, "Must be 30 characters or less")
@@ -45,9 +33,9 @@ const SignupForm = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitted(true);
-    setSuccess(true);
+    setSuccess(false);
+
     setTimeout(() => {
-      //alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
 
       history.push("/login");
@@ -55,14 +43,7 @@ const SignupForm = () => {
   };
 
   const renderResultMessage = () => {
-    if (submitted && success) {
-      return (
-        <div className={"result result--background-lightgreen"}>
-          <FiCheckCircle size={35} className={"icon icon--green"} />
-          <p>Signup success!</p>
-        </div>
-      );
-    } else if (submitted && !success) {
+    if (submitted && !success) {
       return (
         <div className={"result result--background-lightpink"}>
           <FiXCircle size={35} className={"icon icon--pink"} />
@@ -90,42 +71,6 @@ const SignupForm = () => {
           {({ isSubmitting }) => (
             <Form className="form__container">
               <Field
-                type="text"
-                name="firstName"
-                className="form__field"
-                placeholder="First Name"
-                maxLength={20}
-              />
-              <ErrorMessage
-                name="firstName"
-                component="div"
-                className="form__error"
-              />
-              <Field
-                type="text"
-                name="lastName"
-                className="form__field"
-                placeholder="Last Name"
-                maxLength={20}
-              />
-              <ErrorMessage
-                name="lastName"
-                component="div"
-                className="form__error"
-              />
-              <Field
-                type="text"
-                name="phoneNumber"
-                className="form__field"
-                placeholder="Phone Number"
-                maxLength={20}
-              />
-              <ErrorMessage
-                name="phoneNumber"
-                component="div"
-                className="form__error"
-              />
-              <Field
                 type="email"
                 name="email"
                 className="form__field"
@@ -150,14 +95,14 @@ const SignupForm = () => {
                 className="form__error"
               />
               <Button
-                text={"Signup"}
+                text={"Login"}
                 width={"90%"}
                 margin={"10px"}
                 modifiers={"btn--text-white btn--background-black"}
               />
-              <Link className="form__link" to={"/login"}>
+              <Link className="form__link" to={"/signup"}>
                 <p className="form__alternative">
-                  {"Already have an account? Login."}
+                  {"Don't have an account? Login."}
                 </p>
               </Link>
             </Form>
@@ -169,4 +114,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default LoginForm;
