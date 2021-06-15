@@ -102,7 +102,7 @@ const LoginForm = () => {
               />
               <Link className="form__link" to={"/signup"}>
                 <p className="form__alternative">
-                  {"Don't have an account? Login."}
+                  {"Don't have an account? Signup."}
                 </p>
               </Link>
             </Form>

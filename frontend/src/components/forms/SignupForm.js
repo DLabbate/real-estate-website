@@ -9,7 +9,7 @@ import * as userApi from "../../utils/api/user-api";
 
 const SignupForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
-  const [submitted, setSubmitted] = useState(false);
+  const [sentRequest, setSentRequest] = useState(false);
 
   // This state keeps track of whether or not the REST API returns a successful response
   const [success, setSuccess] = useState(false);
@@ -61,31 +61,32 @@ const SignupForm = () => {
       setSuccess(false);
       console.log("Signup failed", err);
     } finally {
-      setSubmitted(true);
+      setSentRequest(true);
     }
   };
 
   const onSubmit = (values, { setSubmitting }) => {
+    setSubmitting(false);
     signup(values);
 
-    //setSuccess(true);
-    setTimeout(() => {
-      //alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
+    // //setSuccess(true);
+    // setTimeout(() => {
+    //   //alert(JSON.stringify(values, null, 2));
+    //   setSubmitting(false);
 
-      //history.push("/login");
-    }, 2000);
+    //   //history.push("/login");
+    // }, 2000);
   };
 
   const renderResultMessage = () => {
-    if (submitted && success) {
+    if (sentRequest && success) {
       return (
         <div className={"result result--background-lightgreen"}>
           <FiCheckCircle size={35} className={"icon icon--green"} />
           <p>Signup success!</p>
         </div>
       );
-    } else if (submitted && !success) {
+    } else if (sentRequest && !success) {
       return (
         <div className={"result result--background-lightpink"}>
           <FiXCircle size={35} className={"icon icon--pink"} />
