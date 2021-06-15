@@ -5,6 +5,7 @@ import Button from "../shared/Button";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import * as userApi from "../../utils/api/user-api";
 
 const SignupForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
@@ -43,14 +44,36 @@ const SignupForm = () => {
       .required("Password is required"),
   });
 
+  const signup = async (values) => {
+    try {
+      const response = await userApi.signup(values);
+      console.log("Signup success", response);
+
+      if (response.ok) {
+        setSuccess(true);
+        setTimeout(() => {
+          history.push("/login");
+        }, 2000);
+      } else {
+        setSuccess(false);
+      }
+    } catch (err) {
+      setSuccess(false);
+      console.log("Signup failed", err);
+    } finally {
+      setSubmitted(true);
+    }
+  };
+
   const onSubmit = (values, { setSubmitting }) => {
-    setSubmitted(true);
-    setSuccess(true);
+    signup(values);
+
+    //setSuccess(true);
     setTimeout(() => {
       //alert(JSON.stringify(values, null, 2));
       setSubmitting(false);
 
-      history.push("/login");
+      //history.push("/login");
     }, 2000);
   };
 

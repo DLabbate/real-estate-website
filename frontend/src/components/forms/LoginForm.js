@@ -5,6 +5,7 @@ import Button from "../shared/Button";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import * as userApi from "../../utils/api/user-api";
 
 const LoginForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
@@ -33,7 +34,6 @@ const LoginForm = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitted(true);
-    setSuccess(false);
 
     setTimeout(() => {
       setSubmitting(false);

@@ -19,6 +19,9 @@ const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
 const noteRoutes = require("./routes/notes");
 
+// CORS
+var cors = require("cors");
+
 // Environment variables
 require("dotenv").config();
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
@@ -34,6 +37,9 @@ mongoose.Promise = global.Promise;
 
 // Use JSON
 app.use(express.json());
+
+// Use cors
+app.use(cors());
 
 app.get("/", (req, res, next) => {
   res.status(200).json({});
