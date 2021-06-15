@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./Form.css";
 import Button from "../shared/Button";
@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import * as userApi from "../../utils/api/user-api";
+import { UserContext } from "../../context/UserContext";
 
 const LoginForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
@@ -15,6 +16,8 @@ const LoginForm = () => {
   const [success, setSuccess] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { user, setUser } = useContext(UserContext);
 
   let history = useHistory();
 
@@ -45,9 +48,12 @@ const LoginForm = () => {
         console.log("Login success");
 
         setSuccess(true);
+        setUser(responseJson);
 
-        // After 2 seconds, navigate to home screen
-        history.push("/home");
+        // // After 0.5 seconds, navigate to home screen
+        // setTimeout(() => {
+        //   history.push("/home");
+        // }, 500);
       } else {
         console.log("Login failed");
         setErrorMessage(responseJson.error.message);
@@ -84,6 +90,13 @@ const LoginForm = () => {
       );
     }
   };
+
+  useEffect(() => {
+    // Check if the login was successful and we received a JWT token
+    if (success && Object.keys(user).includes("token")) {
+      history.push("/home");
+    }
+  });
 
   return (
     <>
