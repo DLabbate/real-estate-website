@@ -46,14 +46,8 @@ const LoginForm = () => {
       // Check if the status code is 200-299
       if (response.ok) {
         console.log("Login success");
-
         setSuccess(true);
         setUser(responseJson);
-
-        // // After 0.5 seconds, navigate to home screen
-        // setTimeout(() => {
-        //   history.push("/home");
-        // }, 500);
       } else {
         console.log("Login failed");
         setErrorMessage(responseJson.error.message);
