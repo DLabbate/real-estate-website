@@ -38,21 +38,25 @@ const LoginForm = () => {
     try {
       const response = await userApi.login(values);
       const responseJson = await response.json();
-      //console.log(responseJson);
+      console.log("REST API Response: ", responseJson);
 
+      // Check if the status code is 200-299
       if (response.ok) {
-        //console.log("Login success");
+        console.log("Login success");
+
         setSuccess(true);
+
         // After 2 seconds, navigate to home screen
         history.push("/home");
       } else {
+        console.log("Login failed");
         setErrorMessage(responseJson.error.message);
         setSuccess(false);
       }
     } catch (err) {
+      console.log("Login failed");
       setSuccess(false);
       setErrorMessage(err);
-      //console.log("Login failed", err);
     } finally {
       setSentRequest(true);
     }

@@ -50,23 +50,27 @@ const SignupForm = () => {
     try {
       const response = await userApi.signup(values);
       const responseJson = await response.json();
-      //console.log(responseJson);
+      console.log("REST API Response: ", responseJson);
 
+      // Check if the status code is 200-299
       if (response.ok) {
-        //console.log("Signup success", response);
+        console.log("Signup success");
+
         setSuccess(true);
+
         // After 2 seconds, navigate to login screen
         setTimeout(() => {
           history.push("/login");
         }, 2000);
       } else {
+        console.log("Signup failed");
         setErrorMessage(responseJson.error.message);
         setSuccess(false);
       }
     } catch (err) {
+      console.log("Signup failed");
       setSuccess(false);
       setErrorMessage(err);
-      //console.log("Signup failed", err);
     } finally {
       setSentRequest(true);
     }
