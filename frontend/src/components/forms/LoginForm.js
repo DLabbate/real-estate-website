@@ -9,10 +9,12 @@ import * as userApi from "../../utils/api/user-api";
 
 const LoginForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
-  const [submitted, setSubmitted] = useState(false);
+  const [sentRequest, setSentRequest] = useState(false);
 
   // This state keeps track of whether or not the REST API returns a successful response
   const [success, setSuccess] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   let history = useHistory();
 
@@ -32,29 +34,48 @@ const LoginForm = () => {
       .required("Password is required"),
   });
 
+  const login = async (values) => {
+    try {
+      const response = await userApi.login(values);
+      const responseJson = await response.json();
+      //console.log(responseJson);
+
+      if (response.ok) {
+        //console.log("Login success");
+        setSuccess(true);
+        // After 2 seconds, navigate to home screen
+        history.push("/home");
+      } else {
+        setErrorMessage(responseJson.error.message);
+        setSuccess(false);
+      }
+    } catch (err) {
+      setSuccess(false);
+      setErrorMessage(err);
+      //console.log("Login failed", err);
+    } finally {
+      setSentRequest(true);
+    }
+  };
+
   const onSubmit = (values, { setSubmitting }) => {
-    setSubmitted(true);
-
-    setTimeout(() => {
-      setSubmitting(false);
-
-      history.push("/login");
-    }, 2000);
+    setSubmitting(false);
+    login(values);
   };
 
   const renderResultMessage = () => {
-    if (submitted && !success) {
+    if (sentRequest && !success) {
       return (
         <div className={"result result--background-lightpink"}>
           <FiXCircle size={35} className={"icon icon--pink"} />
-          <p>Error: Email already taken!</p>
+          <p>{errorMessage}</p>
         </div>
       );
     } else {
       return (
         <div className={"result result--hidden"}>
           <FiXCircle size={35} className={"icon"} />
-          <p>Error: Email already taken!</p>
+          <p>{errorMessage}</p>
         </div>
       );
     }

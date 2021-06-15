@@ -50,10 +50,10 @@ const SignupForm = () => {
     try {
       const response = await userApi.signup(values);
       const responseJson = await response.json();
-      console.log(responseJson);
+      //console.log(responseJson);
 
       if (response.ok) {
-        console.log("Signup success", response);
+        //console.log("Signup success", response);
         setSuccess(true);
         // After 2 seconds, navigate to login screen
         setTimeout(() => {
@@ -66,7 +66,7 @@ const SignupForm = () => {
     } catch (err) {
       setSuccess(false);
       setErrorMessage(err);
-      console.log("Signup failed", err);
+      //console.log("Signup failed", err);
     } finally {
       setSentRequest(true);
     }
@@ -96,7 +96,7 @@ const SignupForm = () => {
       return (
         <div className={"result result--hidden"}>
           <FiXCircle size={35} className={"icon"} />
-          <p>Error: Email already taken!</p>
+          <p>{errorMessage}</p>
         </div>
       );
     }
