@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import * as userApi from "../../utils/api/user-api";
-import { UserContext } from "../../context/UserContext";
 
 const LoginForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
@@ -16,8 +15,6 @@ const LoginForm = () => {
   const [success, setSuccess] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
-
-  const { user, setUser } = useContext(UserContext);
 
   let history = useHistory();
 
@@ -47,8 +44,8 @@ const LoginForm = () => {
       if (response.ok) {
         console.log("Login success");
         setSuccess(true);
-        setUser(responseJson);
         localStorage.setItem("user", JSON.stringify(responseJson));
+        history.push("/home");
       } else {
         console.log("Login failed");
         setErrorMessage(responseJson.error.message);
@@ -85,13 +82,6 @@ const LoginForm = () => {
       );
     }
   };
-
-  useEffect(() => {
-    // Check if the login was successful and we received a JWT token
-    if (success && Object.keys(user).includes("token")) {
-      history.push("/home");
-    }
-  });
 
   return (
     <>
