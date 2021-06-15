@@ -25,6 +25,10 @@ function App() {
             <Navbar />
             <h1>Notes</h1>
           </Route>
+          <Route path="/profile">
+            <Navbar />
+            <h1>Profile</h1>
+          </Route>
           <Route path="/login">
             <Login />
           </Route>

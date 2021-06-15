@@ -6,6 +6,7 @@ const navbarLinks = [
   { url: "/home", title: "Home" },
   { url: "/browse", title: "Browse" },
   { url: "/notes", title: "Edit Notes" },
+  { url: "/profile", title: "Profile" },
 ];
 
 const Navbar = ({ transparentEffect }) => {
