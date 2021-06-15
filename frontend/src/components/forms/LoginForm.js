@@ -48,6 +48,7 @@ const LoginForm = () => {
         console.log("Login success");
         setSuccess(true);
         setUser(responseJson);
+        localStorage.setItem("user", JSON.stringify(responseJson));
       } else {
         console.log("Login failed");
         setErrorMessage(responseJson.error.message);
