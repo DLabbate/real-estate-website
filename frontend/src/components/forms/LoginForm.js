@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./Form.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
-import { FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FiXCircle } from "react-icons/fi";
 import * as userApi from "../../utils/api/user-api";
 
 const LoginForm = () => {

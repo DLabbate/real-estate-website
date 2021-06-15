@@ -1,6 +1,5 @@
 import React from "react";
 import "./Browse.css";
-import { FiHeart } from "react-icons/fi";
 import Listing from "../shared/Listing";
 import { mockProperties } from "../../constants/mock.js";
 

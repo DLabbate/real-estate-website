@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from "react";
-import { UserContext } from "../../context/UserContext";
+import React from "react";
 import Button from "../shared/Button";
 import "./Home.css";
 

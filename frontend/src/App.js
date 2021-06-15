@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 import Home from "./components/pages/Home";
@@ -12,7 +11,6 @@ import Browse from "./components/pages/Browse";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Profile from "./components/pages/Profile";
-import { UserContext } from "./context/UserContext";
 
 function App() {
   return (
