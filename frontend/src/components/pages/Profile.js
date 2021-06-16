@@ -8,6 +8,18 @@ import ListingForm from "../forms/ListingForm";
 
 const Profile = () => {
   const user = useRef(JSON.parse(localStorage.getItem("user")));
+
+  const renderPublishedListing = () => {
+    if (!user.current.publishedListing) {
+      return <ListingForm />;
+    } else {
+      return (
+        <>
+          <Listing data={mockProperties[0]} />
+        </>
+      );
+    }
+  };
   return (
     <div className="profile-page-container">
       <div className="profile-container">
@@ -30,16 +42,9 @@ const Profile = () => {
             <p>{user.current.phoneNumber}</p>
           </div>
         </div>
-        {/* <Button
-          text={"Publish Listing"}
-          width={"90%"}
-          margin={"10px"}
-          modifiers={"btn--text-black btn--background-white btn--border-black"}
-        /> */}
-        {/* <Listing data={mockProperties[0]} /> */}
       </div>
       <div></div>
-      <ListingForm />
+      {renderPublishedListing()}
     </div>
   );
 };
