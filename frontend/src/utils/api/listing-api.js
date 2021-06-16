@@ -47,3 +47,38 @@ export const deleteListing = async (token) => {
 
   return await fetch(`${url}`, requestOptions);
 };
+
+export const searchListings = async (token, queryParams) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  let queryArray = [];
+
+  if (queryParams.minPrice) {
+    queryArray.push(`minPrice=${queryParams.minPrice}`);
+  }
+
+  if (queryParams.maxPrice) {
+    queryArray.push(`maxPrice=${queryParams.maxPrice}`);
+  }
+
+  if (queryParams.coordinates) {
+    queryArray.push(
+      `coordinates=${queryParams.coordinates[0]},${queryParams.coordinates[1]}`
+    );
+  }
+
+  if (queryParams.radius) {
+    queryArray.push(`radius=${queryParams.minPrice}`);
+  }
+
+  const queryString = queryArray.join("&");
+
+  var requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return await fetch(`${url}/search?${queryString}`, requestOptions);
+};
