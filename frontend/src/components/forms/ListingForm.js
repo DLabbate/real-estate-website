@@ -4,8 +4,9 @@ import "./Form.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
 import * as listingApi from "../../utils/api/listing-api";
+import update from "immutability-helper";
 
-const ListingForm = ({ user }) => {
+const ListingForm = ({ user, setUser }) => {
   const initalValues = {
     address: "",
     price: "",
@@ -43,7 +44,7 @@ const ListingForm = ({ user }) => {
   const createListing = async (values) => {
     try {
       console.log(values);
-      await listingApi.createListing(
+      const response = await listingApi.createListing(
         user.token,
         values.address,
         values.price,
@@ -51,6 +52,19 @@ const ListingForm = ({ user }) => {
         78,
         43
       );
+      const responseJson = await response.json();
+      console.log("REST API Response: ", responseJson);
+
+      // Check if the status code is 200-299
+      if (response.ok) {
+        console.log("Successfully created listing");
+
+        // Update state
+        const updatedUser = update(user, {
+          publishedListing: { $set: responseJson._id },
+        });
+        setUser(updatedUser);
+      }
     } catch (err) {
     } finally {
     }

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Profile.css";
 import { FiMail, FiUser, FiPhone } from "react-icons/fi";
 import Button from "../shared/Button";
@@ -7,11 +7,11 @@ import { mockProperties } from "../../constants/mock.js";
 import ListingForm from "../forms/ListingForm";
 
 const Profile = () => {
-  const user = useRef(JSON.parse(localStorage.getItem("user")));
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   const renderPublishedListing = () => {
-    if (!user.current.publishedListing) {
-      return <ListingForm user={user.current} />;
+    if (!user.publishedListing) {
+      return <ListingForm user={user} setUser={setUser} />;
     } else {
       return (
         <>
@@ -20,6 +20,11 @@ const Profile = () => {
       );
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
   return (
     <div className="profile-page-container">
       <div className="profile-container">
@@ -30,16 +35,16 @@ const Profile = () => {
           <div className="row">
             <FiUser className="icon" />
             <p>
-              {user.current.firstName} {user.current.lastName}
+              {user.firstName} {user.lastName}
             </p>
           </div>
           <div className="row">
             <FiMail className="icon" />
-            <p>{user.current.email}</p>
+            <p>{user.email}</p>
           </div>
           <div className="row">
             <FiPhone className="icon" />
-            <p>{user.current.phoneNumber}</p>
+            <p>{user.phoneNumber}</p>
           </div>
         </div>
       </div>
