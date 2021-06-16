@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import "./Listing.css";
 import { FiHeart, FiTrash, FiHome } from "react-icons/fi";
 
-const Listing = ({ data, variant }) => {
+const Listing = ({ data, variant, onClickIcon }) => {
   const { price, address, owner } = data;
 
   const renderIcon = () => {
     if (variant === "publishedListing") {
-      return <FiTrash size={35} className={"listing__icon--bin"} />;
+      return (
+        <FiTrash
+          size={35}
+          className={"listing__icon--bin"}
+          onClick={onClickIcon}
+        />
+      );
     } else {
       return <FiHeart size={35} className={"listing__icon--heart"} />;
     }

@@ -5,9 +5,26 @@ import Button from "../shared/Button";
 import Listing from "../shared/Listing";
 import { mockProperties } from "../../constants/mock.js";
 import ListingForm from "../forms/ListingForm";
+import * as listingApi from "../../utils/api/listing-api";
+import update from "immutability-helper";
 
 const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+
+  const deleteListing = async () => {
+    try {
+      const response = await listingApi.deleteListing(user.token);
+      const responseJson = await response.json();
+      console.log("REST API Response: ", responseJson);
+
+      const updatedUser = update(user, {
+        publishedListing: { $set: undefined },
+      });
+      setUser(updatedUser);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const renderPublishedListing = () => {
     if (!user.publishedListing) {
@@ -18,7 +35,11 @@ const Profile = () => {
           <div className="title">
             <h3>My Listing</h3>
           </div>
-          <Listing data={user.publishedListing} variant={"publishedListing"} />
+          <Listing
+            data={user.publishedListing}
+            variant={"publishedListing"}
+            onClickIcon={deleteListing}
+          />
         </div>
       );
     }

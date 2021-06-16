@@ -4,7 +4,7 @@ import "./Form.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
-import { FiXCircle } from "react-icons/fi";
+import { FiXCircle, FiCheckCircle } from "react-icons/fi";
 import * as userApi from "../../utils/api/user-api";
 
 const LoginForm = () => {
@@ -45,7 +45,10 @@ const LoginForm = () => {
         console.log("Login success");
         setSuccess(true);
         localStorage.setItem("user", JSON.stringify(responseJson));
-        history.push("/home");
+
+        setTimeout(() => {
+          history.push("/home");
+        }, 500);
       } else {
         console.log("Login failed");
         setErrorMessage(responseJson.error.message);
@@ -66,7 +69,14 @@ const LoginForm = () => {
   };
 
   const renderResultMessage = () => {
-    if (sentRequest && !success) {
+    if (sentRequest && success) {
+      return (
+        <div className={"result result--background-lightgreen"}>
+          <FiCheckCircle size={35} className={"icon icon--green"} />
+          <p>Login success!</p>
+        </div>
+      );
+    } else if (sentRequest && !success) {
       return (
         <div className={"result result--background-lightpink"}>
           <FiXCircle size={35} className={"icon icon--pink"} />

@@ -66,6 +66,7 @@ const ListingForm = ({ user, setUser }) => {
         setUser(updatedUser);
       }
     } catch (err) {
+      console.log(err);
     } finally {
     }
   };

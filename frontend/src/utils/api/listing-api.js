@@ -34,3 +34,16 @@ export const createListing = async (
 
   return await fetch(`${url}`, requestOptions);
 };
+
+export const deleteListing = async (token) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return await fetch(`${url}`, requestOptions);
+};
