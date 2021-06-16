@@ -3,24 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./Form.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
-import { Link, useHistory } from "react-router-dom";
-import { FiCheckCircle, FiXCircle } from "react-icons/fi";
-import * as userApi from "../../utils/api/user-api";
 
 const ListingForm = () => {
-  // This state keeps track of if the user has submitted a request to the REST API
-  const [sentRequest, setSentRequest] = useState(false);
-
-  // This state keeps track of whether or not the REST API returns a successful response
-  const [success, setSuccess] = useState(false);
-
-  const [errorMessage, setErrorMessage] = useState("");
-
-  let history = useHistory();
-
   const initalValues = {
     address: "",
-    price: null,
+    price: "",
+    image: "",
   };
 
   const validate = Yup.object({
@@ -28,7 +16,7 @@ const ListingForm = () => {
       .max(40, "Must be 40 characters or less")
       .required("Address is required"),
     price: Yup.number()
-      .max(999999999, "Must be 10 characters or less")
+      .max(999999999, "Exceeded max value of $999,999,999")
       .required("Price is required")
       .positive()
       .integer(),
@@ -36,6 +24,7 @@ const ListingForm = () => {
 
   const createListing = async (values) => {
     try {
+      console.log(values);
     } catch (err) {
     } finally {
     }
@@ -43,6 +32,8 @@ const ListingForm = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
+    console.log(values);
+    createListing(values);
   };
 
   return (
@@ -71,17 +62,27 @@ const ListingForm = () => {
                 className="form__error"
               />
               <Field
-                type="text"
+                type="number"
                 name="price"
                 className="form__field form__field--lightgrey"
                 placeholder="Price"
-                maxLength={9}
               />
               <ErrorMessage
                 name="price"
                 component="div"
                 className="form__error"
               />
+              {/* <Field
+                type="file"
+                name="image"
+                className="form__field"
+                maxLength={9}
+              />
+              <ErrorMessage
+                name="image"
+                component="div"
+                className="form__error"
+              /> */}
               <Button
                 text={"Submit"}
                 width={"90%"}
