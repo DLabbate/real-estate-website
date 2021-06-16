@@ -14,9 +14,12 @@ const Profile = () => {
       return <ListingForm user={user} setUser={setUser} />;
     } else {
       return (
-        <>
+        <div className="profile-container">
+          <div className="title">
+            <h3>My Listing</h3>
+          </div>
           <Listing data={mockProperties[0]} />
-        </>
+        </div>
       );
     }
   };
