@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
   },
   password: { type: String, required: true },
   phoneNumber: { type: String, required: true },
-  publishedListing: { type: mongoose.Schema.Types.ObjectId },
+  publishedListing: { type: mongoose.Schema.Types.ObjectId, ref: "Listing" },
   favoriteListings: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Listing", default: [] },
   ],

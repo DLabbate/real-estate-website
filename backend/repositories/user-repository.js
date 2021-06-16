@@ -5,7 +5,9 @@ const User = require("../models/user");
  * Queries a user by their email
  */
 exports.getUserByEmail = async (userEmail) => {
-  let user = await User.findOne({ email: userEmail }).exec();
+  let user = await User.findOne({ email: userEmail })
+    .populate("publishedListing", "-__v")
+    .exec();
   return user;
 };
 
