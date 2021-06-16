@@ -20,6 +20,23 @@ const ListingForm = () => {
       .required("Price is required")
       .positive()
       .integer(),
+    image: Yup.mixed()
+      .required("Image is required")
+      .test(
+        "type",
+        "Only the following formats are accepted: .jpeg, .jpg, .png",
+        (value) => {
+          return (
+            value &&
+            (value.type === "image/jpeg" ||
+              value.type === "image/png" ||
+              value.type === "image/png")
+          );
+        }
+      )
+      .test("fileSize", "The file exceeds 1MB", (value) => {
+        return value && value.size <= 1048576;
+      }),
   });
 
   const createListing = async (values) => {
@@ -38,13 +55,13 @@ const ListingForm = () => {
 
   return (
     <>
-      <div className="form form--background-white form--shadow">
+      <div className="form form--background-white form--shadow form--extended">
         <Formik
           initialValues={initalValues}
           validationSchema={validate}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form className="form__container">
               <div className="form__title">
                 <h3>Create Listing</h3>
@@ -69,6 +86,21 @@ const ListingForm = () => {
               />
               <ErrorMessage
                 name="price"
+                component="div"
+                className="form__error"
+              />
+              <input
+                className="form__file"
+                id="image"
+                name="image"
+                type="file"
+                onChange={(event) => {
+                  setFieldValue("image", event.currentTarget.files[0]);
+                }}
+                accept="image/png, image/jpeg"
+              />
+              <ErrorMessage
+                name="image"
                 component="div"
                 className="form__error"
               />
