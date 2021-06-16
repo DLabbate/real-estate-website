@@ -18,12 +18,13 @@ const Profile = () => {
           <div className="title">
             <h3>My Listing</h3>
           </div>
-          <Listing data={mockProperties[0]} />
+          <Listing data={user.publishedListing} variant={"publishedListing"} />
         </div>
       );
     }
   };
 
+  // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);

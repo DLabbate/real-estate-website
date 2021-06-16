@@ -1,10 +1,33 @@
 import React, { useState } from "react";
 import "./Listing.css";
-import { FiHeart } from "react-icons/fi";
+import { FiHeart, FiTrash, FiHome } from "react-icons/fi";
 
-const Listing = ({ data }) => {
-  const { price, type, address, extraInfo } = data;
+const Listing = ({ data, variant }) => {
+  const { price, address, owner } = data;
 
+  const renderIcon = () => {
+    if (variant === "publishedListing") {
+      return <FiTrash size={35} className={"listing__icon--bin"} />;
+    } else {
+      return <FiHeart size={35} className={"listing__icon--heart"} />;
+    }
+  };
+
+  const renderContactInfo = () => {
+    if (variant === "publishedListing") {
+      return <></>;
+    } else {
+      return (
+        <div className="listing__contact">
+          <p className="listing__contact-text">
+            {owner.firstName} {owner.lastName}
+          </p>
+          <p className="listing__contact-text">{owner.email}</p>
+          <p className="listing__contact-text">{owner.phoneNumber}</p>
+        </div>
+      );
+    }
+  };
   return (
     <div className="listing">
       <img
@@ -13,13 +36,11 @@ const Listing = ({ data }) => {
         className="listing__image"
       ></img>
       <div className="listing__details">
-        <h3>{price}</h3>
-        <h5>{type}</h5>
+        <h3>${Number(price).toLocaleString()}</h3>
         <h5>{address}</h5>
-        <h6>{extraInfo}</h6>
+        {renderContactInfo()}
       </div>
-
-      <FiHeart size={35} className={"listing__icon"} />
+      {renderIcon()}
     </div>
   );
 };

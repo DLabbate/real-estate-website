@@ -61,7 +61,7 @@ const ListingForm = ({ user, setUser }) => {
 
         // Update state
         const updatedUser = update(user, {
-          publishedListing: { $set: responseJson._id },
+          publishedListing: { $set: responseJson },
         });
         setUser(updatedUser);
       }
