@@ -11,7 +11,7 @@ const Profile = () => {
 
   const renderPublishedListing = () => {
     if (!user.current.publishedListing) {
-      return <ListingForm />;
+      return <ListingForm user={user.current} />;
     } else {
       return (
         <>

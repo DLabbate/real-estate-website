@@ -3,8 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./Form.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
+import * as listingApi from "../../utils/api/listing-api";
 
-const ListingForm = () => {
+const ListingForm = ({ user }) => {
   const initalValues = {
     address: "",
     price: "",
@@ -42,6 +43,14 @@ const ListingForm = () => {
   const createListing = async (values) => {
     try {
       console.log(values);
+      await listingApi.createListing(
+        user.token,
+        values.address,
+        values.price,
+        values.image,
+        78,
+        43
+      );
     } catch (err) {
     } finally {
     }
