@@ -4,6 +4,7 @@ import { FiMail, FiUser, FiPhone } from "react-icons/fi";
 import Button from "../shared/Button";
 import Listing from "../shared/Listing";
 import { mockProperties } from "../../constants/mock.js";
+import ListingForm from "../forms/ListingForm";
 
 const Profile = () => {
   const user = useRef(JSON.parse(localStorage.getItem("user")));
@@ -37,6 +38,8 @@ const Profile = () => {
         /> */}
         {/* <Listing data={mockProperties[0]} /> */}
       </div>
+      <div></div>
+      <ListingForm />
     </div>
   );
 };

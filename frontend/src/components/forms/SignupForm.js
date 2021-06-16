@@ -28,7 +28,7 @@ const SignupForm = () => {
 
   const validate = Yup.object({
     firstName: Yup.string()
-      .max(20, "Must be 15 characters or less")
+      .max(20, "Must be 20 characters or less")
       .required("First Name is required"),
     lastName: Yup.string()
       .max(20, "Must be 20 characters or less")
