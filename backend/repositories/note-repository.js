@@ -27,7 +27,19 @@ exports.findNote = async (userId, listingId) => {
  * Get a user's notes
  */
 exports.getNotesByUserId = async (userId) => {
-  return Note.find({ user: userId }).select("-__v").exec();
+  return Note.find({ user: userId })
+    .select("-__v")
+    .populate({
+      path: "listing",
+      model: "Listing",
+      select: "-__v",
+      populate: {
+        path: "owner",
+        model: "User",
+        select: "firstName lastName email phoneNumber",
+      },
+    })
+    .exec();
 };
 
 /**

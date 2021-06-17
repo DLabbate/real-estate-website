@@ -1,0 +1,6 @@
+.notes-container {
+  display: flex;
+  justify-content: center;
+  background-color: lightgrey;
+  height: 900px;
+}

@@ -11,6 +11,7 @@ import Browse from "./components/pages/Browse";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
 import Profile from "./components/pages/Profile";
+import Notes from "./components/pages/Notes";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
           </Route>
           <Route path="/notes">
             <Navbar />
-            <h1>Notes</h1>
+            <Notes />
           </Route>
           <Route path="/profile">
             <Navbar />
