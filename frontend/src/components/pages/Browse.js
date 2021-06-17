@@ -72,7 +72,7 @@ const Browse = () => {
 
   useEffect(() => {
     getListings();
-  });
+  }, [user]);
 
   // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
   useEffect(() => {
@@ -82,25 +82,21 @@ const Browse = () => {
   return (
     <>
       <div className="filter">
-        <div className="filter__row">
-          <label>Location</label>
+        <div className="filter__row filter__row--large">
           <input
             type="search"
             placeholder="Location"
-            className="filter__textinput"
+            className="filter__input"
           ></input>
         </div>
         <div className="filter__row">
-          <label>Price</label>
-          <input type="range" className="filter__textinput"></input>
+          <label>Radius</label>
+          <input type="range" className="filter__input"></input>
         </div>
         <div className="filter__row">
-          <label>Location</label>
-          <input className="filter__textinput"></input>
-        </div>
-        <div className="filter__row">
-          <label>Location</label>
-          <input className="filter__textinput"></input>
+          <input className="filter__input" placeholder="Min. Price"></input>
+          <p>-</p>
+          <input className="filter__input" placeholder="Max. Price"></input>
         </div>
       </div>
       <div className="properties">{renderListings()}</div>
