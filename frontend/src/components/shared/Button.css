@@ -9,34 +9,38 @@
   transition: 400ms;
 }
 
-.btn--small {
+.btn--text-small {
   font-size: 0.85rem;
 }
 
-.btn--medium {
+.btn--text-medium {
   font-size: 1.25rem;
 }
 
-.btn--large {
+.btn--text-large {
   font-size: 1.65rem;
 }
 
-.btn--solid {
-  color: white;
-  border-color: black;
-  background-color: black;
-}
-
-.btn--transparent {
+.btn--background-transparent {
   background-color: transparent;
 }
 
-.btn--black {
-  color: black;
+.btn--background-black {
+  background-color: black;
+}
+
+.btn--background-white {
+  background-color: white;
+}
+
+.btn--border-black {
   border-color: black;
 }
 
-.btn--white {
-  border-color: white;
+.btn--text-white {
   color: white;
+}
+
+.btn--text-black {
+  color: black;
 }

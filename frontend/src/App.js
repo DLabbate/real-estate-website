@@ -4,13 +4,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Browse from "./components/pages/Browse";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
+import Profile from "./components/pages/Profile";
 
 function App() {
   return (
@@ -24,6 +24,10 @@ function App() {
           <Route path="/notes">
             <Navbar />
             <h1>Notes</h1>
+          </Route>
+          <Route path="/profile">
+            <Navbar />
+            <Profile />
           </Route>
           <Route path="/login">
             <Login />

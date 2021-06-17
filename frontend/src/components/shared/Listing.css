@@ -1,6 +1,6 @@
 .listing {
-  width: 300px;
-  height: 300px;
+  width: 325px;
+  height: 325px;
   min-width: 200px;
   min-height: 200px;
   margin: 10px;
@@ -26,25 +26,57 @@
   align-items: center;
 }
 
-.listing__icon {
+.listing__icon--heart {
   position: absolute;
   top: 10px;
   right: 10px;
   border-radius: 50%;
   border-width: 2px;
-
   border-color: black;
   border-style: solid;
   padding: 5px;
-  /* background-color: rgb(255, 170, 170); */
   cursor: pointer;
 }
 
-.listing__icon:hover {
+.listing__icon--bin {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  border-width: 2px;
+  border-color: black;
+  border-style: solid;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.listing__icon--bin:hover {
+  background-color: #ed4337;
+  transition: 250ms;
+}
+
+.listing__icon--heart:hover {
   background-color: rgb(255, 170, 170);
   transition: 250ms;
 }
 
+.listing__icon--fill {
+  background-color: rgb(255, 170, 170);
+}
+
 .listing__details {
   margin-left: 10px;
+  margin-right: 10px;
+}
+
+.listing__contact {
+  border-style: solid;
+  border-width: 0px;
+  border-top-width: 1px;
+  border-color: gray;
+  margin-top: 5px;
+}
+
+.listing__contact-text {
+  font-size: 0.7rem;
 }
