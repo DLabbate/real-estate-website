@@ -5,10 +5,11 @@ import Listing from "../shared/Listing";
 import * as userApi from "../../utils/api/user-api";
 import update from "immutability-helper";
 import "./Notes.css";
+import { mockBoard } from "../../constants/mock";
 
 const Notes = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(mockBoard);
 
   const getNotes = async () => {
     try {
@@ -22,7 +23,7 @@ const Notes = () => {
   };
 
   useEffect(() => {
-    getNotes();
+    //getNotes();
   }, [user]);
 
   const removeFavorite = async (listingId) => {
@@ -53,7 +54,7 @@ const Notes = () => {
     // margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    // background: isDragging ? "lightgreen" : "grey",
+    background: isDragging ? "lightblue" : "transparent",
     // margin: "10px",
     // padding: "10px",
 
@@ -66,14 +67,66 @@ const Notes = () => {
       {/* <DragDropContext
         onDragEnd={(result) => console.log(result)}
       ></DragDropContext> */}
+      <DragDropContext onDragEnd={(result) => console.log(result)}>
+        {notes.columns.map((column) => (
+          <Droppable droppableId={column.columnName}>
+            {(provided, snapshot) => (
+              <div className="column" ref={provided.innerRef}>
+                <h3 className="column__title">Queue</h3>
+                {column.items
+                  // .filter((item) => item.category === "Queue")
+                  .map((item, index) => {
+                    console.log(item);
+                    return (
+                      <Draggable
+                        key={item._id}
+                        draggableId={item._id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          //   <Listing
+                          //     data={item.listing}
+                          //     onClickIcon={removeFavorite}
+                          //     //   key={item._id}
+                          //     isFavorited={true}
+                          //   />
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={getItemStyle(
+                              snapshot.isDragging,
+                              provided.draggableProps.style
+                            )}
+                          >
+                            <Listing
+                              //data={item.listing}
+                              data={item}
+                              onClickIcon={removeFavorite}
+                              //   key={item._id}
+                              isFavorited={true}
+                            />
+                            {item.content}
+                          </div>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        ))}
+      </DragDropContext>
 
+      {/* 
       <DragDropContext onDragEnd={(result) => console.log(result)}>
         <Droppable droppableId="Queue">
           {(provided, snapshot) => (
             <div className="column" ref={provided.innerRef}>
               <h3 className="column__title">Queue</h3>
-              {notes
-                .filter((item) => item.category === "Queue")
+              {notes.columns[0].items
+                // .filter((item) => item.category === "Queue")
                 .map((item, index) => {
                   console.log(item);
                   return (
@@ -99,7 +152,8 @@ const Notes = () => {
                           )}
                         >
                           <Listing
-                            data={item.listing}
+                            //data={item.listing}
+                            data={item}
                             onClickIcon={removeFavorite}
                             //   key={item._id}
                             isFavorited={true}
@@ -114,7 +168,7 @@ const Notes = () => {
             </div>
           )}
         </Droppable>
-      </DragDropContext>
+      </DragDropContext> */}
 
       {/* <div className="column">
         <h3 className="column__title">Queue</h3>
