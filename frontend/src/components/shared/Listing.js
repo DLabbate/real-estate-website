@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import "./Listing.css";
 import { FiHeart, FiTrash, FiHome } from "react-icons/fi";
 
-const Listing = ({ data, variant, onClickIcon }) => {
-  const { price, address, owner } = data;
+const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
+  const { price, address, owner, _id } = data;
 
   const renderIcon = () => {
     if (variant === "publishedListing") {
@@ -15,7 +15,16 @@ const Listing = ({ data, variant, onClickIcon }) => {
         />
       );
     } else {
-      return <FiHeart size={35} className={"listing__icon--heart"} />;
+      const iconClassName = isFavorited
+        ? "listing__icon--heart listing__icon--fill"
+        : "listing__icon--heart";
+      return (
+        <FiHeart
+          size={35}
+          className={iconClassName}
+          onClick={() => onClickIcon(_id)}
+        />
+      );
     }
   };
 

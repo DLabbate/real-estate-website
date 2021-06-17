@@ -31,3 +31,29 @@ export const login = async (values) => {
 
   return await fetch(`${url}/login`, requestOptions);
 };
+
+export const addFavorite = async (token, listingId) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  var requestOptions = {
+    method: "PATCH",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return await fetch(`${url}/favorites/${listingId}`, requestOptions);
+};
+
+export const removeFavorite = async (token, listingId) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+
+  var requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  return await fetch(`${url}/favorites/${listingId}`, requestOptions);
+};

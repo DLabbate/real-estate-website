@@ -60,6 +60,10 @@
   transition: 250ms;
 }
 
+.listing__icon--fill {
+  background-color: rgb(255, 170, 170);
+}
+
 .listing__details {
   margin-left: 10px;
   margin-right: 10px;

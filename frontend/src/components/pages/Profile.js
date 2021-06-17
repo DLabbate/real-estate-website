@@ -17,10 +17,12 @@ const Profile = () => {
       const responseJson = await response.json();
       console.log("REST API Response: ", responseJson);
 
-      const updatedUser = update(user, {
-        publishedListing: { $set: undefined },
-      });
-      setUser(updatedUser);
+      if (response.ok) {
+        const updatedUser = update(user, {
+          publishedListing: { $set: undefined },
+        });
+        setUser(updatedUser);
+      }
     } catch (err) {
       console.log(err);
     }

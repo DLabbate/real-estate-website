@@ -3,6 +3,8 @@ import "./Browse.css";
 import Listing from "../shared/Listing";
 import { mockProperties } from "../../constants/mock.js";
 import * as listingApi from "../../utils/api/listing-api";
+import * as userApi from "../../utils/api/user-api";
+import update from "immutability-helper";
 
 const Browse = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
@@ -14,9 +16,69 @@ const Browse = () => {
     const responseJson = await response.json();
     setListings(responseJson);
   };
+
+  const addFavorite = async (listingId) => {
+    try {
+      const response = await userApi.addFavorite(user.token, listingId);
+      const responseJson = await response.json();
+      console.log("REST API response", responseJson);
+      if (response.ok) {
+        const updatedUser = update(user, {
+          favoriteListings: { $set: responseJson.favoriteListings },
+        });
+        setUser(updatedUser);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const removeFavorite = async (listingId) => {
+    try {
+      const response = await userApi.removeFavorite(user.token, listingId);
+      const responseJson = await response.json();
+      console.log("REST API response", responseJson);
+      if (response.ok) {
+        const updatedUser = update(user, {
+          favoriteListings: { $set: responseJson.favoriteListings },
+        });
+        setUser(updatedUser);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const isListingFavorited = (listingId) => {
+    return user.favoriteListings.includes(listingId);
+  };
+
+  const renderListing = (item) => {
+    const isFavorited = isListingFavorited(item._id);
+    const onClickIcon = isFavorited ? removeFavorite : addFavorite;
+    return (
+      <Listing
+        data={item}
+        key={item._id}
+        isFavorited={isFavorited}
+        onClickIcon={onClickIcon}
+      />
+    );
+  };
+
+  const renderListings = () => {
+    return listings.map(renderListing);
+  };
+
   useEffect(() => {
     getListings();
   });
+
+  // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
   return (
     <>
       <div className="filter">
@@ -41,11 +103,7 @@ const Browse = () => {
           <input className="filter__textinput"></input>
         </div>
       </div>
-      <div className="properties">
-        {listings.map((item) => (
-          <Listing data={item} />
-        ))}
-      </div>
+      <div className="properties">{renderListings()}</div>
     </>
   );
 };
