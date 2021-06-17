@@ -46,22 +46,90 @@ const Notes = () => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
+  const getItemStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: "none",
+    // padding: grid * 2,
+    // margin: `0 0 ${grid}px 0`,
+
+    // change background colour if dragging
+    // background: isDragging ? "lightgreen" : "grey",
+    // margin: "10px",
+    // padding: "10px",
+
+    // styles we need to apply on draggables
+    ...draggableStyle,
+  });
+
   return (
     <div className="notes-container">
       {/* <DragDropContext
         onDragEnd={(result) => console.log(result)}
       ></DragDropContext> */}
-      {notes.map((item) => {
-        console.log(item);
-        return (
-          <Listing
-            data={item.listing}
-            onClickIcon={removeFavorite}
-            key={item._id}
-            isFavorited={true}
-          />
-        );
-      })}
+
+      <DragDropContext onDragEnd={(result) => console.log(result)}>
+        <Droppable droppableId="Queue">
+          {(provided, snapshot) => (
+            <div className="column" ref={provided.innerRef}>
+              <h3 className="column__title">Queue</h3>
+              {notes
+                .filter((item) => item.category === "Queue")
+                .map((item, index) => {
+                  console.log(item);
+                  return (
+                    <Draggable
+                      key={item._id}
+                      draggableId={item._id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        //   <Listing
+                        //     data={item.listing}
+                        //     onClickIcon={removeFavorite}
+                        //     //   key={item._id}
+                        //     isFavorited={true}
+                        //   />
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style
+                          )}
+                        >
+                          <Listing
+                            data={item.listing}
+                            onClickIcon={removeFavorite}
+                            //   key={item._id}
+                            isFavorited={true}
+                          />
+                          {item.content}
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+
+      {/* <div className="column">
+        <h3 className="column__title">Queue</h3>
+        {notes.map((item, index) => {
+          console.log(item);
+          return (
+            <Listing
+              data={item.listing}
+              onClickIcon={removeFavorite}
+              //   key={item._id}
+              isFavorited={true}
+            />
+          );
+        })}
+      </div> */}
     </div>
   );
 };

@@ -1,6 +1,22 @@
 .notes-container {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   background-color: lightgrey;
-  height: 900px;
+  /* height: 900px; */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  padding: 10px;
+  align-items: center;
+}
+
+.column__title {
+  /* border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: lightgrey; */
 }
