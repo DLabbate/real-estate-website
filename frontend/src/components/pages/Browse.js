@@ -38,7 +38,7 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
 
   useEffect(() => {
     getListings();
-  });
+  }, [user]);
 
   return (
     <>

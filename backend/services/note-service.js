@@ -30,11 +30,3 @@ exports.getNotesByUserId = async (userId) => {
   let notes = await noteRepository.getNotesByUserId(userId);
   return notes;
 };
-
-/**
- * Edit a user's note (e.g. change its category)
- */
-exports.editNote = async (userId, noteId, newNoteData) => {
-  let note = await noteRepository.editNote(userId, noteId, newNoteData);
-  return note;
-};

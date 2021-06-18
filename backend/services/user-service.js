@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
+const boardRepository = require("../repositories/board-repository");
 require("dotenv").config();
 
 /**
@@ -36,6 +37,9 @@ exports.createNewUser = async (userData) => {
 
   const user = await userRepository.createNewUser(userData, hash);
   console.log("Successfully saved user with hashed password");
+
+  // If this is successful, we should also create a board for the user
+  await boardRepository.createNewBoard(user._id);
 
   let userObject = user.toObject();
   // Don't show hashed password in the response

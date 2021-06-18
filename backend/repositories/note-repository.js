@@ -43,19 +43,6 @@ exports.getNotesByUserId = async (userId) => {
 };
 
 /**
- * Edit a user's note (e.g. change its category)
- */
-exports.editNote = async (userId, noteId, newNoteData) => {
-  return await Note.findOneAndUpdate(
-    { _id: noteId, user: userId },
-    { $set: { category: newNoteData.category } },
-    { new: true }
-  )
-    .select("-__v")
-    .exec();
-};
-
-/**
  * Deletes a single note where the "user" and "listingId" fields match the corresponding arguments
  */
 exports.deleteNote = async (userId, listingId) => {
