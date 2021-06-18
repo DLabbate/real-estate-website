@@ -7,7 +7,7 @@ import update from "immutability-helper";
 import "./Notes.css";
 import { mockBoard } from "../../constants/mock";
 
-const Notes = () => {
+const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
   const defaultBoard = {
     columns: [
       { columnName: "queue", items: [] },
@@ -16,7 +16,6 @@ const Notes = () => {
       { columnName: "offers", items: [] },
     ],
   };
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [board, setBoard] = useState(mockBoard);
 
   const getBoard = async () => {
@@ -37,22 +36,6 @@ const Notes = () => {
   useEffect(() => {
     console.log("Board: ", board);
   });
-
-  const removeFavorite = async (listingId) => {
-    try {
-      const response = await userApi.removeFavorite(user.token, listingId);
-      const responseJson = await response.json();
-      console.log("REST API response", responseJson);
-      if (response.ok) {
-        const updatedUser = update(user, {
-          favoriteListings: { $set: responseJson.favoriteListings },
-        });
-        setUser(updatedUser);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
   useEffect(() => {

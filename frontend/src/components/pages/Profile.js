@@ -8,9 +8,7 @@ import ListingForm from "../forms/ListingForm";
 import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";
 
-const Profile = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-
+const Profile = ({ user, setUser }) => {
   const deleteListing = async () => {
     try {
       const response = await listingApi.deleteListing(user.token);
