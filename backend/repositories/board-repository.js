@@ -35,5 +35,14 @@ exports.createNewBoard = async (userId) => {
  * Finds a board by userId
  */
 exports.findBoardByUserId = async (userId) => {
-  return await Board.findOne({ user: userId }).select("-__v");
+  return await Board.findOne({ user: userId }).select("-__v").exec();
+};
+
+exports.editBoard = async (userId, newBoard) => {
+  const board = await Board.findOneAndUpdate({ user: userId }, newBoard, {
+    new: true,
+  })
+    .select("-__v")
+    .exec();
+  return board.toObject();
 };
