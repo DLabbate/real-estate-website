@@ -61,5 +61,33 @@ exports.editBoard = async (userId, newBoard) => {
     .populate(populateQuery)
     .select("-__v")
     .exec();
-  return board.toObject();
+  return board;
+};
+
+exports.addToQueue = async (userId, noteId) => {
+  const boardDocument = await Board.findOne({ user: userId }).exec();
+
+  //console.log("Board Document", boardDocument.toObject());
+  const indexToUpdate = boardDocument.columns.findIndex(
+    (column) => column.columnName === "queue"
+  );
+
+  boardDocument.columns[indexToUpdate].items.push(noteId);
+
+  return await boardDocument.save();
+};
+
+exports.removeNoteFromColumns = async (userId, noteId) => {
+  const boardDocument = await Board.findOne({ user: userId }).exec();
+
+  console.log("Board Document", boardDocument.toObject());
+  boardDocument.columns.forEach((column) => {
+    let indexToRemove = column.items.findIndex((note) => note._id === noteId);
+
+    if (indexToRemove) {
+      column.items.splice(indexToRemove, 1);
+    }
+  });
+
+  return await boardDocument.save();
 };

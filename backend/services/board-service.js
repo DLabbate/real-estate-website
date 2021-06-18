@@ -18,9 +18,9 @@ exports.createNewBoard = async (userId) => {
  * Finds a board by userId
  */
 exports.findBoardByUserId = async (userId) => {
-  return await boardRepository.findBoardByUserId(userId);
+  return await boardRepository.findBoardByUserId(userId).toObject();
 };
 
 exports.editBoard = async (userId, newBoard) => {
-  return await boardRepository.editBoard(userId, newBoard);
+  return await boardRepository.editBoard(userId, newBoard).toObject();
 };
