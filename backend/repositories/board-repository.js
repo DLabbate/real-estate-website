@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Board = require("../models/Board");
+const Board = require("../models/board");
 
 /**
  * Creates a new board. Only 1 per user.
@@ -35,5 +35,5 @@ exports.createNewBoard = async (userId) => {
  * Finds a board by userId
  */
 exports.findBoardByUserId = async (userId) => {
-  return await Board.findOne({ user: userId });
+  return await Board.findOne({ user: userId }).select("-__v");
 };
