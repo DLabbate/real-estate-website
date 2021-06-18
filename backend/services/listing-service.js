@@ -49,6 +49,13 @@ exports.createNewListing = async (ownerId, listingData, imageUrl) => {
  * Deletes a listing
  */
 exports.deleteListing = async (listingId, imageUrl) => {
+  // Delete notes that reference this listing in the "board" collection
+  // Do this before deleting the notes, because the board must know the noteId!!!
+  const promiseDeleteNotesFromBoards =
+    await boardService.removeNotesFromAllBoardsByListingId(listingId);
+
+  // The rest can be done in parallel
+
   /*   
       When we delete a listing, we must do the following
       1) Delete the listing that belongs to the user making the request
@@ -71,11 +78,6 @@ exports.deleteListing = async (listingId, imageUrl) => {
 
   // #4) Delete all notes related to this listing
   const promiseDeleteNote = noteRepository.deleteNotesByListingId(listingId);
-
-  // Delete notes that reference this listing in the "board" collection
-  // Do this before deleting the notes, because the board must know the noteId!!!
-  const promiseDeleteNotesFromBoards =
-    await boardService.removeNotesFromAllBoardsByListingId(listingId);
 
   await Promise.all([
     promiseDeleteListing,
