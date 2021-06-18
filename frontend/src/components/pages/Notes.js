@@ -66,7 +66,7 @@ const Notes = () => {
     // margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "lightblue" : "transparent",
+    background: isDragging ? "lightgrey" : "transparent",
     // margin: "10px",
     // padding: "10px",
 
