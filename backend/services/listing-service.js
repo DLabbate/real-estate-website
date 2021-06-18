@@ -5,6 +5,7 @@ const listingRepository = require("../repositories/listing-repository");
 const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
 const boardRepository = require("../repositories/board-repository");
+const boardService = require("./board-service");
 const AWS = require("aws-sdk");
 
 /**
@@ -70,6 +71,11 @@ exports.deleteListing = async (listingId, imageUrl) => {
 
   // #4) Delete all notes related to this listing
   const promiseDeleteNote = noteRepository.deleteNotesByListingId(listingId);
+
+  // Delete notes that reference this listing in the "board" collection
+  // Do this before deleting the notes, because the board must know the noteId!!!
+  const promiseDeleteNotesFromBoards =
+    await boardService.removeNotesFromAllBoardsByListingId(listingId);
 
   await Promise.all([
     promiseDeleteListing,

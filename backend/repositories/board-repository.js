@@ -91,3 +91,24 @@ exports.removeNoteFromColumns = async (userId, noteId) => {
 
   return await boardDocument.save();
 };
+
+exports.removeNoteFromAllBoards = async (noteId) => {
+  console.log(noteId);
+  //   const boards = await Board.find({
+  //     // columns: {
+  //     //   $elemMatch: { columnName: "queue" },
+  //     // },
+
+  //     //"columns.columnName": "queue",
+
+  //     "columns.items": noteId,
+  //   }).exec();
+  const boards = await Board.updateMany(
+    {},
+    { $pull: { "columns.$[].items": noteId } }
+  ).exec();
+  //   console.log("Boards: ", boards);
+
+  //   console.log("Boards matching the query: ", boards);
+  return boards;
+};

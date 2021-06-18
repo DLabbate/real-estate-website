@@ -108,6 +108,7 @@ exports.addFavoriteListing = async (userId, listingId) => {
     const note = await noteRepository.createNewNote(userId, listingId);
 
     // Also add the note to the user's board
+    //console.log("Adding note to the board with the following _id: ", note._id);
     await boardRepository.addToQueue(userId, note._id);
   }
 
@@ -127,8 +128,8 @@ exports.removeFavoriteListing = async (userId, listingId) => {
   // The corresponding note must be removed
   const note = await noteRepository.deleteNote(userId, listingId);
 
-  // Remove the note from the user's board
-  await boardRepository.removeNoteFromColumns(userId, note.__id);
+  //Remove the note from the user's board
+  await boardRepository.removeNoteFromColumns(userId, note._id);
 
   updatedUserObject = updatedUser.toObject();
   return await this.formatUser(updatedUserObject);

@@ -46,7 +46,10 @@ exports.getNotesByUserId = async (userId) => {
  * Deletes a single note where the "user" and "listingId" fields match the corresponding arguments
  */
 exports.deleteNote = async (userId, listingId) => {
-  return await Note.deleteOne({ user: userId, listing: listingId }).exec();
+  return await Note.findOneAndDelete({
+    user: userId,
+    listing: listingId,
+  }).exec();
 };
 
 /**
@@ -54,4 +57,8 @@ exports.deleteNote = async (userId, listingId) => {
  */
 exports.deleteNotesByListingId = async (listingId) => {
   return await Note.deleteMany({ listing: listingId }).exec();
+};
+
+exports.getNotesByListingId = async (listingId) => {
+  return await Note.find({ listing: listingId }).exec();
 };
