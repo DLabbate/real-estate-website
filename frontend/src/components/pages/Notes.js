@@ -17,14 +17,14 @@ const Notes = () => {
     ],
   };
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-  const [notes, setNotes] = useState(mockBoard);
+  const [board, setBoard] = useState(mockBoard);
 
-  const getNotes = async () => {
+  const getBoard = async () => {
     try {
       const response = await notesApi.getNotesByUser(user.token);
       const responseJson = await response.json();
       console.log("REST API response: ", responseJson);
-      setNotes(responseJson);
+      setBoard(responseJson);
     } catch (err) {
       console.log(err);
     }
@@ -33,6 +33,10 @@ const Notes = () => {
   useEffect(() => {
     //getNotes();
   }, [user]);
+
+  useEffect(() => {
+    console.log("Board: ", board);
+  });
 
   const removeFavorite = async (listingId) => {
     try {
@@ -72,37 +76,37 @@ const Notes = () => {
 
   // Reorder within a column
   const reorderColumn = (columnName, startIndex, endIndex) => {
-    const columnIndex = notes.columns.findIndex(
+    const columnIndex = board.columns.findIndex(
       (item) => item.columnName === columnName
     );
 
-    const updatedNotes = update(notes, {
+    const updatedNotes = update(board, {
       columns: {
         [columnIndex]: {
           items: {
             $splice: [
-              [startIndex, 1, notes.columns[columnIndex].items[endIndex]],
-              [endIndex, 1, notes.columns[columnIndex].items[startIndex]],
+              [startIndex, 1, board.columns[columnIndex].items[endIndex]],
+              [endIndex, 1, board.columns[columnIndex].items[startIndex]],
             ],
           },
         },
       },
     });
-    console.log("Updated Notes", updatedNotes);
-    setNotes(updatedNotes);
+    console.log("Updated Board: ", updatedNotes);
+    setBoard(updatedNotes);
   };
 
   // Move to another column
   const move = (columnNameStart, columnNameEnd, startIndex, endIndex) => {
-    const columnStartIndex = notes.columns.findIndex(
+    const columnStartIndex = board.columns.findIndex(
       (item) => item.columnName === columnNameStart
     );
 
-    const columnEndIndex = notes.columns.findIndex(
+    const columnEndIndex = board.columns.findIndex(
       (item) => item.columnName === columnNameEnd
     );
 
-    const updatedNotes = update(notes, {
+    const updatedNotes = update(board, {
       columns: {
         [columnStartIndex]: {
           items: {
@@ -112,14 +116,14 @@ const Notes = () => {
         [columnEndIndex]: {
           items: {
             $splice: [
-              [endIndex, 0, notes.columns[columnStartIndex].items[startIndex]],
+              [endIndex, 0, board.columns[columnStartIndex].items[startIndex]],
             ],
           },
         },
       },
     });
-    console.log("Updated Notes", updatedNotes);
-    setNotes(updatedNotes);
+    console.log("Updated Board: ", updatedNotes);
+    setBoard(updatedNotes);
   };
 
   const onDragEnd = (result) => {
@@ -142,73 +146,30 @@ const Notes = () => {
     }
   };
 
+  const formatColumnName = (columnName) => {
+    if (columnName === "queue") {
+      return "Queue";
+    } else if (columnName === "notInterested") {
+      return "Not Interested";
+    } else if (columnName === "interested") {
+      return "Interested";
+    } else if (columnName === "offers") return "Offers";
+    else {
+      return "";
+    }
+  };
+
   return (
     <div className="notes-container">
-      {/* <DragDropContext
-        onDragEnd={(result) => console.log(result)}
-      ></DragDropContext> */}
       <DragDropContext onDragEnd={onDragEnd}>
-        {notes.columns.map((column) => (
-          <Droppable droppableId={column.columnName}>
+        {board.columns.map((column) => (
+          <Droppable droppableId={column.columnName} key={column.columnName}>
             {(provided, snapshot) => (
               <div className="column" ref={provided.innerRef}>
-                <h3 className="column__title">{column.columnName}</h3>
-                {column.items
-                  // .filter((item) => item.category === "Queue")
-                  .map((item, index) => {
-                    console.log(item);
-                    return (
-                      <Draggable
-                        key={item._id}
-                        draggableId={item._id}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          //   <Listing
-                          //     data={item.listing}
-                          //     onClickIcon={removeFavorite}
-                          //     //   key={item._id}
-                          //     isFavorited={true}
-                          //   />
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            style={getItemStyle(
-                              snapshot.isDragging,
-                              provided.draggableProps.style
-                            )}
-                          >
-                            <Listing
-                              //data={item.listing}
-                              data={item}
-                              onClickIcon={removeFavorite}
-                              //   key={item._id}
-                              isFavorited={true}
-                            />
-                            {item.content}
-                          </div>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        ))}
-      </DragDropContext>
-
-      {/* 
-      <DragDropContext onDragEnd={(result) => console.log(result)}>
-        <Droppable droppableId="Queue">
-          {(provided, snapshot) => (
-            <div className="column" ref={provided.innerRef}>
-              <h3 className="column__title">Queue</h3>
-              {notes.columns[0].items
-                // .filter((item) => item.category === "Queue")
-                .map((item, index) => {
-                  console.log(item);
+                <h3 className="column__title">
+                  {formatColumnName(column.columnName)}
+                </h3>
+                {column.items.map((item, index) => {
                   return (
                     <Draggable
                       key={item._id}
@@ -216,12 +177,6 @@ const Notes = () => {
                       index={index}
                     >
                       {(provided, snapshot) => (
-                        //   <Listing
-                        //     data={item.listing}
-                        //     onClickIcon={removeFavorite}
-                        //     //   key={item._id}
-                        //     isFavorited={true}
-                        //   />
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
@@ -232,10 +187,8 @@ const Notes = () => {
                           )}
                         >
                           <Listing
-                            //data={item.listing}
                             data={item}
                             onClickIcon={removeFavorite}
-                            //   key={item._id}
                             isFavorited={true}
                           />
                           {item.content}
@@ -244,26 +197,12 @@ const Notes = () => {
                     </Draggable>
                   );
                 })}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext> */}
-
-      {/* <div className="column">
-        <h3 className="column__title">Queue</h3>
-        {notes.map((item, index) => {
-          console.log(item);
-          return (
-            <Listing
-              data={item.listing}
-              onClickIcon={removeFavorite}
-              //   key={item._id}
-              isFavorited={true}
-            />
-          );
-        })}
-      </div> */}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        ))}
+      </DragDropContext>
     </div>
   );
 };
