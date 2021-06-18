@@ -54,6 +54,9 @@ exports.findBoardByUserId = async (userId) => {
     .exec();
 };
 
+/**
+ * Edits the user's board (e.g moving the order of listings, moving a listing to a new column, etc.)
+ */
 exports.editBoard = async (userId, newBoard) => {
   const board = await Board.findOneAndUpdate({ user: userId }, newBoard, {
     new: true,
@@ -64,18 +67,10 @@ exports.editBoard = async (userId, newBoard) => {
   return board;
 };
 
+/**
+ * Adds a note to the queue (e.g. when a user favorites a listing)
+ */
 exports.addToQueue = async (userId, noteId) => {
-  // const boardDocument = await Board.findOne({ user: userId }).exec();
-
-  // //console.log("Board Document", boardDocument.toObject());
-  // const indexToUpdate = boardDocument.columns.findIndex(
-  //   (column) => column.columnName === "queue"
-  // );
-
-  // boardDocument.columns[indexToUpdate].items.push(noteId);
-
-  // return await boardDocument.save();
-
   // columns[0] is the queue
   return await await Board.findOneAndUpdate(
     { user: userId },
@@ -83,6 +78,9 @@ exports.addToQueue = async (userId, noteId) => {
   );
 };
 
+/**
+ * Removes a note from all columns (e.g. when a user unfavorites a listing)
+ */
 exports.removeNoteFromColumns = async (userId, noteId) => {
   const boardDocument = await Board.findOne({ user: userId }).exec();
 
@@ -102,23 +100,10 @@ exports.removeNoteFromColumns = async (userId, noteId) => {
  * Removes a single note from ALL boards.
  */
 exports.removeNoteFromAllBoards = async (noteId) => {
-  console.log(noteId);
-  //   const boards = await Board.find({
-  //     // columns: {
-  //     //   $elemMatch: { columnName: "queue" },
-  //     // },
-
-  //     //"columns.columnName": "queue",
-
-  //     "columns.items": noteId,
-  //   }).exec();
   const boards = await Board.updateMany(
     {},
     { $pull: { "columns.$[].items": noteId } }
   ).exec();
-  //   console.log("Boards: ", boards);
-
-  //   console.log("Boards matching the query: ", boards);
   return boards;
 };
 

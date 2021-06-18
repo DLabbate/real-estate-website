@@ -52,9 +52,6 @@ exports.deleteListing = async (listingId, imageUrl) => {
   // Delete notes that reference this listing in the "board" collection
   // Do this before deleting the notes, because the board must know the noteId!!!
 
-  // const promiseDeleteNotesFromBoards =
-  //   await boardService.removeNotesFromAllBoardsByListingId(listingId);
-
   // Get the array of notes that are related to the listingId
   const notesToDelete = await noteRepository.getNotesByListingId(listingId);
   await boardRepository.removeNoteListFromAllBoards(notesToDelete);
@@ -62,7 +59,7 @@ exports.deleteListing = async (listingId, imageUrl) => {
   // The rest can be done in parallel
 
   /*   
-      When we delete a listing, we must do the following
+      When we delete a listing, we must also do the following
       1) Delete the listing that belongs to the user making the request
       2) Unset the "publishedListing" field in the user document (of the user that owns the listing)
       3) Delete this listingId from the favoritedListings array of all users

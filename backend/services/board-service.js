@@ -21,24 +21,9 @@ exports.findBoardByUserId = async (userId) => {
   return await boardRepository.findBoardByUserId(userId).toObject();
 };
 
+/**
+ * Edits a user's board
+ */
 exports.editBoard = async (userId, newBoard) => {
   return await boardRepository.editBoard(userId, newBoard).toObject();
-};
-
-exports.removeNotesFromAllBoardsByListingId = async (listingId) => {
-  // Get the array of notes that are related to the listingId
-  const notesToDelete = await noteRepository.getNotesByListingId(listingId);
-
-  console.log(
-    "Attempting to delete all notes in the board related to: ",
-    notesToDelete
-  );
-  // Delete the note from all boards
-  let i;
-  for (i = 0; i < notesToDelete.length; i++) {
-    return await boardRepository.removeNoteFromAllBoards(notesToDelete[i]._id);
-  }
-  //   notesToDelete.forEach(async (note) => {
-  //     await boardRepository.removeNoteFromAllBoards("60cc2ee2d50cb007e02123b9");
-  //   });
 };
