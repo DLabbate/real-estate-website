@@ -51,8 +51,13 @@ exports.createNewListing = async (ownerId, listingData, imageUrl) => {
 exports.deleteListing = async (listingId, imageUrl) => {
   // Delete notes that reference this listing in the "board" collection
   // Do this before deleting the notes, because the board must know the noteId!!!
-  const promiseDeleteNotesFromBoards =
-    await boardService.removeNotesFromAllBoardsByListingId(listingId);
+
+  // const promiseDeleteNotesFromBoards =
+  //   await boardService.removeNotesFromAllBoardsByListingId(listingId);
+
+  // Get the array of notes that are related to the listingId
+  const notesToDelete = await noteRepository.getNotesByListingId(listingId);
+  await boardRepository.removeNoteListFromAllBoards(notesToDelete);
 
   // The rest can be done in parallel
 

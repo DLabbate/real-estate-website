@@ -121,3 +121,14 @@ exports.removeNoteFromAllBoards = async (noteId) => {
   //   console.log("Boards matching the query: ", boards);
   return boards;
 };
+
+/**
+ * Removes a list of notes from ALL Boards
+ */
+exports.removeNoteListFromAllBoards = async (notesToDelete) => {
+  // Delete the note from all boards
+  let i;
+  for (i = 0; i < notesToDelete.length; i++) {
+    await this.removeNoteFromAllBoards(notesToDelete[i]._id);
+  }
+};
