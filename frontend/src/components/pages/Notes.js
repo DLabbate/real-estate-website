@@ -8,6 +8,14 @@ import "./Notes.css";
 import { mockBoard } from "../../constants/mock";
 
 const Notes = () => {
+  const defaultBoard = {
+    columns: [
+      { columnName: "queue", items: [] },
+      { columnName: "notInterested", items: [] },
+      { columnName: "interested", items: [] },
+      { columnName: "offers", items: [] },
+    ],
+  };
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [notes, setNotes] = useState(mockBoard);
 
@@ -62,17 +70,89 @@ const Notes = () => {
     ...draggableStyle,
   });
 
+  // Reorder within a column
+  const reorderColumn = (columnName, startIndex, endIndex) => {
+    const columnIndex = notes.columns.findIndex(
+      (item) => item.columnName === columnName
+    );
+
+    const updatedNotes = update(notes, {
+      columns: {
+        [columnIndex]: {
+          items: {
+            $splice: [
+              [startIndex, 1, notes.columns[columnIndex].items[endIndex]],
+              [endIndex, 1, notes.columns[columnIndex].items[startIndex]],
+            ],
+          },
+        },
+      },
+    });
+    console.log("Updated Notes", updatedNotes);
+    setNotes(updatedNotes);
+  };
+
+  // Move to another column
+  const move = (columnNameStart, columnNameEnd, startIndex, endIndex) => {
+    const columnStartIndex = notes.columns.findIndex(
+      (item) => item.columnName === columnNameStart
+    );
+
+    const columnEndIndex = notes.columns.findIndex(
+      (item) => item.columnName === columnNameEnd
+    );
+
+    const updatedNotes = update(notes, {
+      columns: {
+        [columnStartIndex]: {
+          items: {
+            $splice: [[startIndex, 1]],
+          },
+        },
+        [columnEndIndex]: {
+          items: {
+            $splice: [
+              [endIndex, 0, notes.columns[columnStartIndex].items[startIndex]],
+            ],
+          },
+        },
+      },
+    });
+    console.log("Updated Notes", updatedNotes);
+    setNotes(updatedNotes);
+  };
+
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+
+    // dropped outside the list
+    if (!destination) {
+      return;
+    }
+
+    if (source.droppableId === destination.droppableId) {
+      reorderColumn(source.droppableId, source.index, destination.index);
+    } else {
+      move(
+        source.droppableId,
+        destination.droppableId,
+        source.index,
+        destination.index
+      );
+    }
+  };
+
   return (
     <div className="notes-container">
       {/* <DragDropContext
         onDragEnd={(result) => console.log(result)}
       ></DragDropContext> */}
-      <DragDropContext onDragEnd={(result) => console.log(result)}>
+      <DragDropContext onDragEnd={onDragEnd}>
         {notes.columns.map((column) => (
           <Droppable droppableId={column.columnName}>
             {(provided, snapshot) => (
               <div className="column" ref={provided.innerRef}>
-                <h3 className="column__title">Queue</h3>
+                <h3 className="column__title">{column.columnName}</h3>
                 {column.items
                   // .filter((item) => item.category === "Queue")
                   .map((item, index) => {
