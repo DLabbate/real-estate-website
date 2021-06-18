@@ -65,16 +65,22 @@ exports.editBoard = async (userId, newBoard) => {
 };
 
 exports.addToQueue = async (userId, noteId) => {
-  const boardDocument = await Board.findOne({ user: userId }).exec();
+  // const boardDocument = await Board.findOne({ user: userId }).exec();
 
-  //console.log("Board Document", boardDocument.toObject());
-  const indexToUpdate = boardDocument.columns.findIndex(
-    (column) => column.columnName === "queue"
+  // //console.log("Board Document", boardDocument.toObject());
+  // const indexToUpdate = boardDocument.columns.findIndex(
+  //   (column) => column.columnName === "queue"
+  // );
+
+  // boardDocument.columns[indexToUpdate].items.push(noteId);
+
+  // return await boardDocument.save();
+
+  // columns[0] is the queue
+  return await await Board.findOneAndUpdate(
+    { user: userId },
+    { $push: { "columns.0.items": noteId } }
   );
-
-  boardDocument.columns[indexToUpdate].items.push(noteId);
-
-  return await boardDocument.save();
 };
 
 exports.removeNoteFromColumns = async (userId, noteId) => {
@@ -92,6 +98,9 @@ exports.removeNoteFromColumns = async (userId, noteId) => {
   return await boardDocument.save();
 };
 
+/**
+ * Removes a single note from ALL boards.
+ */
 exports.removeNoteFromAllBoards = async (noteId) => {
   console.log(noteId);
   //   const boards = await Board.find({
