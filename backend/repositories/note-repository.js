@@ -27,19 +27,18 @@ exports.findNote = async (userId, listingId) => {
  * Get a user's notes
  */
 exports.getNotesByUserId = async (userId) => {
-  return Note.find({ user: userId }).select("-__v").exec();
-};
-
-/**
- * Edit a user's note (e.g. change its category)
- */
-exports.editNote = async (userId, noteId, newNoteData) => {
-  return await Note.findOneAndUpdate(
-    { _id: noteId, user: userId },
-    { $set: { category: newNoteData.category } },
-    { new: true }
-  )
+  return Note.find({ user: userId })
     .select("-__v")
+    .populate({
+      path: "listing",
+      model: "Listing",
+      select: "-__v",
+      populate: {
+        path: "owner",
+        model: "User",
+        select: "firstName lastName email phoneNumber",
+      },
+    })
     .exec();
 };
 
@@ -47,7 +46,10 @@ exports.editNote = async (userId, noteId, newNoteData) => {
  * Deletes a single note where the "user" and "listingId" fields match the corresponding arguments
  */
 exports.deleteNote = async (userId, listingId) => {
-  return await Note.deleteOne({ user: userId, listing: listingId }).exec();
+  return await Note.findOneAndDelete({
+    user: userId,
+    listing: listingId,
+  }).exec();
 };
 
 /**
@@ -55,4 +57,8 @@ exports.deleteNote = async (userId, listingId) => {
  */
 exports.deleteNotesByListingId = async (listingId) => {
   return await Note.deleteMany({ listing: listingId }).exec();
+};
+
+exports.getNotesByListingId = async (listingId) => {
+  return await Note.find({ listing: listingId }).exec();
 };

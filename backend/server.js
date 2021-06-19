@@ -18,6 +18,7 @@ const mongoose = require("mongoose");
 const listingRoutes = require("./routes/listings");
 const userRoutes = require("./routes/users");
 const noteRoutes = require("./routes/notes");
+const boardRoutes = require("./routes/boards");
 
 // CORS
 var cors = require("cors");
@@ -49,6 +50,7 @@ app.get("/", (req, res, next) => {
 app.use("/listings", listingRoutes);
 app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
+app.use("/boards", boardRoutes);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

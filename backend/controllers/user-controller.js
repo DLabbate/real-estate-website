@@ -127,7 +127,7 @@ exports.removeFavoriteListing = async (req, res, next) => {
     console.log("Successfully removed favoriteListing for user");
     res.status(200).json(updatedUserObject);
   } catch (err) {
-    console.log("Error with adding listing to user favorites", err);
+    console.log("Error with removing listing from user favorites", err);
     return res.status(500).json({ error: err });
   }
 };

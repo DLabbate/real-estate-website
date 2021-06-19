@@ -3,7 +3,7 @@ import "./Listing.css";
 import { FiHeart, FiTrash, FiHome } from "react-icons/fi";
 
 const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
-  const { price, address, owner, _id } = data;
+  const { price, address, owner, _id, imageUrl } = data;
 
   const renderIcon = () => {
     if (variant === "publishedListing") {
@@ -47,7 +47,8 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
     <div className="listing">
       <img
         alt="Property for Sale"
-        src="http://cdn.home-designing.com/wp-content/uploads/2017/05/wood-white-and-charcoal-modern-exterior-paint-themes.jpg"
+        //src="http://cdn.home-designing.com/wp-content/uploads/2017/05/wood-white-and-charcoal-modern-exterior-paint-themes.jpg"
+        src={imageUrl}
         className="listing__image"
       ></img>
       <div className="listing__details">

@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userRepository = require("../repositories/user-repository");
 const noteRepository = require("../repositories/note-repository");
+const boardRepository = require("../repositories/board-repository");
 require("dotenv").config();
 
 /**
@@ -36,6 +37,9 @@ exports.createNewUser = async (userData) => {
 
   const user = await userRepository.createNewUser(userData, hash);
   console.log("Successfully saved user with hashed password");
+
+  // If this is successful, we should also create a board for the user
+  await boardRepository.createNewBoard(user._id);
 
   let userObject = user.toObject();
   // Don't show hashed password in the response
@@ -101,7 +105,11 @@ exports.addFavoriteListing = async (userId, listingId) => {
   const note = await noteRepository.findNote(userId, listingId);
 
   if (!note) {
-    await noteRepository.createNewNote(userId, listingId);
+    const note = await noteRepository.createNewNote(userId, listingId);
+
+    // Also add the note to the user's board
+    //console.log("Adding note to the board with the following _id: ", note._id);
+    await boardRepository.addToQueue(userId, note._id);
   }
 
   updatedUserObject = updatedUser.toObject();
@@ -118,7 +126,10 @@ exports.removeFavoriteListing = async (userId, listingId) => {
   );
 
   // The corresponding note must be removed
-  await noteRepository.deleteNote(userId, listingId);
+  const note = await noteRepository.deleteNote(userId, listingId);
+
+  //Remove the note from the user's board
+  await boardRepository.removeNoteFromColumns(userId, note._id);
 
   updatedUserObject = updatedUser.toObject();
   return await this.formatUser(updatedUserObject);
