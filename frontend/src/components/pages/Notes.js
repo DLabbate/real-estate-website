@@ -50,10 +50,12 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     getBoard();
   }, []);
 
+  // Whenever our user info changes, we should retrieve our updated board
   useEffect(() => {
     getBoard();
   }, [user]);
 
+  // Whenever we make a drag/drop action, the backend should be updated accordingly
   useEffect(() => {
     editBoard();
     console.log("State: ", board);
