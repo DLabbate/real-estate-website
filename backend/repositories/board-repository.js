@@ -11,6 +11,11 @@ const populateQuery = {
       path: "listing",
       model: "Listing",
       select: "-__v",
+      populate: {
+        path: "owner",
+        model: "User",
+        select: "-__v",
+      },
     },
   },
 };

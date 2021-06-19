@@ -6,6 +6,7 @@ import * as userApi from "../../utils/api/user-api";
 import update from "immutability-helper";
 import "./Notes.css";
 import { mockBoard } from "../../constants/mock";
+import * as boardApi from "../../utils/api/board-api";
 
 const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
   const defaultBoard = {
@@ -16,14 +17,29 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
       { columnName: "offers", items: [] },
     ],
   };
-  const [board, setBoard] = useState(mockBoard);
+  const [board, setBoard] = useState(defaultBoard);
 
   const getBoard = async () => {
     try {
-      const response = await notesApi.getNotesByUser(user.token);
+      // const response = await notesApi.getNotesByUser(user.token);
+      // const responseJson = await response.json();
+      // console.log("REST API response: ", responseJson);
+      // setBoard(responseJson);
+      const response = await boardApi.getBoard(user.token);
       const responseJson = await response.json();
-      console.log("REST API response: ", responseJson);
+      console.log("REST API response:", responseJson);
       setBoard(responseJson);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const editBoard = async () => {
+    try {
+      const response = await boardApi.editBoard(user.token, board);
+      const responseJson = await response.json();
+      console.log("REST API response:", responseJson);
+      //setBoard(responseJson);
     } catch (err) {
       console.log(err);
     }
@@ -33,9 +49,19 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     //getNotes();
   }, [user]);
 
+  // useEffect(() => {
+  //   console.log("Board: ", board);
+  //   boardApi.getBoard();
+  // });
+
   useEffect(() => {
-    console.log("Board: ", board);
-  });
+    getBoard();
+  }, []);
+
+  useEffect(() => {
+    editBoard();
+    console.log("State: ", board);
+  }, [board]);
 
   // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
   useEffect(() => {
@@ -170,7 +196,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
                           )}
                         >
                           <Listing
-                            data={item}
+                            data={item.listing}
                             onClickIcon={removeFavorite}
                             isFavorited={true}
                           />
