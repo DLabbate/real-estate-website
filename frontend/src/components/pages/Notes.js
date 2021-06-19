@@ -6,17 +6,12 @@ import "./Notes.css";
 import * as boardApi from "../../utils/api/board-api";
 
 const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
-  // const defaultBoard = {
-  //   columns: [
-  //     { columnName: "queue", items: [] },
-  //     { columnName: "notInterested", items: [] },
-  //     { columnName: "interested", items: [] },
-  //     { columnName: "offers", items: [] },
-  //   ],
-  // };
-  const defaultBoard = null;
-  const [board, setBoard] = useState(defaultBoard);
+  const [board, setBoard] = useState(null);
 
+  /**
+   * Sends a GET request to the backend to retrieve the user's board
+   * Also updates the "board" state
+   */
   const getBoard = async () => {
     try {
       const response = await boardApi.getBoard(user.token);
@@ -28,23 +23,25 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     }
   };
 
+  /**
+   * Sends a PATCH request to the backend
+   */
   const editBoard = async () => {
     try {
       const response = await boardApi.editBoard(user.token, board);
       const responseJson = await response.json();
       console.log("[PATCH] REST API response:", responseJson);
-      //setBoard(responseJson);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // Initialization
+  // Initialization of the "board" state
   useEffect(() => {
     getBoard();
   }, []);
 
-  // Whenever our user info changes, we should retrieve our update board state
+  // Whenever the user info changes, we should retrieve and update the "board" state
   useEffect(() => {
     getBoard();
   }, [user]);
@@ -59,17 +56,13 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
   }, [board]);
 
   const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
+    // Some basic styles to make the items look a bit nicer
     userSelect: "none",
-    // padding: grid * 2,
-    // margin: `0 0 ${grid}px 0`,
 
-    // change background colour if dragging
+    // Change background colour if dragging
     background: isDragging ? "rgb(210, 210, 210)" : "transparent",
-    // margin: "10px",
-    // padding: "10px",
 
-    // styles we need to apply on draggables
+    // Styles we need to apply on draggables
     ...draggableStyle,
   });
 
