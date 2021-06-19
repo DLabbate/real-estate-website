@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./Form.css";
 import Button from "../shared/Button";
@@ -13,7 +13,10 @@ import PlacesAutocomplete, {
 
 const ListingForm = ({ user, setUser }) => {
   const [address, setAddress] = useState("");
-  const handleSelect = async (value) => {};
+  const handleSelect = async (value) => {
+    console.log(value);
+    //setAddress(value);
+  };
 
   const initalValues = {
     address: "",
@@ -93,7 +96,7 @@ const ListingForm = ({ user, setUser }) => {
           validationSchema={validate}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting, setFieldValue }) => (
+          {({ isSubmitting, setFieldValue, values }) => (
             <Form className="form__container">
               <div className="form__title">
                 <h3>Create Listing</h3>
@@ -106,9 +109,14 @@ const ListingForm = ({ user, setUser }) => {
                 maxLength={40}
               /> */}
               <PlacesAutocomplete
-                value={address}
-                onChange={setAddress}
-                onSelect={handleSelect}
+                value={values.address}
+                onChange={(address) => {
+                  setFieldValue("address", address);
+                }}
+                onSelect={(address) => {
+                  console.log("Selected the following address: ", address);
+                  setFieldValue("address", address);
+                }}
               >
                 {({
                   getInputProps,
@@ -116,15 +124,17 @@ const ListingForm = ({ user, setUser }) => {
                   getSuggestionItemProps,
                   loading,
                 }) => (
-                  <div>
+                  <div className="address-container">
                     <input
                       {...getInputProps({
+                        name: "address",
                         placeholder: "Address",
-                        className: "form__field form__field--lightgrey",
+                        className: "form__field form__field--lightgrey ",
                       })}
                     />
 
                     <div>{loading ? <div>...loading</div> : null}</div>
+
                     {suggestions.map((suggestion) => {
                       const className = suggestion.active
                         ? "suggestion-item--active"
