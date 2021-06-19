@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import * as notesApi from "../../utils/api/notes-api";
 import Listing from "../shared/Listing";
-import * as userApi from "../../utils/api/user-api";
 import update from "immutability-helper";
 import "./Notes.css";
-import { mockBoard } from "../../constants/mock";
 import * as boardApi from "../../utils/api/board-api";
 
 const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
@@ -21,10 +18,6 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
 
   const getBoard = async () => {
     try {
-      // const response = await notesApi.getNotesByUser(user.token);
-      // const responseJson = await response.json();
-      // console.log("REST API response: ", responseJson);
-      // setBoard(responseJson);
       const response = await boardApi.getBoard(user.token);
       const responseJson = await response.json();
       console.log("REST API response:", responseJson);
@@ -136,7 +129,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
   const onDragEnd = (result) => {
     const { source, destination } = result;
 
-    // dropped outside the list
+    // Dropped outside the list
     if (!destination) {
       return;
     }
