@@ -87,18 +87,20 @@ exports.addToQueue = async (userId, noteId) => {
  * Removes a note from all columns (e.g. when a user unfavorites a listing)
  */
 exports.removeNoteFromColumns = async (userId, noteId) => {
-  const boardDocument = await Board.findOne({ user: userId }).exec();
-
-  console.log("Board Document", boardDocument.toObject());
-  boardDocument.columns.forEach((column) => {
-    let indexToRemove = column.items.findIndex((note) => note._id === noteId);
-
-    if (indexToRemove) {
-      column.items.splice(indexToRemove, 1);
-    }
-  });
-
-  return await boardDocument.save();
+  // const boardDocument = await Board.findOne({ user: userId }).exec();
+  // console.log("Board Document", boardDocument.toObject());
+  // boardDocument.columns.forEach((column) => {
+  //   let indexToRemove = column.items.findIndex((note) => note._id === noteId);
+  //   if (indexToRemove) {
+  //     column.items.splice(indexToRemove, 1);
+  //   }
+  // });
+  // return await boardDocument.save();
+  const boards = await Board.updateMany(
+    { user: userId },
+    { $pull: { "columns.$[].items": noteId } }
+  ).exec();
+  return boards;
 };
 
 /**

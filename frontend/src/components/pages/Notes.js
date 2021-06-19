@@ -6,21 +6,22 @@ import "./Notes.css";
 import * as boardApi from "../../utils/api/board-api";
 
 const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
-  const defaultBoard = {
-    columns: [
-      { columnName: "queue", items: [] },
-      { columnName: "notInterested", items: [] },
-      { columnName: "interested", items: [] },
-      { columnName: "offers", items: [] },
-    ],
-  };
+  // const defaultBoard = {
+  //   columns: [
+  //     { columnName: "queue", items: [] },
+  //     { columnName: "notInterested", items: [] },
+  //     { columnName: "interested", items: [] },
+  //     { columnName: "offers", items: [] },
+  //   ],
+  // };
+  const defaultBoard = null;
   const [board, setBoard] = useState(defaultBoard);
 
   const getBoard = async () => {
     try {
       const response = await boardApi.getBoard(user.token);
       const responseJson = await response.json();
-      console.log("REST API response:", responseJson);
+      console.log("[GET] REST API response:", responseJson);
       setBoard(responseJson);
     } catch (err) {
       console.log(err);
@@ -31,7 +32,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     try {
       const response = await boardApi.editBoard(user.token, board);
       const responseJson = await response.json();
-      console.log("REST API response:", responseJson);
+      console.log("[PATCH] REST API response:", responseJson);
       //setBoard(responseJson);
     } catch (err) {
       console.log(err);
@@ -43,21 +44,19 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     getBoard();
   }, []);
 
-  // Whenever our user info changes, we should retrieve our updated board
+  // Whenever our user info changes, we should retrieve our update board state
   useEffect(() => {
     getBoard();
   }, [user]);
 
   // Whenever we make a drag/drop action, the backend should be updated accordingly
   useEffect(() => {
-    editBoard();
+    // Make sure board is not null
+    if (board) {
+      editBoard();
+    }
     console.log("State: ", board);
   }, [board]);
-
-  // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
 
   const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
@@ -66,7 +65,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     // margin: `0 0 ${grid}px 0`,
 
     // change background colour if dragging
-    background: isDragging ? "lightgrey" : "transparent",
+    background: isDragging ? "rgb(210, 210, 210)" : "transparent",
     // margin: "10px",
     // padding: "10px",
 
@@ -92,7 +91,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
         },
       },
     });
-    console.log("Updated Board: ", updatedNotes);
+    console.log("[Reordering Column] Updated Board: ", updatedNotes);
     setBoard(updatedNotes);
   };
 
@@ -122,7 +121,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
         },
       },
     });
-    console.log("Updated Board: ", updatedNotes);
+    console.log("[Moving to Different Column] Updated Board: ", updatedNotes);
     setBoard(updatedNotes);
   };
 
@@ -159,8 +158,8 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     }
   };
 
-  return (
-    <div className="notes-container">
+  const renderDragDropContext = () => {
+    return (
       <DragDropContext onDragEnd={onDragEnd}>
         {board.columns.map((column) => (
           <Droppable droppableId={column.columnName} key={column.columnName}>
@@ -203,8 +202,22 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
           </Droppable>
         ))}
       </DragDropContext>
-    </div>
-  );
+    );
+  };
+
+  const renderLoading = () => {
+    return <></>;
+  };
+
+  const renderBoard = () => {
+    if (board) {
+      return renderDragDropContext();
+    } else {
+      return renderLoading();
+    }
+  };
+
+  return <div className="notes-container">{renderBoard()}</div>;
 };
 
 export default Notes;
