@@ -5,7 +5,7 @@ const boardSchema = mongoose.Schema({
   user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   columns: [
     {
-      columnName: { type: String },
+      columnName: { type: String, immutable: true },
       items: [{ type: mongoose.Types.ObjectId, ref: "Note" }],
     },
   ],

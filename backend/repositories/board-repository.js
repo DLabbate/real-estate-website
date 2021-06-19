@@ -75,7 +75,7 @@ exports.addToQueue = async (userId, noteId) => {
   return await await Board.findOneAndUpdate(
     { user: userId },
     { $push: { "columns.0.items": noteId } }
-  );
+  ).exec();
 };
 
 /**
