@@ -132,6 +132,16 @@ input[type="file"]::file-selector-button {
   flex-direction: column;
 }
 
+.suggestion-item--active {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+.suggestion-item {
+  background-color: white;
+  cursor: pointer;
+}
+
 @media screen and (max-width: calc(500px / 0.9)) {
   .form {
     width: 90vw;

@@ -5,8 +5,16 @@ import Button from "../shared/Button";
 import * as Yup from "yup";
 import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-places-autocomplete";
 
 const ListingForm = ({ user, setUser }) => {
+  const [address, setAddress] = useState("");
+  const handleSelect = async (value) => {};
+
   const initalValues = {
     address: "",
     price: "",
@@ -90,13 +98,48 @@ const ListingForm = ({ user, setUser }) => {
               <div className="form__title">
                 <h3>Create Listing</h3>
               </div>
-              <Field
+              {/* <Field
                 type="text"
                 name="address"
                 className="form__field form__field--lightgrey"
                 placeholder="Address"
                 maxLength={40}
-              />
+              /> */}
+              <PlacesAutocomplete
+                value={address}
+                onChange={setAddress}
+                onSelect={handleSelect}
+              >
+                {({
+                  getInputProps,
+                  suggestions,
+                  getSuggestionItemProps,
+                  loading,
+                }) => (
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: "Address",
+                        className: "form__field form__field--lightgrey",
+                      })}
+                    />
+
+                    <div>{loading ? <div>...loading</div> : null}</div>
+                    {suggestions.map((suggestion) => {
+                      const className = suggestion.active
+                        ? "suggestion-item--active"
+                        : "suggestion-item";
+                      return (
+                        <div
+                          {...getSuggestionItemProps(suggestion, { className })}
+                        >
+                          {suggestion.description}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </PlacesAutocomplete>
               <ErrorMessage
                 name="address"
                 component="div"
