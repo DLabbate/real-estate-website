@@ -45,18 +45,14 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     }
   };
 
-  useEffect(() => {
-    //getNotes();
-  }, [user]);
-
-  // useEffect(() => {
-  //   console.log("Board: ", board);
-  //   boardApi.getBoard();
-  // });
-
+  // Initialization
   useEffect(() => {
     getBoard();
   }, []);
+
+  useEffect(() => {
+    getBoard();
+  }, [user]);
 
   useEffect(() => {
     editBoard();
