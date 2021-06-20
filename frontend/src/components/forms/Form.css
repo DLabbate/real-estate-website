@@ -39,11 +39,6 @@
   position: relative;
 }
 
-.form__field--absolute {
-  position: absolute;
-  z-index: 2;
-}
-
 .form__field {
   margin: 10px;
   padding: 10px;
@@ -144,6 +139,10 @@ input[type="file"]::file-selector-button {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.suggestion-container {
+  width: 90%;
 }
 
 .suggestion-item--active {

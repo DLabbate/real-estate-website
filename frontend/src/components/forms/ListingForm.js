@@ -17,17 +17,33 @@ const ListingForm = ({ user, setUser }) => {
     console.log(value);
     //setAddress(value);
   };
+  const [coordinates, setCoordinates] = useState({
+    lat: null,
+    lng: null,
+  });
 
   const initalValues = {
     address: "",
+    coordinates: { lat: null, lng: null },
     price: "",
     image: "",
   };
 
   const validate = Yup.object({
     address: Yup.string()
-      .max(40, "Must be 40 characters or less")
-      .required("Address is required"),
+      .max(80, "Must be 80 characters or less")
+      .required("Address is required")
+      .test(
+        "location",
+        "Please select a valid address from the list",
+        (value) => {
+          if (coordinates.lat && coordinates.lng) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      ),
     price: Yup.number()
       .max(999999999, "Exceeded max value of $999,999,999")
       .required("Price is required")
@@ -60,8 +76,8 @@ const ListingForm = ({ user, setUser }) => {
         values.address,
         values.price,
         values.image,
-        78,
-        43
+        coordinates.lat,
+        coordinates.lng
       );
       const responseJson = await response.json();
       console.log("REST API Response: ", responseJson);
@@ -113,9 +129,13 @@ const ListingForm = ({ user, setUser }) => {
                 onChange={(address) => {
                   setFieldValue("address", address);
                 }}
-                onSelect={(address) => {
+                onSelect={async (address) => {
                   console.log("Selected the following address: ", address);
                   setFieldValue("address", address);
+                  const results = await geocodeByAddress(address);
+                  const coordinates = await getLatLng(results[0]);
+                  console.log(coordinates);
+                  setCoordinates(coordinates);
                 }}
               >
                 {({
@@ -130,23 +150,29 @@ const ListingForm = ({ user, setUser }) => {
                         name: "address",
                         placeholder: "Address",
                         className: "form__field form__field--lightgrey ",
+                        maxLength: 80,
                       })}
                     />
 
-                    <div>{loading ? <div>...loading</div> : null}</div>
-
-                    {suggestions.map((suggestion) => {
-                      const className = suggestion.active
-                        ? "suggestion-item--active"
-                        : "suggestion-item";
-                      return (
-                        <div
-                          {...getSuggestionItemProps(suggestion, { className })}
-                        >
-                          {suggestion.description}
-                        </div>
-                      );
-                    })}
+                    <div className="suggestion-container">
+                      {loading ? <div>...loading</div> : null}
+                      {suggestions.map((suggestion) => {
+                        const className = suggestion.active
+                          ? "suggestion-item--active"
+                          : "suggestion-item";
+                        const key = suggestion.description;
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              className,
+                              key,
+                            })}
+                          >
+                            {suggestion.description}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </PlacesAutocomplete>
@@ -181,17 +207,6 @@ const ListingForm = ({ user, setUser }) => {
                 component="div"
                 className="form__error"
               />
-              {/* <Field
-                type="file"
-                name="image"
-                className="form__field"
-                maxLength={9}
-              />
-              <ErrorMessage
-                name="image"
-                component="div"
-                className="form__error"
-              /> */}
               <Button
                 text={"Submit"}
                 width={"90%"}
