@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Browse.css";
 import Listing from "../shared/Listing";
-import { mockProperties } from "../../constants/mock.js";
 import * as listingApi from "../../utils/api/listing-api";
-import * as userApi from "../../utils/api/user-api";
 import update from "immutability-helper";
+import "../forms/SearchForm";
+import SearchForm from "../forms/SearchForm";
 
 const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
   const [listings, setListings] = useState([]);
@@ -42,7 +42,7 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
 
   return (
     <>
-      <div className="filter">
+      {/* <div className="filter">
         <div className="filter__row filter__row--large">
           <input
             type="search"
@@ -59,7 +59,8 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
           <p>-</p>
           <input className="filter__input" placeholder="Max. Price"></input>
         </div>
-      </div>
+      </div> */}
+      <SearchForm />
       <div className="properties">{renderListings()}</div>
     </>
   );
