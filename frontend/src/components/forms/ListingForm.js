@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "./Form.css";
 import Button from "../shared/Button";
 import * as Yup from "yup";
 import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng,
-} from "react-places-autocomplete";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import AddressInput from "./AddressInput";
 
 const ListingForm = ({ user, setUser }) => {
-  const [address, setAddress] = useState("");
-  const handleSelect = async (value) => {
-    console.log(value);
-    //setAddress(value);
-  };
-  const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lng: null,
-  });
-
   const initalValues = {
     address: "",
     coordinates: { lat: null, lng: null },
@@ -36,8 +23,9 @@ const ListingForm = ({ user, setUser }) => {
       .test(
         "location",
         "Please select a valid address from the list",
-        (value) => {
-          if (coordinates.lat && coordinates.lng) {
+        function () {
+          const { lat, lng } = this.parent["coordinates"];
+          if (lat && lng) {
             return true;
           } else {
             return false;
@@ -76,8 +64,8 @@ const ListingForm = ({ user, setUser }) => {
         values.address,
         values.price,
         values.image,
-        coordinates.lat,
-        coordinates.lng
+        values.coordinates.lat,
+        values.coordinates.lng
       );
       const responseJson = await response.json();
       console.log("REST API Response: ", responseJson);
@@ -117,14 +105,7 @@ const ListingForm = ({ user, setUser }) => {
               <div className="form__title">
                 <h3>Create Listing</h3>
               </div>
-              {/* <Field
-                type="text"
-                name="address"
-                className="form__field form__field--lightgrey"
-                placeholder="Address"
-                maxLength={40}
-              /> */}
-              <PlacesAutocomplete
+              <AddressInput
                 value={values.address}
                 onChange={(address) => {
                   setFieldValue("address", address);
@@ -135,47 +116,9 @@ const ListingForm = ({ user, setUser }) => {
                   const results = await geocodeByAddress(address);
                   const coordinates = await getLatLng(results[0]);
                   console.log(coordinates);
-                  setCoordinates(coordinates);
+                  setFieldValue("coordinates", coordinates);
                 }}
-              >
-                {({
-                  getInputProps,
-                  suggestions,
-                  getSuggestionItemProps,
-                  loading,
-                }) => (
-                  <div className="address-container">
-                    <input
-                      {...getInputProps({
-                        name: "address",
-                        placeholder: "Address",
-                        className: "form__field form__field--lightgrey ",
-                        maxLength: 80,
-                      })}
-                    />
-
-                    <div className="suggestion-container">
-                      {loading ? <div>...loading</div> : null}
-                      {suggestions.map((suggestion) => {
-                        const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        const key = suggestion.description;
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, {
-                              className,
-                              key,
-                            })}
-                          >
-                            {suggestion.description}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </PlacesAutocomplete>
+              />
               <ErrorMessage
                 name="address"
                 component="div"
@@ -194,7 +137,6 @@ const ListingForm = ({ user, setUser }) => {
               />
               <input
                 className="form__file"
-                id="image"
                 name="image"
                 type="file"
                 onChange={(event) => {

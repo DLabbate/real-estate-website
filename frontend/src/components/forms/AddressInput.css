@@ -1,0 +1,13 @@
+.suggestion-container {
+  width: 90%;
+}
+
+.suggestion-item--active {
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+.suggestion-item {
+  background-color: white;
+  cursor: pointer;
+}
