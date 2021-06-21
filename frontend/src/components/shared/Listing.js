@@ -52,8 +52,8 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
         className="listing__image"
       ></img>
       <div className="listing__details">
-        <h3>${Number(price).toLocaleString()}</h3>
-        <h5>{address}</h5>
+        <h4>${Number(price).toLocaleString()}</h4>
+        <h6>{address}</h6>
         {renderContactInfo()}
       </div>
       {renderIcon()}
