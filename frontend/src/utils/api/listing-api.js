@@ -67,15 +67,17 @@ export const searchListings = async (token, queryParams) => {
       queryArray.push(
         `coordinates=${queryParams.coordinates.lng},${queryParams.coordinates.lat}`
       );
+      if (queryParams.radius) {
+        queryArray.push(`radius=${queryParams.radius * 1000}`);
+      }
     }
   }
 
-  if (queryParams.radius) {
-    queryArray.push(`radius=${queryParams.radius * 1000}`);
-  }
-
   const queryString = queryArray.join("&");
-  console.log(queryString);
+  console.log(
+    "Querying for listings with the following filters: ",
+    queryString
+  );
 
   var requestOptions = {
     method: "GET",

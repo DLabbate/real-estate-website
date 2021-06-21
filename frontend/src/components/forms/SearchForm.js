@@ -6,88 +6,106 @@ import AddressInput from "./AddressInput";
 import * as listingApi from "../../utils/api/listing-api";
 
 const SearchForm = ({ user, setListings }) => {
-  const [filterParams, setFilterParams] = useState({
-    address: "",
-    coordinates: { lat: null, lng: null },
-    radius: 5, // in km
-    minPrice: "",
-    maxPrice: "",
-  });
-
-  const setField = async (fieldName, newValue) => {
-    const newFilterParams = update(filterParams, {
-      [fieldName]: { $set: newValue },
-    });
-    setFilterParams(newFilterParams);
-  };
+  const [address, setAddress] = useState("");
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
+  const [radius, setRadius] = useState(5); // in km
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const onChangeAddress = async (address) => {
-    setField("address", address);
+    setAddress(address);
   };
 
   const onSelectAddress = async (address) => {
-    console.log("Selected the following address: ", address);
-    setField("address", address);
+    setAddress(address);
 
     const results = await geocodeByAddress(address);
     const coordinates = await getLatLng(results[0]);
-    console.log(coordinates);
 
-    const newFilterParams = update(filterParams, {
-      address: { $set: address },
-      coordinates: { $set: coordinates },
-    });
-    setFilterParams(newFilterParams);
+    setCoordinates(coordinates);
   };
 
   const onChangeRadius = async (event) => {
-    setField("radius", event.target.value);
+    setRadius(event.target.value);
+  };
+
+  const onChangePriceFilter = async (event, callback) => {
+    let numberFormat = event.target.value.replace(/\D/g, "");
+
+    if (numberFormat === "") {
+      callback("");
+    } else {
+      // Strip of all non-numeric characters
+      let numberLocaleString = Number(numberFormat).toLocaleString();
+      callback(`$${numberLocaleString}`);
+    }
   };
 
   const onChangeMinPrice = async (event) => {
-    setField("minPrice", event.target.value);
+    onChangePriceFilter(event, setMinPrice);
   };
 
   const onChangeMaxPrice = async (event) => {
-    setField("maxPrice", event.target.value);
+    onChangePriceFilter(event, setMaxPrice);
+  };
+
+  /**
+   * Formats a price string (e.g. "$123,456") to a number (e.g. 123456)
+   */
+  const formatPrice = (priceString) => {
+    return parseInt(priceString.replace(/\D/g, ""));
+  };
+
+  const getFilterParams = () => {
+    return {
+      address,
+      coordinates,
+      radius,
+      minPrice: formatPrice(minPrice),
+      maxPrice: formatPrice(maxPrice),
+    };
   };
 
   const getListings = async () => {
     try {
+      const filterParams = getFilterParams();
       const response = await listingApi.searchListings(
         user.token,
         filterParams
       );
-      const responseJson = await response.json();
-      setListings(responseJson);
+      if (response.ok) {
+        const responseJson = await response.json();
+        setListings(responseJson);
+      } else {
+        console.log("Error searching for listings");
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
+    const filterParams = getFilterParams();
     console.log("Filter Params: ", filterParams);
     getListings();
-  }, [filterParams]);
+  }, [address, coordinates, radius, minPrice, maxPrice]);
 
   return (
     <div className="filter">
       <div className="filter__row">
         <AddressInput
-          value={filterParams.address}
+          value={address}
           onChange={onChangeAddress}
           onSelect={onSelectAddress}
           suggestionContainerAbsolute={true}
         />
       </div>
       <div className="filter__row">
-        <label className="filter__slider-label">
-          Radius ({filterParams.radius}km)
-        </label>
+        <label className="filter__slider-label">Radius ({radius}km)</label>
         <input
           type="range"
           className="filter__slider"
-          value={filterParams.radius}
+          value={radius}
           min={1}
           max={10}
           step={1}
@@ -96,17 +114,19 @@ const SearchForm = ({ user, setListings }) => {
       </div>
       <div className="filter__row">
         <input
-          value={filterParams.minPrice}
+          value={minPrice}
           className="filter__input"
           placeholder="Min. Price"
           onChange={onChangeMinPrice}
+          maxLength={12}
         ></input>
         <p>-</p>
         <input
-          value={filterParams.maxPrice}
+          value={maxPrice}
           className="filter__input"
           placeholder="Max. Price"
           onChange={onChangeMaxPrice}
+          maxLength={12}
         ></input>
       </div>
     </div>
