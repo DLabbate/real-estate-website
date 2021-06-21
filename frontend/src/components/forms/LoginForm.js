@@ -18,7 +18,7 @@ const LoginForm = () => {
 
   let history = useHistory();
 
-  const initalValues = {
+  const initialValues = {
     email: "",
     password: "",
   };
@@ -97,7 +97,7 @@ const LoginForm = () => {
     <>
       <div className="form">
         <Formik
-          initialValues={initalValues}
+          initialValues={initialValues}
           validationSchema={validate}
           onSubmit={onSubmit}
         >

@@ -3,7 +3,16 @@ import PlacesAutocomplete from "react-places-autocomplete";
 import "./Form.css";
 import "./AddressInput.css";
 
-const AddressInput = ({ value, onChange, onSelect }) => {
+const AddressInput = ({
+  value,
+  onChange,
+  onSelect,
+  suggestionContainerAbsolute,
+}) => {
+  const suggestionContainerClass = suggestionContainerAbsolute
+    ? "suggestion-container suggestion-container--absolute"
+    : "suggestion-container";
+
   return (
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect}>
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -16,11 +25,11 @@ const AddressInput = ({ value, onChange, onSelect }) => {
               maxLength: 80,
             })}
           />
-          <div className="suggestion-container">
+          <div className={suggestionContainerClass}>
             {loading ? <div>...loading</div> : null}
             {suggestions.map((suggestion) => {
               const className = suggestion.active
-                ? "suggestion-item--active"
+                ? "suggestion-item suggestion-item--active"
                 : "suggestion-item";
               const key = suggestion.description;
               return (
