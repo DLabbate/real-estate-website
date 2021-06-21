@@ -60,7 +60,7 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
           <input className="filter__input" placeholder="Max. Price"></input>
         </div>
       </div> */}
-      <SearchForm />
+      <SearchForm user={user} setListings={setListings} />
       <div className="properties">{renderListings()}</div>
     </>
   );

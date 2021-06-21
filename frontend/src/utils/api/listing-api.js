@@ -63,16 +63,19 @@ export const searchListings = async (token, queryParams) => {
   }
 
   if (queryParams.coordinates) {
-    queryArray.push(
-      `coordinates=${queryParams.coordinates[0]},${queryParams.coordinates[1]}`
-    );
+    if (queryParams.coordinates.lat && queryParams.coordinates.lng) {
+      queryArray.push(
+        `coordinates=${queryParams.coordinates.lng},${queryParams.coordinates.lat}`
+      );
+    }
   }
 
   if (queryParams.radius) {
-    queryArray.push(`radius=${queryParams.minPrice}`);
+    queryArray.push(`radius=${queryParams.radius * 1000}`);
   }
 
   const queryString = queryArray.join("&");
+  console.log(queryString);
 
   var requestOptions = {
     method: "GET",

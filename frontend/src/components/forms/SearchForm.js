@@ -3,8 +3,9 @@ import "./SearchForm.css";
 import update from "immutability-helper";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AddressInput from "./AddressInput";
+import * as listingApi from "../../utils/api/listing-api";
 
-const SearchForm = () => {
+const SearchForm = ({ user, setListings }) => {
   const [filterParams, setFilterParams] = useState({
     address: "",
     coordinates: { lat: null, lng: null },
@@ -52,6 +53,19 @@ const SearchForm = () => {
     }
   };
 
+  const getListings = async () => {
+    try {
+      const response = await listingApi.searchListings(
+        user.token,
+        filterParams
+      );
+      const responseJson = await response.json();
+      setListings(responseJson);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   /**
    * Every time the address changes, update the coordinates
    */
@@ -61,7 +75,8 @@ const SearchForm = () => {
 
   useEffect(() => {
     console.log("Filter Params: ", filterParams);
-  });
+    getListings();
+  }, [filterParams]);
 
   return (
     <div className="filter">
