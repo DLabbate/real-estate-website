@@ -3,8 +3,8 @@ import "./Browse.css";
 import Listing from "../shared/Listing";
 import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";
-import "../forms/SearchForm";
-import SearchForm from "../forms/SearchForm";
+import "../filters/SearchFilter";
+import SearchFilter from "../filters/SearchFilter";
 
 const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
   const [listings, setListings] = useState([]);
@@ -60,7 +60,7 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
           <input className="filter__input" placeholder="Max. Price"></input>
         </div>
       </div> */}
-      <SearchForm user={user} setListings={setListings} />
+      <SearchFilter user={user} setListings={setListings} />
       <div className="properties">{renderListings()}</div>
     </>
   );

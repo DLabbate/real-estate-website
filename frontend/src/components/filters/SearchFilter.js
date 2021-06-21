@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./SearchForm.css";
+import "./SearchFilter.css";
 import update from "immutability-helper";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import AddressInput from "./AddressInput";
+import AddressInput from "../forms/AddressInput";
 import * as listingApi from "../../utils/api/listing-api";
 
-const SearchForm = ({ user, setListings }) => {
+const SearchFilter = ({ user, setListings }) => {
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({ lat: null, lng: null });
   const [radius, setRadius] = useState(5); // in km
@@ -133,4 +133,4 @@ const SearchForm = ({ user, setListings }) => {
   );
 };
 
-export default SearchForm;
+export default SearchFilter;
