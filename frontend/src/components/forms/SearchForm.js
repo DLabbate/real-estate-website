@@ -6,6 +6,7 @@ import AddressInput from "./AddressInput";
 import * as listingApi from "../../utils/api/listing-api";
 
 const SearchForm = ({ user, setListings }) => {
+  const [address, setAddress] = useState("");
   const [filterParams, setFilterParams] = useState({
     address: "",
     coordinates: { lat: null, lng: null },
@@ -28,6 +29,16 @@ const SearchForm = ({ user, setListings }) => {
   const onSelectAddress = async (address) => {
     console.log("Selected the following address: ", address);
     setField("address", address);
+
+    const results = await geocodeByAddress(address);
+    const coordinates = await getLatLng(results[0]);
+    console.log(coordinates);
+
+    const newFilterParams = update(filterParams, {
+      address: { $set: address },
+      coordinates: { $set: coordinates },
+    });
+    setFilterParams(newFilterParams);
   };
 
   const onChangeRadius = async (event) => {
@@ -42,16 +53,16 @@ const SearchForm = ({ user, setListings }) => {
     setField("maxPrice", event.target.value);
   };
 
-  const updateCoordinates = async (address) => {
-    if (filterParams.address) {
-      const results = await geocodeByAddress(address);
-      const coordinates = await getLatLng(results[0]);
-      console.log(coordinates);
+  // const updateCoordinates = async (address) => {
+  //   if (filterParams.address) {
+  //     const results = await geocodeByAddress(address);
+  //     const coordinates = await getLatLng(results[0]);
+  //     console.log(coordinates);
 
-      //Update coordinates
-      setField("coordinates", coordinates);
-    }
-  };
+  //     //Update coordinates
+  //     setField("coordinates", coordinates);
+  //   }
+  // };
 
   const getListings = async () => {
     try {
@@ -69,9 +80,9 @@ const SearchForm = ({ user, setListings }) => {
   /**
    * Every time the address changes, update the coordinates
    */
-  useEffect(() => {
-    updateCoordinates(filterParams.address);
-  }, [filterParams.address]);
+  // useEffect(() => {
+  //   updateCoordinates(filterParams.address);
+  // }, [filterParams.address]);
 
   useEffect(() => {
     console.log("Filter Params: ", filterParams);
