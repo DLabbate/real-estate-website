@@ -4,6 +4,7 @@ import update from "immutability-helper";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AddressInput from "../forms/AddressInput";
 import * as listingApi from "../../utils/api/listing-api";
+import * as priceHelper from "../../utils/helpers/price-helper";
 
 const SearchFilter = ({ user, setListings }) => {
   const [address, setAddress] = useState("");
@@ -29,31 +30,14 @@ const SearchFilter = ({ user, setListings }) => {
     setRadius(event.target.value);
   };
 
-  const onChangePriceFilter = async (event, callback) => {
-    let numberFormat = event.target.value.replace(/\D/g, "");
-
-    if (numberFormat === "") {
-      callback("");
-    } else {
-      // Strip of all non-numeric characters
-      let numberLocaleString = Number(numberFormat).toLocaleString();
-      callback(`$${numberLocaleString}`);
-    }
-  };
-
   const onChangeMinPrice = async (event) => {
-    onChangePriceFilter(event, setMinPrice);
+    const priceString = priceHelper.formatPriceString(event.target.value);
+    setMinPrice(priceString);
   };
 
   const onChangeMaxPrice = async (event) => {
-    onChangePriceFilter(event, setMaxPrice);
-  };
-
-  /**
-   * Formats a price string (e.g. "$123,456") to a number (e.g. 123456)
-   */
-  const formatPrice = (priceString) => {
-    return parseInt(priceString.replace(/\D/g, ""));
+    const priceString = priceHelper.formatPriceString(event.target.value);
+    setMaxPrice(priceString);
   };
 
   const getFilterParams = () => {
@@ -61,8 +45,8 @@ const SearchFilter = ({ user, setListings }) => {
       address,
       coordinates,
       radius,
-      minPrice: formatPrice(minPrice),
-      maxPrice: formatPrice(maxPrice),
+      minPrice: priceHelper.getPriceNumber(minPrice),
+      maxPrice: priceHelper.getPriceNumber(maxPrice),
     };
   };
 
