@@ -7,6 +7,7 @@ import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AddressInput from "./AddressInput";
+import * as priceHelper from "../../utils/helpers/price-helper";
 
 const ListingForm = ({ user, setUser }) => {
   const initalValues = {
@@ -32,11 +33,9 @@ const ListingForm = ({ user, setUser }) => {
           }
         }
       ),
-    price: Yup.number()
-      .max(999999999, "Exceeded max value of $999,999,999")
-      .required("Price is required")
-      .positive()
-      .integer(),
+    price: Yup.string()
+      .max(12, "Exceeded max value of $999,999,999")
+      .required("Price is required"),
     image: Yup.mixed()
       .required("Image is required")
       .test(
@@ -89,7 +88,10 @@ const ListingForm = ({ user, setUser }) => {
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
     console.log(values);
-    createListing(values);
+
+    // Convert price to Number
+    const priceNumber = priceHelper.getPriceNumber(values.price);
+    createListing({ ...values, price: priceNumber });
   };
 
   return (
@@ -125,10 +127,16 @@ const ListingForm = ({ user, setUser }) => {
                 className="form__error"
               />
               <Field
-                type="number"
                 name="price"
                 className="form__field form__field--lightgrey"
                 placeholder="Price"
+                maxLength={12}
+                onChange={(event) => {
+                  setFieldValue(
+                    "price",
+                    priceHelper.formatPriceString(event.target.value)
+                  );
+                }}
               />
               <ErrorMessage
                 name="price"
