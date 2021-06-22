@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import { Link, useHistory } from "react-router-dom";
 import { FiCheckCircle, FiXCircle } from "react-icons/fi";
 import * as userApi from "../../utils/api/user-api";
+import * as phoneHelper from "../../utils/helpers/phone-helper";
+import * as nameHelper from "../../utils/helpers/name-helper";
 
 const SignupForm = () => {
   // This state keeps track of if the user has submitted a request to the REST API
@@ -34,8 +36,8 @@ const SignupForm = () => {
       .max(20, "Must be 20 characters or less")
       .required("Last Name is required"),
     phoneNumber: Yup.string()
-      .max(20, "Must be 20 characters or less")
-      .required("Phone Number is required"),
+      .required("Phone Number is required")
+      .length(14, "Must be exactly 14 characters"),
     email: Yup.string()
       .email("Invalid email addresss")
       .max(30, "Must be 30 characters or less")
@@ -114,7 +116,7 @@ const SignupForm = () => {
           validationSchema={validate}
           onSubmit={onSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form className="form__container">
               <Field
                 type="text"
@@ -122,6 +124,10 @@ const SignupForm = () => {
                 className="form__field"
                 placeholder="First Name"
                 maxLength={20}
+                onChange={(event) => {
+                  const firstName = nameHelper.formatName(event.target.value);
+                  setFieldValue("firstName", firstName);
+                }}
               />
               <ErrorMessage
                 name="firstName"
@@ -134,6 +140,10 @@ const SignupForm = () => {
                 className="form__field"
                 placeholder="Last Name"
                 maxLength={20}
+                onChange={(event) => {
+                  const lastName = nameHelper.formatName(event.target.value);
+                  setFieldValue("lastName", lastName);
+                }}
               />
               <ErrorMessage
                 name="lastName"
@@ -145,7 +155,13 @@ const SignupForm = () => {
                 name="phoneNumber"
                 className="form__field"
                 placeholder="Phone Number"
-                maxLength={20}
+                maxLength={14}
+                onChange={(event) => {
+                  const updatedValue = phoneHelper.formatPhoneString(
+                    event.target.value
+                  );
+                  setFieldValue("phoneNumber", updatedValue);
+                }}
               />
               <ErrorMessage
                 name="phoneNumber"
