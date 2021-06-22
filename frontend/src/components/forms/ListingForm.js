@@ -77,7 +77,11 @@ const ListingForm = ({ user, setUser }) => {
         const updatedUser = update(user, {
           publishedListing: { $set: responseJson },
         });
-        setUser(updatedUser);
+
+        // Set timeout for file to be uploaded to AWS S3
+        setTimeout(() => {
+          setUser(updatedUser);
+        }, 200);
       }
     } catch (err) {
       console.log(err);
