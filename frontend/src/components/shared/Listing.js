@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Listing.css";
-import { FiHeart, FiTrash, FiHome } from "react-icons/fi";
+import { FiHeart, FiTrash } from "react-icons/fi";
 
 const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
   const { price, address, owner, _id, imageUrl } = data;

@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import "./Profile.css";
 import { FiMail, FiUser, FiPhone } from "react-icons/fi";
-import Button from "../shared/Button";
 import Listing from "../shared/Listing";
-import { mockProperties } from "../../constants/mock.js";
 import ListingForm from "../forms/ListingForm";
 import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";

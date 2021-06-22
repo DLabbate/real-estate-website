@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./SearchFilter.css";
-import update from "immutability-helper";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import AddressInput from "../forms/AddressInput";
 import * as listingApi from "../../utils/api/listing-api";

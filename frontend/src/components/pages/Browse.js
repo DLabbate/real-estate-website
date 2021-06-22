@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Browse.css";
 import Listing from "../shared/Listing";
 import * as listingApi from "../../utils/api/listing-api";
-import update from "immutability-helper";
 import "../filters/SearchFilter";
 import SearchFilter from "../filters/SearchFilter";
 
