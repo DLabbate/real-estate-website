@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.filter__row {
+.filter__column {
   height: 50px;
   display: flex;
   align-items: center;
@@ -33,12 +33,6 @@
   color: rgb(141, 141, 141);
 }
 
-.filter__slider-label {
-  font-size: 0.9rem;
-  color: rgb(141, 141, 141);
-  /* color: rgb(173, 173, 173); */
-}
-
 .filter__slider {
   width: 65%;
   height: 90%;
@@ -48,6 +42,12 @@
   outline: none;
   border: none;
   background-color: #f5f5f5;
+}
+
+.filter__label {
+  font-size: 0.9rem;
+  color: rgb(141, 141, 141);
+  /* color: rgb(173, 173, 173); */
 }
 
 input[type="range"] {

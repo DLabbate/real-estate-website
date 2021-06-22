@@ -92,7 +92,7 @@ const SearchFilter = ({ user, setListings }) => {
 
   return (
     <div className="filter">
-      <div className="filter__row">
+      <div className="filter__column">
         <AddressInput
           value={address}
           onChange={onChangeAddress}
@@ -100,8 +100,8 @@ const SearchFilter = ({ user, setListings }) => {
           suggestionContainerAbsolute={true}
         />
       </div>
-      <div className="filter__row">
-        <label className="filter__slider-label">Radius ({radius}km)</label>
+      <div className="filter__column">
+        <label className="filter__label">Radius ({radius}km)</label>
         <input
           type="range"
           className="filter__slider"
@@ -112,7 +112,7 @@ const SearchFilter = ({ user, setListings }) => {
           onChange={onChangeRadius}
         ></input>
       </div>
-      <div className="filter__row">
+      <div className="filter__column">
         <input
           value={minPrice}
           className="filter__input"
