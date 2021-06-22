@@ -104,7 +104,6 @@ const LoginForm = () => {
           {({ isSubmitting }) => (
             <Form className="form__container">
               <Field
-                type="email"
                 name="email"
                 className="form__field"
                 placeholder="Email"

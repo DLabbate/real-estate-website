@@ -169,7 +169,6 @@ const SignupForm = () => {
                 className="form__error"
               />
               <Field
-                type="email"
                 name="email"
                 className="form__field"
                 placeholder="Email"
