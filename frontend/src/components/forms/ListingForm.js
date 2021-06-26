@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import * as listingApi from "../../utils/api/listing-api";
 import update from "immutability-helper";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import AddressInput from "./AddressInput";
+import AddressInput from "../inputs/AddressInput";
 import * as priceHelper from "../../utils/helpers/price-helper";
 
 const ListingForm = ({ user, setUser }) => {

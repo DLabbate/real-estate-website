@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SearchFilter.css";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-import AddressInput from "../forms/AddressInput";
+import AddressInput from "../inputs/AddressInput";
 import * as listingApi from "../../utils/api/listing-api";
 import * as priceHelper from "../../utils/helpers/price-helper";
 
