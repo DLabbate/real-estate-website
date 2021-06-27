@@ -8,52 +8,47 @@ import * as boardApi from "../../utils/api/board-api";
 const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
   const [board, setBoard] = useState(null);
 
-  /**
-   * Sends a GET request to the backend to retrieve the user's board
-   * Also updates the "board" state
-   */
-  const getBoard = async () => {
-    try {
-      const response = await boardApi.getBoard(user.token);
-      const responseJson = await response.json();
-      console.log("[GET] REST API response:", responseJson);
-      setBoard(responseJson);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  /**
-   * Sends a PATCH request to the backend
-   */
-  const editBoard = async () => {
-    try {
-      const response = await boardApi.editBoard(user.token, board);
-      const responseJson = await response.json();
-      console.log("[PATCH] REST API response:", responseJson);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // Initialization of the "board" state
-  useEffect(() => {
-    getBoard();
-  }, []);
-
   // Whenever the user info changes, we should retrieve and update the "board" state
   useEffect(() => {
+    /**
+     * Sends a GET request to the backend to retrieve the user's board
+     * Also updates the "board" state
+     */
+    const getBoard = async () => {
+      try {
+        const response = await boardApi.getBoard(user.token);
+        const responseJson = await response.json();
+        console.log("[GET] REST API response:", responseJson);
+        setBoard(responseJson);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     getBoard();
-  }, [user]);
+  }, [user.token]);
 
   // Whenever we make a drag/drop action, the backend should be updated accordingly
   useEffect(() => {
+    /**
+     * Sends a PATCH request to the backend
+     */
+    const editBoard = async () => {
+      try {
+        const response = await boardApi.editBoard(user.token, board);
+        const responseJson = await response.json();
+        console.log("[PATCH] REST API response:", responseJson);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     // Make sure board is not null
     if (board) {
       editBoard();
     }
     console.log("State: ", board);
-  }, [board]);
+  }, [board, user.token]);
 
   const getItemStyle = (isDragging, draggableStyle) => ({
     // Some basic styles to make the items look a bit nicer

@@ -39,39 +39,47 @@ const SearchFilter = ({ user, setListings }) => {
     setMaxPrice(priceString);
   };
 
-  const getFilterParams = () => {
-    return {
-      address,
-      coordinates,
-      radius,
-      minPrice: priceHelper.getPriceNumber(minPrice),
-      maxPrice: priceHelper.getPriceNumber(maxPrice),
-    };
-  };
-
-  const getListings = async () => {
-    try {
-      const filterParams = getFilterParams();
-      const response = await listingApi.searchListings(
-        user.token,
-        filterParams
-      );
-      if (response.ok) {
-        const responseJson = await response.json();
-        setListings(responseJson);
-      } else {
-        console.log("Error searching for listings");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const getFilterParams = () => {
+      return {
+        address,
+        coordinates,
+        radius,
+        minPrice: priceHelper.getPriceNumber(minPrice),
+        maxPrice: priceHelper.getPriceNumber(maxPrice),
+      };
+    };
+
+    const filterListings = async () => {
+      try {
+        const filterParams = getFilterParams();
+        const response = await listingApi.searchListings(
+          user.token,
+          filterParams
+        );
+        if (response.ok) {
+          const responseJson = await response.json();
+          setListings(responseJson);
+        } else {
+          console.log("Error searching for listings");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     const filterParams = getFilterParams();
     console.log("Filter Params: ", filterParams);
-    getListings();
-  }, [address, coordinates, radius, minPrice, maxPrice]);
+    filterListings();
+  }, [
+    address,
+    coordinates,
+    radius,
+    minPrice,
+    maxPrice,
+    setListings,
+    user.token,
+  ]);
 
   return (
     <div className="filter">

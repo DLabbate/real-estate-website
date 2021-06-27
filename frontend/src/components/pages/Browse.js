@@ -8,12 +8,6 @@ import SearchFilter from "../filters/SearchFilter";
 const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
   const [listings, setListings] = useState([]);
 
-  const getListings = async () => {
-    const response = await listingApi.searchListings(user.token, {});
-    const responseJson = await response.json();
-    setListings(responseJson);
-  };
-
   const isListingFavorited = (listingId) => {
     return user.favoriteListings.includes(listingId);
   };
@@ -36,8 +30,14 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
   };
 
   useEffect(() => {
-    getListings();
-  }, [user]);
+    const getAllListings = async () => {
+      const response = await listingApi.searchListings(user.token, {});
+      const responseJson = await response.json();
+      setListings(responseJson);
+    };
+
+    getAllListings();
+  }, [user.token]);
 
   return (
     <>
