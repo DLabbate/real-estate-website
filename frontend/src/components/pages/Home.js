@@ -59,17 +59,20 @@ const Home = () => {
           className="welcome__image"
         />
         <div className="welcome__paragraph-container">
-          <h1 style={{ textAlign: "center" }}>Easy & Intuitive.</h1>
+          <h1 style={{ textAlign: "center" }}>Simple & Intuitive.</h1>
           <p>
-            An minimalist interface that makes it easy to filter homes. Blah
-            Blah Blah.
+            A minimalist approach that removes the headache of house hunting.
+            Your dream home is only a couple clicks away.
           </p>
         </div>
       </div>
       <div className="welcome__row">
         <div className="welcome__paragraph-container">
-          <h1 style={{ textAlign: "center" }}>Easy & Intuitive.</h1>
-          <p>An minimalist interface that makes it easy to filter homes.</p>
+          <h1 style={{ textAlign: "center" }}>Stay Organized.</h1>
+          <p>
+            Our platform offers the ability to keep track of your favorite
+            listings and organize them into different categories with ease!
+          </p>
         </div>
         <img
           src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
