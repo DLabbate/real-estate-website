@@ -9,6 +9,10 @@
   display: flex;
 }
 
+.welcome__banner-container {
+  position: relative;
+}
+
 .welcome__banner {
   position: absolute;
   top: 10%;
@@ -35,12 +39,50 @@
   border-width: 1px;
   border-color: white;
   cursor: pointer;
-
   transition: 400ms;
 }
 
 .welcome__btn--small {
   font-size: 1rem;
+}
+
+.welcome__row {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+}
+
+.welcome__paragraph-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome__info {
+  height: 300px;
+  margin-top: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(236, 236, 236);
+}
+
+.welcome__info-section {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  flex: 1;
+}
+
+.welcome__info-section p {
+  width: 100%;
+  height: 75px;
+  text-align: center;
 }
 
 @media screen and (max-width: 960px) {
