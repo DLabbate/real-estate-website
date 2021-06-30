@@ -4,6 +4,7 @@ import Button from "../shared/Button";
 import "./Home.css";
 import { FiSearch, FiHeart, FiHome, FiFilter, FiFolder } from "react-icons/fi";
 import IconSlider from "../shared/sliders/IconSlider";
+import ImageSlider from "../shared/sliders/ImageSlider";
 
 const Home = () => {
   let history = useHistory();
@@ -40,6 +41,7 @@ const Home = () => {
       iconCaption: "Publish your own listing!.",
     },
   ];
+
   return (
     <div className="welcome">
       <div className="welcome__banner-container">
@@ -64,36 +66,25 @@ const Home = () => {
         </div>
       </div>
       <IconSlider entries={icons} />
-      <div className="welcome__row">
-        <img
-          src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-          width="60%"
-          alt=""
-          className="welcome__image"
-        />
-        <div className="welcome__paragraph-container">
-          <h1 style={{ textAlign: "center" }}>Simple & Intuitive.</h1>
-          <p>
-            A minimalist approach that removes the headache of house hunting.
-            Your dream home is only a couple clicks away.
-          </p>
-        </div>
-      </div>
-      <div className="welcome__row">
-        <div className="welcome__paragraph-container">
-          <h1 style={{ textAlign: "center" }}>Stay Organized.</h1>
-          <p>
-            Our platform offers the ability to keep track of your favorite
-            listings and organize them into different categories with ease!
-          </p>
-        </div>
-        <img
-          src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-          width="60%"
-          alt=""
-          className="welcome__image"
-        />
-      </div>
+      <ImageSlider
+        imageUrl={
+          "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+        }
+        title={"Simple & Intuitive."}
+        subtitle={
+          " A minimalist approach that removes the headache of house hunting. Your dream home is only a couple clicks away."
+        }
+      />
+      <ImageSlider
+        imageUrl={
+          "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+        }
+        title={"Stay Organized."}
+        subtitle={
+          "Our platform offers the ability to keep track of your favorite listings and organize them into different categories with ease!"
+        }
+        flipped={true}
+      />
     </div>
   );
 };

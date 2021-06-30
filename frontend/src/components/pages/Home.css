@@ -54,22 +54,6 @@
   font-size: 1rem;
 }
 
-.welcome__row {
-  display: flex;
-  align-items: center;
-  margin: 20px;
-}
-
-.welcome__paragraph-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  text-align: center;
-}
-
 .welcome__info {
   height: 300px;
   margin-top: -5px;

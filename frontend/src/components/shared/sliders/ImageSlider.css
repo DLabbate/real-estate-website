@@ -1,0 +1,19 @@
+.image-slider {
+  display: flex;
+  align-items: center;
+  margin: 20px;
+}
+
+.image-slider__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.image-slider__title {
+  text-align: center;
+}

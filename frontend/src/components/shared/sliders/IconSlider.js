@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import "./IconSlider.css";
 import * as Fi from "react-icons/fi";
 
