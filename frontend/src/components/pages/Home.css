@@ -5,10 +5,6 @@
   font-family: "Montserrat", sans-serif;
 }
 
-.properties {
-  display: flex;
-}
-
 .welcome__banner-container {
   position: relative;
   width: 100%;

@@ -7,11 +7,9 @@ const IconSlider = ({ entries }) => {
     <div className="icon-slider">
       {entries.map((item) => {
         const { iconName, iconSize, iconStrokeWidth, iconCaption } = item;
-        console.log(Fi[iconName]);
         let Icon = Fi[iconName];
-        console.log("Fi." + iconName);
         return (
-          <div className="icon-slider__column">
+          <div className="icon-slider__column" key={"Fi." + iconName}>
             <Icon size={iconSize} strokeWidth={iconStrokeWidth} />
             <p>{iconCaption}</p>
           </div>
