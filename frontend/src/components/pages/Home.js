@@ -3,9 +3,43 @@ import { useHistory } from "react-router-dom";
 import Button from "../shared/Button";
 import "./Home.css";
 import { FiSearch, FiHeart, FiHome, FiFilter, FiFolder } from "react-icons/fi";
+import IconSlider from "../shared/sliders/IconSlider";
 
 const Home = () => {
   let history = useHistory();
+
+  const icons = [
+    {
+      iconName: "FiSearch",
+      iconSize: 75,
+      iconStrokeWidth: 0.5,
+      iconCaption: "Search for listings.",
+    },
+    {
+      iconName: "FiFilter",
+      iconSize: 75,
+      iconStrokeWidth: 0.5,
+      iconCaption: "Filter by location & price.",
+    },
+    {
+      iconName: "FiHeart",
+      iconSize: 75,
+      iconStrokeWidth: 0.5,
+      iconCaption: "Favorite listings.",
+    },
+    {
+      iconName: "FiFolder",
+      iconSize: 75,
+      iconStrokeWidth: 0.5,
+      iconCaption: "Organize into categories",
+    },
+    {
+      iconName: "FiHome",
+      iconSize: 75,
+      iconStrokeWidth: 0.5,
+      iconCaption: "Publish your own listing!.",
+    },
+  ];
   return (
     <div className="welcome">
       <div className="welcome__banner-container">
@@ -29,28 +63,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="welcome__info">
-        <div className="welcome__info-section">
-          <FiSearch size={75} strokeWidth={0.5} />
-          <p>Search for listings.</p>
-        </div>
-        <div className="welcome__info-section">
-          <FiFilter size={75} strokeWidth={0.5} />
-          <p>Filter by location & price.</p>
-        </div>
-        <div className="welcome__info-section">
-          <FiHeart size={75} strokeWidth={0.5} />
-          <p>Favorite listings.</p>
-        </div>
-        <div className="welcome__info-section">
-          <FiFolder size={75} strokeWidth={0.5} />
-          <p>Organize into categories.</p>
-        </div>
-        <div className="welcome__info-section">
-          <FiHome size={75} strokeWidth={0.5} />
-          <p>Publish your own listing!</p>
-        </div>
-      </div>
+      <IconSlider entries={icons} />
       <div className="welcome__row">
         <img
           src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
