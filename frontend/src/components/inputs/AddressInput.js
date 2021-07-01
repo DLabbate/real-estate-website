@@ -1,6 +1,5 @@
 import React from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
-//import "./Form.css";
 import "./AddressInput.css";
 
 const AddressInput = ({
@@ -23,6 +22,9 @@ const AddressInput = ({
               placeholder: "Address",
               className: "form__field form__field--lightgrey ",
               maxLength: 80,
+              // Place a random string for autocomplete attribute so Google chrome does not place autocomplete
+              // See https://gist.github.com/niksumeiko/360164708c3b326bd1c8
+              autocomplete: "none",
             })}
           />
           <div className={suggestionContainerClass}>

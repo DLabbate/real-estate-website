@@ -26,5 +26,6 @@
 }
 
 .suggestion-item--active {
-  background-color: #bfeaff;
+  /* background-color: #bfeaff; */
+  background-color: #f5f5f5;
 }

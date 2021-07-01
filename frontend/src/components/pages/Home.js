@@ -37,7 +37,7 @@ const Home = () => {
       iconName: "FiFolder",
       iconSize: 75,
       iconStrokeWidth: 0.5,
-      iconCaption: "Organize into categories",
+      iconCaption: "Organize into categories.",
     },
     {
       iconName: "FiHome",
