@@ -49,5 +49,7 @@
 @media screen and (max-width: 960px) {
   .profile-page-container {
     flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 }
