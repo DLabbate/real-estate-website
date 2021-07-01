@@ -5,7 +5,7 @@ const ImageSlider = ({ imageUrl, title, subtitle, flipped }) => {
   if (!flipped) {
     return (
       <div className="image-slider">
-        <img src={imageUrl} width="60%" alt="" className="welcome__image" />
+        <img src={imageUrl} alt="" className="image-slider__photo" />
         <div className="image-slider__content">
           <h1 className="image-slider__title">{title}</h1>
           <p>{subtitle}</p>
@@ -19,7 +19,7 @@ const ImageSlider = ({ imageUrl, title, subtitle, flipped }) => {
           <h1 className="image-slider__title">{title}</h1>
           <p>{subtitle}</p>
         </div>
-        <img src={imageUrl} width="60%" alt="" className="welcome__image" />
+        <img src={imageUrl} alt="" className="image-slider__photo" />
       </div>
     );
   }

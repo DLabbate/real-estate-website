@@ -17,3 +17,17 @@
 .image-slider__title {
   text-align: center;
 }
+
+.image-slider__photo {
+  width: 60%;
+}
+
+@media screen and (max-width: 960px) {
+  .image-slider {
+    flex-direction: column;
+  }
+
+  .image-slider__photo {
+    width: 100%;
+  }
+}
