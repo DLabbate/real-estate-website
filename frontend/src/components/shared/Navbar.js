@@ -28,7 +28,6 @@ const Navbar = ({ transparentEffect }) => {
       } else {
         setIsTransparent(true);
       }
-      console.log(isTransparent);
     };
 
     window.addEventListener("scroll", changeBackground);

@@ -10,11 +10,9 @@ const WelcomeSlider = ({ imageUrls }) => {
   useEffect(() => {
     setTimeout(() => {
       let newIndex = (activeIndex + 1) % imageUrls.length;
-      console.log(newIndex);
       setActiveIndex(newIndex);
     }, 5000);
-    //console.log(activeIndex);
-  }, [activeIndex]);
+  }, [activeIndex, imageUrls.length]);
   return (
     <div className="welcome-slider">
       {imageUrls.map((url, index) => {
@@ -22,14 +20,10 @@ const WelcomeSlider = ({ imageUrls }) => {
           index === activeIndex
             ? "welcome-slider__image welcome-slider__image--active"
             : "welcome-slider__image";
-        return <img src={url} width="100%" alt="" className={imageStyle} />;
+        return (
+          <img key={url} src={url} width="100%" alt="" className={imageStyle} />
+        );
       })}
-      {/* <img
-        src="https://wallpapercave.com/wp/wp4914369.jpg"
-        width="100%"
-        alt=""
-        className="welcome-slider__image welcome-slider__image--active"
-      /> */}
       <div className="welcome-slider__banner">
         <h1 className="welcome-slider__text">Find your dream home.</h1>
         <Button

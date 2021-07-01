@@ -1,5 +1,5 @@
 import React from "react";
-import video from "../../assets/background-video.mp4";
+import video from "../../assets/videos/background-video.mp4";
 import "./VideoBackground.css";
 
 const VideoBackground = (props) => {

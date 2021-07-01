@@ -10,6 +10,8 @@ import welcomeSlider_04 from "../../assets/welcome-sliders/welcome-slider-04.jpg
 import welcomeSlider_05 from "../../assets/welcome-sliders/welcome-slider-05.jpg";
 import welcomeSlider_06 from "../../assets/welcome-sliders/welcome-slider-06.jpg";
 import welcomeSlider_07 from "../../assets/welcome-sliders/welcome-slider-07.jpg";
+import imageSlider_01 from "../../assets/image-sliders/image-slider-01.jpg";
+import imageSlider_02 from "../../assets/image-sliders/image-slider-02.jpg";
 
 const Home = () => {
   const icons = [
@@ -60,18 +62,14 @@ const Home = () => {
       <WelcomeSlider imageUrls={welcomeSliderUrls} />
       <IconSlider entries={icons} />
       <ImageSlider
-        imageUrl={
-          "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-        }
+        imageUrl={imageSlider_01}
         title={"Simple & Intuitive."}
         subtitle={
           " A minimalist approach that removes the headache of house hunting. Your dream home is only a couple clicks away."
         }
       />
       <ImageSlider
-        imageUrl={
-          "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-        }
+        imageUrl={imageSlider_02}
         title={"Stay Organized."}
         subtitle={
           "Our platform offers the ability to keep track of your favorite listings and organize them into different categories with ease!"
