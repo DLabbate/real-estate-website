@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/users";
+const url = `${process.env.REACT_APP_BACKEND_URL}/users`;
 
 export const signup = async (values) => {
   var myHeaders = new Headers();

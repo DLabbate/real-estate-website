@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/notes";
+const url = `${process.env.REACT_APP_BACKEND_URL}/notes`;
 
 export const getNotesByUser = async (token) => {
   var myHeaders = new Headers();

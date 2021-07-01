@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/listings";
+const url = `${process.env.REACT_APP_BACKEND_URL}/listings`;
 
 export const createListing = async (
   token,

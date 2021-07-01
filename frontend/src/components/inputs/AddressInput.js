@@ -24,7 +24,7 @@ const AddressInput = ({
               maxLength: 80,
               // Place a random string for autocomplete attribute so Google chrome does not place autocomplete
               // See https://gist.github.com/niksumeiko/360164708c3b326bd1c8
-              autocomplete: "none",
+              autoComplete: "none",
             })}
           />
           <div className={suggestionContainerClass}>
