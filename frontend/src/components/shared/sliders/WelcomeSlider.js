@@ -31,7 +31,7 @@ const WelcomeSlider = ({ imageUrls }) => {
           margin={10}
           text={"Start Browsing"}
           buttonHandler={() => {
-            history.push("/notes");
+            history.push("/browse");
             // Refresh page
             history.go(0);
           }}
