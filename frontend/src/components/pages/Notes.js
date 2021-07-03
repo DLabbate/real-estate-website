@@ -54,8 +54,8 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     // Some basic styles to make the items look a bit nicer
     userSelect: "none",
 
-    // Change background colour if dragging
-    background: isDragging ? "rgb(210, 210, 210)" : "transparent",
+    // Background colour if dragging
+    background: isDragging ? "transparent" : "transparent",
 
     // Styles we need to apply on draggables
     ...draggableStyle,
