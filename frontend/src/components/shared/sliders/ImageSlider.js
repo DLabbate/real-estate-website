@@ -7,14 +7,15 @@ const ImageSlider = ({ imageUrl, title, subtitle, flipped }) => {
   const positionRef = useRef(null);
 
   useLayoutEffect(() => {
-    const topPos = (element) => element.getBoundingClientRect().top;
+    const topPos = (element) => element.offsetTop;
 
     const pos = topPos(positionRef.current);
 
-    console.log(topPos, window.scrollY + window.innerHeight);
-
     const onScroll = () => {
       const scrollPos = window.scrollY + window.innerHeight;
+
+      console.log("scrollPos", flipped, window.scrollY + window.innerHeight);
+      console.log("pos", flipped, pos);
 
       if (pos < scrollPos) {
         setClassName("image-slider image-slider--zoom");
@@ -26,7 +27,7 @@ const ImageSlider = ({ imageUrl, title, subtitle, flipped }) => {
     window.addEventListener("scroll", onScroll);
 
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [flipped]);
 
   if (!flipped) {
     return (
