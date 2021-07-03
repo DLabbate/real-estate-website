@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { FiMenu, FiX } from "react-icons/fi";
 import Logo from "./Logo";
@@ -22,17 +22,23 @@ const Navbar = ({ transparentEffect }) => {
     setMenuClicked(!menuClicked);
   };
 
-  if (transparentEffect) {
-    const changeBackground = () => {
-      if (window.scrollY >= 70) {
-        setIsTransparent(false);
-      } else {
-        setIsTransparent(true);
-      }
-    };
+  useEffect(() => {
+    // Only change the background if the "transparentEffect" prop is true
+    if (transparentEffect) {
+      const changeBackground = () => {
+        if (window.scrollY >= 70) {
+          setIsTransparent(false);
+        } else {
+          setIsTransparent(true);
+        }
+      };
 
-    window.addEventListener("scroll", changeBackground);
-  }
+      window.addEventListener("scroll", changeBackground);
+
+      // Remove event listener to avoid memory leaks
+      return () => window.removeEventListener("scroll", changeBackground);
+    }
+  }, [transparentEffect]);
 
   return (
     <nav className={isTransparent ? "navbar" : "navbar navbar--opaque"}>
