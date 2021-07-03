@@ -153,9 +153,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
           <Droppable droppableId={column.columnName} key={column.columnName}>
             {(provided, snapshot) => (
               <div className="column" ref={provided.innerRef}>
-                <h3 className="column__title">
-                  {formatColumnName(column.columnName)}
-                </h3>
+                <h3>{formatColumnName(column.columnName)}</h3>
                 {column.items.map((item, index) => {
                   return (
                     <Draggable
