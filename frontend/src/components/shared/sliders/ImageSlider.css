@@ -5,13 +5,13 @@
 
   opacity: 0;
   transform: scale(85%);
-  transition: 4s;
+  transition: 2s;
 }
 
 .image-slider--zoom {
   opacity: 1;
   transform: scale(100%);
-  transition: 4s;
+  transition: 2s;
 }
 
 .image-slider__content {
