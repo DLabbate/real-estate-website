@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 const ImageSlider = ({ imageUrl, title, subtitle, flipped }) => {
   const { ref, inView } = useInView({
     /* Optional options */
-    threshold: 0,
+    threshold: 0.15,
   });
 
   if (!flipped) {
