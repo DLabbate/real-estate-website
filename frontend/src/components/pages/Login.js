@@ -2,11 +2,12 @@ import React from "react";
 import "./Login.css";
 import VideoBackground from "../shared/VideoBackground";
 import LoginForm from "../forms/LoginForm";
+import Logo from "../shared/Logo";
 
 const Login = () => {
   return (
     <VideoBackground>
-      <h1 className="logo">acasa</h1>
+      <Logo />
       <LoginForm />
     </VideoBackground>
   );

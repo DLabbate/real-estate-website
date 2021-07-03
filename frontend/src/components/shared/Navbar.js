@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { FiMenu, FiX } from "react-icons/fi";
+import Logo from "./Logo";
 
 const navbarLinks = [
   { url: "/home", title: "Home" },
@@ -35,7 +36,7 @@ const Navbar = ({ transparentEffect }) => {
 
   return (
     <nav className={isTransparent ? "navbar" : "navbar navbar--opaque"}>
-      <h1 className="navbar__logo">acasa</h1>
+      <Logo size={"small"} />
 
       {menuClicked ? (
         <FiX size={25} className={"navbar__icon"} onClick={toggleMenuClick} />
