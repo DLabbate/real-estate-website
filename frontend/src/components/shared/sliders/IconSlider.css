@@ -1,0 +1,32 @@
+.icon-slider {
+  height: 300px;
+  margin-top: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(236, 236, 236);
+}
+
+.icon-slider__column {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  flex: 1;
+}
+
+.icon-slider__column p {
+  width: 100%;
+  height: 75px;
+  text-align: center;
+}
+
+@media screen and (max-width: 960px) {
+  .icon-slider {
+    flex-direction: column;
+    height: auto;
+    padding: 20px;
+  }
+}

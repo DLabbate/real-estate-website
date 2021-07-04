@@ -1,4 +1,4 @@
-const url = "http://localhost:3000/listings";
+const url = `${process.env.REACT_APP_BACKEND_URL}/listings`;
 
 export const createListing = async (
   token,
@@ -63,16 +63,21 @@ export const searchListings = async (token, queryParams) => {
   }
 
   if (queryParams.coordinates) {
-    queryArray.push(
-      `coordinates=${queryParams.coordinates[0]},${queryParams.coordinates[1]}`
-    );
-  }
-
-  if (queryParams.radius) {
-    queryArray.push(`radius=${queryParams.minPrice}`);
+    if (queryParams.coordinates.lat && queryParams.coordinates.lng) {
+      queryArray.push(
+        `coordinates=${queryParams.coordinates.lng},${queryParams.coordinates.lat}`
+      );
+      if (queryParams.radius) {
+        queryArray.push(`radius=${queryParams.radius * 1000}`);
+      }
+    }
   }
 
   const queryString = queryArray.join("&");
+  console.log(
+    "Querying for listings with the following filters: ",
+    queryString
+  );
 
   var requestOptions = {
     method: "GET",

@@ -19,12 +19,6 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.column__title {
-  /* border-style: solid;
-  border-width: 0px 0px 1px 0px;
-  border-color: lightgrey; */
-}
-
 @media screen and (min-width: 1680px) {
   .notes-container {
     justify-content: center;

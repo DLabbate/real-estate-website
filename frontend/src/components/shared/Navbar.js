@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { FiMenu, FiX } from "react-icons/fi";
+import Logo from "./Logo";
 
 const navbarLinks = [
   { url: "/home", title: "Home" },
@@ -21,22 +22,27 @@ const Navbar = ({ transparentEffect }) => {
     setMenuClicked(!menuClicked);
   };
 
-  if (transparentEffect) {
-    const changeBackground = () => {
-      if (window.scrollY >= 70) {
-        setIsTransparent(false);
-      } else {
-        setIsTransparent(true);
-      }
-      console.log(isTransparent);
-    };
+  useEffect(() => {
+    // Only change the background if the "transparentEffect" prop is true
+    if (transparentEffect) {
+      const changeBackground = () => {
+        if (window.scrollY >= 70) {
+          setIsTransparent(false);
+        } else {
+          setIsTransparent(true);
+        }
+      };
 
-    window.addEventListener("scroll", changeBackground);
-  }
+      window.addEventListener("scroll", changeBackground);
+
+      // Remove event listener to avoid memory leaks
+      return () => window.removeEventListener("scroll", changeBackground);
+    }
+  }, [transparentEffect]);
 
   return (
     <nav className={isTransparent ? "navbar" : "navbar navbar--opaque"}>
-      <h1 className="navbar__logo">acasa</h1>
+      <Logo size={"small"} />
 
       {menuClicked ? (
         <FiX size={25} className={"navbar__icon"} onClick={toggleMenuClick} />

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Listing.css";
-import { FiHeart, FiTrash, FiHome } from "react-icons/fi";
+import { FiHeart, FiTrash } from "react-icons/fi";
 
 const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
   const { price, address, owner, _id, imageUrl } = data;
@@ -52,8 +52,8 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
         className="listing__image"
       ></img>
       <div className="listing__details">
-        <h3>${Number(price).toLocaleString()}</h3>
-        <h5>{address}</h5>
+        <h4>${Number(price).toLocaleString()}</h4>
+        <h6>{address}</h6>
         {renderContactInfo()}
       </div>
       {renderIcon()}

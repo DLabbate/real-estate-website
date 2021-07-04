@@ -1,8 +1,6 @@
 import React from "react";
-import video from "../../assets/video1.mp4";
-import Button from "./Button";
+import video from "../../assets/videos/background-video.mp4";
 import "./VideoBackground.css";
-import { Link } from "react-router-dom";
 
 const VideoBackground = (props) => {
   return (

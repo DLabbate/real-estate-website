@@ -1,0 +1,28 @@
+.logo {
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo__icon {
+  width: 75px;
+  fill: white;
+  z-index: 1;
+  margin: 5px;
+}
+
+.logo__icon--small {
+  width: 25px;
+}
+
+.logo__text {
+  z-index: 1;
+  color: white;
+  font-size: 6rem;
+}
+
+.logo__text--small {
+  font-size: 1.5rem;
+}

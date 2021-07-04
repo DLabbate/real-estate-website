@@ -1,4 +1,5 @@
-const url = "http://localhost:3000/boards";
+const url = `${process.env.REACT_APP_BACKEND_URL}/boards`;
+console.log(url);
 
 export const getBoard = async (token) => {
   var myHeaders = new Headers();
