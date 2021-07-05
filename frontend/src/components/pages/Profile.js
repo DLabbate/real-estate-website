@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Profile.css";
 import { FiMail, FiUser, FiPhone } from "react-icons/fi";
 import Listing from "../shared/Listing";
@@ -42,11 +42,6 @@ const Profile = ({ user, setUser }) => {
       );
     }
   };
-
-  // Update localStorage every time user info gets updated (e.g. if they create/delete a listing)
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
 
   return (
     <div className="profile-page-container">

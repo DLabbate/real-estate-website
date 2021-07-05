@@ -36,7 +36,6 @@ const Form = ({
           );
         })}
       </form>
-      {/* <Link className="form__link" to={navigationPath}> */}
       <Button
         text={buttonText}
         width={"90%"}
@@ -44,7 +43,6 @@ const Form = ({
         modifiers={"btn--text-white btn--background-black"}
         buttonHandler={onSubmit}
       />
-      {/* </Link> */}
       <Link className="form__link" to={navigationAlternative}>
         <p className="form__alternative">{alternativeText}</p>
       </Link>

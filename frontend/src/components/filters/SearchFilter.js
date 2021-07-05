@@ -18,10 +18,8 @@ const SearchFilter = ({ user, setListings }) => {
 
   const onSelectAddress = async (address) => {
     setAddress(address);
-
     const results = await geocodeByAddress(address);
     const coordinates = await getLatLng(results[0]);
-
     setCoordinates(coordinates);
   };
 
