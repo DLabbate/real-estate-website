@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   try {
-    // e.g. Bearer eyJhbGciOiJIUzI1NiIsInR5...
-    // We only want the token
+    // e.g. `Bearer eyJhbGciOiJIUzI1NiIsInR5...`
+    // We only want to extract the token eyJhbGciOiJIUzI1NiIsInR5...
     const token = req.headers.authorization.split(" ")[1];
     console.log("Received the following Bearer token: ", token);
 
