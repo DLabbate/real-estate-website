@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const Note = require("../models/note");
 
-/**
- * Creates a single new note
- */
 exports.createNewNote = async (userId, listingId) => {
   const note = new Note({
     _id: new mongoose.Types.ObjectId(),
@@ -24,7 +21,7 @@ exports.findNote = async (userId, listingId) => {
 };
 
 /**
- * Get a user's notes
+ * Get a user's notes (via userId)
  */
 exports.getNotesByUserId = async (userId) => {
   return Note.find({ user: userId })
@@ -52,9 +49,6 @@ exports.deleteNote = async (userId, listingId) => {
   }).exec();
 };
 
-/**
- * Deletes all notes where the "listingId" matches
- */
 exports.deleteNotesByListingId = async (listingId) => {
   return await Note.deleteMany({ listing: listingId }).exec();
 };

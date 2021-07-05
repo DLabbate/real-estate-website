@@ -19,8 +19,9 @@ const populateQuery = {
     },
   },
 };
+
 /**
- * Creates a new board. Only 1 per user.
+ * Creates a new board. Only 1 per user!
  */
 exports.createNewBoard = async (userId) => {
   const board = new Board({
@@ -49,9 +50,6 @@ exports.createNewBoard = async (userId) => {
   return await board.save();
 };
 
-/**
- * Finds a board by userId
- */
 exports.findBoardByUserId = async (userId) => {
   return await Board.findOne({ user: userId })
     .select("-__v")
@@ -87,15 +85,6 @@ exports.addToQueue = async (userId, noteId) => {
  * Removes a note from all columns (e.g. when a user unfavorites a listing)
  */
 exports.removeNoteFromColumns = async (userId, noteId) => {
-  // const boardDocument = await Board.findOne({ user: userId }).exec();
-  // console.log("Board Document", boardDocument.toObject());
-  // boardDocument.columns.forEach((column) => {
-  //   let indexToRemove = column.items.findIndex((note) => note._id === noteId);
-  //   if (indexToRemove) {
-  //     column.items.splice(indexToRemove, 1);
-  //   }
-  // });
-  // return await boardDocument.save();
   const boards = await Board.updateMany(
     { user: userId },
     { $pull: { "columns.$[].items": noteId } }
@@ -115,10 +104,9 @@ exports.removeNoteFromAllBoards = async (noteId) => {
 };
 
 /**
- * Removes a list of notes from ALL Boards
+ * Removes a list of notes from ALL boards
  */
 exports.removeNoteListFromAllBoards = async (notesToDelete) => {
-  // Delete the note from all boards
   let i;
   for (i = 0; i < notesToDelete.length; i++) {
     await this.removeNoteFromAllBoards(notesToDelete[i]._id);

@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
 
-/**
- * Queries a user by their email
- */
 exports.getUserByEmail = async (userEmail) => {
   let user = await User.findOne({ email: userEmail })
     .populate("publishedListing", "-__v")
@@ -11,9 +8,6 @@ exports.getUserByEmail = async (userEmail) => {
   return user;
 };
 
-/**
- * Creates a new user document
- */
 exports.createNewUser = async (userData, hash) => {
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
