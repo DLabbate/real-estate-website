@@ -18,16 +18,10 @@ exports.formatListingDocument = async (listingDocument) => {
   return listingObject;
 };
 
-/**
- * Get a listing via owner ID
- */
 exports.getListingByOwnerId = async (ownerId) => {
   return await listingRepository.getListingByOwnerId(ownerId);
 };
 
-/**
- * Creates a new listing
- */
 exports.createNewListing = async (ownerId, listingData, imageUrl) => {
   const listing = new Listing({
     _id: new mongoose.Types.ObjectId(),
@@ -45,9 +39,6 @@ exports.createNewListing = async (ownerId, listingData, imageUrl) => {
   return await this.formatListingDocument(newListing);
 };
 
-/**
- * Deletes a listing
- */
 exports.deleteListing = async (listingId, imageUrl) => {
   // Delete notes that reference this listing in the "board" collection
   // Do this before deleting the notes, because the board must know the noteId!!!

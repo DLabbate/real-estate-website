@@ -1,5 +1,7 @@
 /**
  * Formats a phoneNumber string (e.g. "1234567890" to "(123) 456-7890")
+ * @param {string} stringValue - The phone number to be formatted (e.g. "1234567890")
+ * @returns {string} The formatted phone number (e.g. "(123) 456-7890")
  */
 export const formatPhoneString = (stringValue) => {
   // Strip of all non-numeric characters

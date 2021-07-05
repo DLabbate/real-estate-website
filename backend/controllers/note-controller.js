@@ -1,8 +1,5 @@
 const noteService = require("../services/note-service");
 
-/**
- * Get a user's notes
- */
 exports.getNotes = async (req, res, next) => {
   try {
     // User Data from JWT

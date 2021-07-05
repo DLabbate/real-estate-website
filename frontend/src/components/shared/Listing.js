@@ -47,7 +47,6 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
     <div className="listing">
       <img
         alt="Property for Sale"
-        //src="http://cdn.home-designing.com/wp-content/uploads/2017/05/wood-white-and-charcoal-modern-exterior-paint-themes.jpg"
         src={imageUrl}
         className="listing__image"
       ></img>

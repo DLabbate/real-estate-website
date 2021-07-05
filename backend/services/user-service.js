@@ -5,9 +5,6 @@ const noteRepository = require("../repositories/note-repository");
 const boardRepository = require("../repositories/board-repository");
 require("dotenv").config();
 
-/**
- * Gets a user by email
- */
 exports.getUserByEmail = async (userEmail) => {
   console.log(`Finding user with email: ${userEmail}`);
   let user = await userRepository.getUserByEmail(userEmail);
@@ -29,9 +26,6 @@ exports.formatUser = async (userObject) => {
   return userObject;
 };
 
-/**
- * Creates a new user
- */
 exports.createNewUser = async (userData) => {
   const hash = await bcrypt.hash(userData.password, 10);
 
@@ -108,7 +102,6 @@ exports.addFavoriteListing = async (userId, listingId) => {
     const note = await noteRepository.createNewNote(userId, listingId);
 
     // Also add the note to the user's board
-    //console.log("Adding note to the board with the following _id: ", note._id);
     await boardRepository.addToQueue(userId, note._id);
   }
 

@@ -1,7 +1,7 @@
 const noteRepository = require("../repositories/note-repository");
 
 /**
- * Formats a mongoose document
+ * Formats a mongoose document (For instance, remves the "__v" field)
  */
 exports.formatNote = async (noteDocument) => {
   noteObject = noteDocument.toObject();
@@ -23,9 +23,6 @@ exports.formatNotesArray = async (noteArray) => {
   return formattedArray;
 };
 
-/**
- * Get a user's notes
- */
 exports.getNotesByUserId = async (userId) => {
   let notes = await noteRepository.getNotesByUserId(userId);
   return notes;

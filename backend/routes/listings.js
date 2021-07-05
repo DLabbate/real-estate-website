@@ -16,14 +16,8 @@ router.post(
   listingController.listingCreateNew
 );
 
-/**
- * Deleting a user's listing.
- */
 router.delete("/", authentication, listingController.listingDelete);
 
-/**
- * Search for listings
- */
 router.get("/search", listingController.listingSearch);
 
 module.exports = router;

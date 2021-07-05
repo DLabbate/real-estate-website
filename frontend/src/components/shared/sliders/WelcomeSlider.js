@@ -13,6 +13,7 @@ const WelcomeSlider = ({ imageUrls }) => {
       setActiveIndex(newIndex);
     }, 5000);
   }, [activeIndex, imageUrls.length]);
+
   return (
     <div className="welcome-slider">
       {imageUrls.map((url, index) => {
