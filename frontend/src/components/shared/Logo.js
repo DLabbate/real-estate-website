@@ -1,10 +1,8 @@
 import React from "react";
 import "./Logo.css";
 import { ReactComponent as LogoSvg } from "../../assets/logo/logo.svg";
-import { useHistory } from "react-router-dom";
 
 const Logo = ({ size, onClick }) => {
-  let history = useHistory();
   return (
     <div className={"logo"} onClick={onClick ? onClick : null}>
       <LogoSvg
