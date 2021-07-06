@@ -5,7 +5,7 @@
  */
 export const formatName = (stringValue) => {
   // Strip of all numeric characters
-  const nameString = stringValue.replace(/\d/g, "");
+  const nameString = stringValue.replace(/[^a-z]/g, "");
 
-  return nameString;
+  return nameString[0].charAt(0).toUpperCase() + nameString.slice(1);
 };
