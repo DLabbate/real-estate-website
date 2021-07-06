@@ -1,4 +1,5 @@
 import * as priceHelper from "../../utils/helpers/price-helper";
+import "@testing-library/jest-dom/extend-expect";
 
 test("price string is formatted correctly", () => {
   const priceString = "900000";
