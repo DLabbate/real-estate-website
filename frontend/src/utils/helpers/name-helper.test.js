@@ -1,7 +1,7 @@
 import * as nameHelper from "../../utils/helpers/name-helper";
 
 test("name is formatted correctly", () => {
-  const nameToFormat = "12!@domenic17";
-  const nameFormatted = nameHelper.formatName(nameToFormat);
-  expect(nameFormatted).toBe("Domenic");
+  const nameString = "12!@domenic17";
+  const nameStringFormatted = nameHelper.formatName(nameString);
+  expect(nameStringFormatted).toBe("Domenic");
 });
