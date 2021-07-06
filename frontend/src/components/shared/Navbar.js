@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { FiMenu, FiX } from "react-icons/fi";
 import Logo from "./Logo";
+import { useHistory } from "react-router-dom";
 
 const navbarLinks = [
   { url: "/home", title: "Home" },
@@ -17,6 +18,8 @@ const Navbar = ({ transparentEffect }) => {
   const [isTransparent, setIsTransparent] = useState(
     transparentEffect ? true : false
   );
+
+  let history = useHistory();
 
   const toggleMenuClick = () => {
     setMenuClicked(!menuClicked);
@@ -42,7 +45,14 @@ const Navbar = ({ transparentEffect }) => {
 
   return (
     <nav className={isTransparent ? "navbar" : "navbar navbar--opaque"}>
-      <Logo size={"small"} />
+      <Logo
+        size={"small"}
+        onClick={() => {
+          history.push("/home");
+          // Refresh page
+          history.go(0);
+        }}
+      />
 
       {menuClicked ? (
         <FiX size={25} className={"navbar__icon"} onClick={toggleMenuClick} />

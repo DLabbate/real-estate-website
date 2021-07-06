@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 
 .logo__icon {
@@ -15,6 +14,7 @@
 
 .logo__icon--small {
   width: 25px;
+  cursor: pointer;
 }
 
 .logo__text {

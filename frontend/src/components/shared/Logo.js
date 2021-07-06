@@ -3,17 +3,10 @@ import "./Logo.css";
 import { ReactComponent as LogoSvg } from "../../assets/logo/logo.svg";
 import { useHistory } from "react-router-dom";
 
-const Logo = ({ size }) => {
+const Logo = ({ size, onClick }) => {
   let history = useHistory();
   return (
-    <div
-      className={"logo"}
-      onClick={() => {
-        history.push("/home");
-        // Refresh page
-        history.go(0);
-      }}
-    >
+    <div className={"logo"} onClick={onClick ? onClick : null}>
       <LogoSvg
         className={
           size === "small" ? "logo__icon logo__icon--small" : "logo__icon"
