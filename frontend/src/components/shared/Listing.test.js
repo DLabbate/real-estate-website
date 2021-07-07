@@ -1,6 +1,6 @@
 import React from "react";
 import Listing from "./Listing";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
 const mockListing = {
