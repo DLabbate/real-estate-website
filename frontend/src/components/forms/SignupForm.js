@@ -192,7 +192,6 @@ const SignupForm = () => {
                 className="form__error"
               />
               <Button
-                data-testid={"button-signup"}
                 text={"Signup"}
                 width={"90%"}
                 margin={"10px"}
