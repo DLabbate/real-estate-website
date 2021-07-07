@@ -3,15 +3,22 @@ import Button from "./Button";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 
+// Constants
+const handleClick = jest.fn();
+const text = "click me";
+
+// Variables
+let button;
+
+beforeEach(() => {
+  button = render(<Button text={text} buttonHandler={handleClick} />);
+});
+
 test("button should render with text", () => {
-  const text = "Testing text...";
-  const button = render(<Button text={text} />);
   expect(button.getByText(text)).toBeTruthy();
 });
 
 test("button calls onClick prop when clicked", () => {
-  const handleClick = jest.fn();
-  render(<Button text={"click me"} buttonHandler={handleClick} />);
-  fireEvent.click(screen.getByText("click me"));
+  fireEvent.click(screen.getByText(/click me/i));
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
