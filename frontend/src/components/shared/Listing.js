@@ -9,6 +9,7 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
     if (variant === "publishedListing") {
       return (
         <FiTrash
+          data-testid={"icon-trash"}
           size={35}
           className={"listing__icon--bin"}
           onClick={onClickIcon}
@@ -20,6 +21,7 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
         : "listing__icon--heart";
       return (
         <FiHeart
+          data-testid={"icon-heart"}
           size={35}
           className={iconClassName}
           onClick={() => onClickIcon(_id)}
@@ -43,6 +45,7 @@ const Listing = ({ data, variant, onClickIcon, isFavorited }) => {
       );
     }
   };
+
   return (
     <div className="listing">
       <img
