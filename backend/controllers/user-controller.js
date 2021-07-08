@@ -31,10 +31,7 @@ exports.userLogin = async (req, res, next) => {
 
     let userSavedData = await userService.getUserByEmail(userLoginData.email);
 
-    console.log(
-      `Checking if user exists with email ${userLoginData.email}:`,
-      userSavedData
-    );
+    console.log(`Checking if user exists with email ${userLoginData.email}:`);
     if (!userSavedData) {
       // In this case, no user account is associated with the specified email
       console.log("No user account is associated with the specified email");
