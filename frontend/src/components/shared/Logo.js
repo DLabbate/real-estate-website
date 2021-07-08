@@ -4,7 +4,10 @@ import { ReactComponent as LogoSvg } from "../../assets/logo/logo.svg";
 
 const Logo = ({ size, onClick }) => {
   return (
-    <div className={"logo"} onClick={onClick ? onClick : null}>
+    <div
+      className={size === "small" ? "logo logo--small" : "logo"}
+      onClick={onClick ? onClick : null}
+    >
       <LogoSvg
         className={
           size === "small" ? "logo__icon logo__icon--small" : "logo__icon"
