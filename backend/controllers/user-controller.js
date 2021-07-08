@@ -70,7 +70,6 @@ exports.userEdit = async (req, res, next) => {
   try {
     // From JWT
     const userData = req.userData;
-    console.log(req.userData);
 
     // From body
     const newUserData = req.body;
@@ -93,7 +92,6 @@ exports.addFavoriteListing = async (req, res, next) => {
   try {
     // From JWT
     const userData = req.userData;
-    console.log(req.userData);
 
     const listingId = req.params.listingId;
 
@@ -113,7 +111,6 @@ exports.removeFavoriteListing = async (req, res, next) => {
   try {
     // From JWT
     const userData = req.userData;
-    console.log(req.userData);
 
     const listingId = req.params.listingId;
 

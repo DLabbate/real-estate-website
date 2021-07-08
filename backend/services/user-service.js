@@ -64,9 +64,7 @@ exports.getJWT = async (userData) => {
       firstName: userData.firstName,
       lastName: userData.lastName,
       email: userData.email,
-      favoriteListings: userData.favoriteListings,
       phoneNumber: userData.phoneNumber,
-      publishedListing: userData.publishedListing,
     },
     process.env.JWT_KEY,
     { expiresIn: "24h" }
