@@ -62,11 +62,16 @@ input[type="file"]::file-selector-button {
   cursor: pointer;
 }
 
-.form__link {
+.form__link-container {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.form__link {
   text-decoration: none;
+  color: white;
+  text-decoration: underline;
 }
 
 .form__alternative {

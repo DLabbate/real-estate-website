@@ -15,6 +15,32 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
+test("login form should render correctly", () => {
+  // Wrap inside a router or else we will get an error --> [Error: Invariant failed: You should not use <Link> outside a <Router>]
+  const { container, getByText } = render(
+    <Router>
+      <LoginForm />
+    </Router>
+  );
+
+  // Inputs
+  const email = container.querySelector('input[name="email"]');
+  const password = container.querySelector('input[name="password"]');
+
+  // Button
+  const button = getByText("Login", { selector: "button" });
+
+  // Link to SignupForm
+  const alternativeLink = getByText("Don't have an account? Signup.", {
+    selector: "a",
+  });
+
+  expect(email).toBeTruthy();
+  expect(password).toBeTruthy();
+  expect(button).toBeTruthy();
+  expect(alternativeLink).toBeTruthy();
+});
+
 test("login form should display success message", async () => {
   // Mock the return value of fetch
   userApi.login.mockReturnValue(
