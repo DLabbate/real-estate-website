@@ -99,7 +99,9 @@ exports.addFavoriteListing = async (req, res, next) => {
       userData._id,
       listingId
     );
-    console.log("Successfully added favoriteListing for user");
+    console.log(
+      `Successfully added favoriteListing ${listingId} for user ${userData.email}`
+    );
     res.status(200).json(updatedUserObject);
   } catch (err) {
     console.log("Error with adding listing to user favorites", err);
@@ -118,7 +120,9 @@ exports.removeFavoriteListing = async (req, res, next) => {
       userData._id,
       listingId
     );
-    console.log("Successfully removed favoriteListing for user");
+    console.log(
+      `Successfully removed favoriteListing ${listingId} for user ${userData.email}`
+    );
     res.status(200).json(updatedUserObject);
   } catch (err) {
     console.log("Error with removing listing from user favorites", err);
