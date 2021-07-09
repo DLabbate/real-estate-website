@@ -26,7 +26,7 @@ exports.editBoard = async (req, res, next) => {
 
     const newBoard = req.body;
     const updatedBoard = await boardService.editBoard(userData._id, req.body);
-    console.log("Updated board: ", updatedBoard);
+    console.log("Updated board: ", JSON.stringify(updatedBoard));
 
     return res.status(200).json(updatedBoard);
   } catch (err) {

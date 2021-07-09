@@ -197,11 +197,11 @@ const SignupForm = () => {
                 margin={"10px"}
                 modifiers={"btn--text-white btn--background-black"}
               />
-              <Link className="form__link" to={"/login"}>
-                <p className="form__alternative">
-                  {"Already have an account? Login."}
-                </p>
-              </Link>
+              <div className="form__link-container">
+                <Link className="form__link" to={"/login"}>
+                  Already have an account? Login.
+                </Link>
+              </div>
             </Form>
           )}
         </Formik>

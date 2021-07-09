@@ -132,11 +132,11 @@ const LoginForm = () => {
                 margin={"10px"}
                 modifiers={"btn--text-white btn--background-black"}
               />
-              <Link className="form__link" to={"/signup"}>
-                <p className="form__alternative">
-                  {"Don't have an account? Signup."}
-                </p>
-              </Link>
+              <div className="form__link-container">
+                <Link className="form__link" to={"/signup"}>
+                  Don't have an account? Signup.
+                </Link>
+              </div>
             </Form>
           )}
         </Formik>

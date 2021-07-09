@@ -31,10 +31,7 @@ exports.userLogin = async (req, res, next) => {
 
     let userSavedData = await userService.getUserByEmail(userLoginData.email);
 
-    console.log(
-      `Checking if user exists with email ${userLoginData.email}:`,
-      userSavedData
-    );
+    console.log(`Checking if user exists with email ${userLoginData.email}:`);
     if (!userSavedData) {
       // In this case, no user account is associated with the specified email
       console.log("No user account is associated with the specified email");
@@ -73,7 +70,6 @@ exports.userEdit = async (req, res, next) => {
   try {
     // From JWT
     const userData = req.userData;
-    console.log(req.userData);
 
     // From body
     const newUserData = req.body;
@@ -96,7 +92,6 @@ exports.addFavoriteListing = async (req, res, next) => {
   try {
     // From JWT
     const userData = req.userData;
-    console.log(req.userData);
 
     const listingId = req.params.listingId;
 
@@ -104,7 +99,9 @@ exports.addFavoriteListing = async (req, res, next) => {
       userData._id,
       listingId
     );
-    console.log("Successfully added favoriteListing for user");
+    console.log(
+      `Successfully added favoriteListing ${listingId} for user ${userData.email}`
+    );
     res.status(200).json(updatedUserObject);
   } catch (err) {
     console.log("Error with adding listing to user favorites", err);
@@ -116,7 +113,6 @@ exports.removeFavoriteListing = async (req, res, next) => {
   try {
     // From JWT
     const userData = req.userData;
-    console.log(req.userData);
 
     const listingId = req.params.listingId;
 
@@ -124,7 +120,9 @@ exports.removeFavoriteListing = async (req, res, next) => {
       userData._id,
       listingId
     );
-    console.log("Successfully removed favoriteListing for user");
+    console.log(
+      `Successfully removed favoriteListing ${listingId} for user ${userData.email}`
+    );
     res.status(200).json(updatedUserObject);
   } catch (err) {
     console.log("Error with removing listing from user favorites", err);

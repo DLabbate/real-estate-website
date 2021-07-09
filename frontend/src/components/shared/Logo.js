@@ -1,18 +1,12 @@
 import React from "react";
 import "./Logo.css";
 import { ReactComponent as LogoSvg } from "../../assets/logo/logo.svg";
-import { useHistory } from "react-router-dom";
 
-const Logo = ({ size }) => {
-  let history = useHistory();
+const Logo = ({ size, onClick }) => {
   return (
     <div
-      className={"logo"}
-      onClick={() => {
-        history.push("/home");
-        // Refresh page
-        history.go(0);
-      }}
+      className={size === "small" ? "logo logo--small" : "logo"}
+      onClick={onClick ? onClick : null}
     >
       <LogoSvg
         className={
