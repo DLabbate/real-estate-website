@@ -1,11 +1,13 @@
 <img src="frontend/src/assets/logo/logo.svg" width=75 align="left"/>
 
 # Acasa
-
+#### *Your dream home is only a few clicks away!*
 <br/>
 
 ## Overview
-Acasa is a simple to use real estate platform that offers the ability to create listings, filter listings, and organize favorite listings into different categories.
+Acasa is a simple to use real estate platform that offers the ability to search for homes, organize favorites into different categories, and even create your own listing!
+
+<br/>
 
 ## Features
 🔎 Filter listings by location (using Google Maps API), radius, and price
@@ -19,6 +21,8 @@ Acasa is a simple to use real estate platform that offers the ability to create 
 🏡 Create your own listing
 
 🗑️ Delete your listing
+
+<br/>
 
 ## Examples
 
