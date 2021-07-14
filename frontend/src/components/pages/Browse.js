@@ -37,7 +37,7 @@ const Browse = ({ user, setUser, addFavorite, removeFavorite }) => {
     };
 
     getAllListings();
-  }, [user.token]);
+  }, [user]);
 
   return (
     <>

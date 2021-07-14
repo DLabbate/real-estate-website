@@ -26,7 +26,7 @@ const Notes = ({ user, setUser, addFavorite, removeFavorite }) => {
     };
 
     getBoard();
-  }, [user.token]);
+  }, [user]);
 
   // Whenever we make a drag/drop action, the backend should be updated accordingly
   useEffect(() => {

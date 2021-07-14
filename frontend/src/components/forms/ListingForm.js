@@ -81,7 +81,7 @@ const ListingForm = ({ user, setUser }) => {
         // Set timeout for file to be uploaded to AWS S3
         setTimeout(() => {
           setUser(updatedUser);
-        }, 200);
+        }, 600);
       }
     } catch (err) {
       console.log(err);
