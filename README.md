@@ -1,14 +1,6 @@
 # Acasa
 
-### Signup Page
-<img src="frontend/src/assets/tutorials/signup.gif" />
 
-***
-
-### Login Page
-<img src="frontend/src/assets/tutorials/login.gif" />
-
-***
 
 ### Browse Page
 ###### (filter by location, radius, and price)
