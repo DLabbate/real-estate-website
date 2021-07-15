@@ -11,7 +11,7 @@ Acasa is a simple to use real estate platform that offers the ability to search 
 <br/>
 
 ## Features
-🔎 Filter listings by location (using Google Maps API), radius, and price
+🔎 Filter listings by **location** (using Google Maps API), **radius**, and **price**
 
 ❤️ Add listings to favorites
 
@@ -38,13 +38,14 @@ Name | Overview | Link
 `Google Maps` | Google Maps API used for searching locations + autocomplete | https://github.com/hibiken/react-places-autocomplete
 `bcrypt` | Encrypted user password with hashing + salt | https://github.com/kelektiv/node.bcrypt.js/
 `jsonwebtoken` | JSON Web Tokens used for route protection | https://github.com/auth0/node-jsonwebtoken
+`react-beautiful-dnd` | Drag and drop for lists with React | https://github.com/atlassian/react-beautiful-dnd
 
 <br/>
 
-## Examples
+## Tutorials
 
 ### Browse Page
-###### (filter by location, radius, and price)
+###### Search for listings with the option to filter by 📍 Location, 🌐 Radius, and 💸 Price 
 <img src="frontend/src/assets/tutorials/browse.gif" />
 
 ***
@@ -55,6 +56,7 @@ Name | Overview | Link
 ***
 
 ### Notes Page
+###### Drag and drop listings into the following categories: Queue (by default, favorited listings are placed here), Not Interested, Interested, Offers
 <img src="frontend/src/assets/tutorials/notes.gif" />
 
 ***
@@ -65,9 +67,11 @@ Name | Overview | Link
 ***
 
 ### Create Listing
+###### Create your own listing! (A user can only have one active listing at a time)
 <img src="frontend/src/assets/tutorials/listing-create.gif" />
 
 ***
 
 ### Delete Listing
+###### Delete your listing when it gets sold!
 <img src="frontend/src/assets/tutorials/listing-delete.gif" />
