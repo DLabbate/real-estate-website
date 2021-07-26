@@ -107,3 +107,9 @@ Backend structured using a layered approach in order to organize logic.
 <br/>
 
 <img src="frontend/src/assets/architecture/backend-architecture.svg" />
+
+***
+
+### References
+* [Organizing HTTP requests using the API module pattern](http://www.sheshbabu.com/posts/organizing-http-requests-using-api-module-pattern/)
+* [Project structure for an Express REST API when there is no "standard way"](https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way)
