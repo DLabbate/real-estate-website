@@ -78,3 +78,32 @@ Name | Overview | Link
 ### Delete Listing
 ###### Delete your listing when it gets sold!
 <img src="frontend/src/assets/tutorials/listing-delete.gif" />
+
+## Architecture
+
+### UML
+The overall structure consists of the following models:
+* `User`
+* `Listing`
+* `Note`
+* `Column`
+* `Board` (where a user organizes notes. For instance, reordering, moving to a different column, etc.)
+<br/>
+
+<img src="frontend/src/assets/architecture/uml-architecture.svg" />
+
+***
+
+### Frontend
+Frontend uses an API module pattern. In particular, JS modules that contains HTTP logic organized by business domain (namely `User`, `Listing`, `Note` and `Board`).
+<br/>
+
+<img src="frontend/src/assets/architecture/frontend-architecture.svg" />
+
+***
+
+### Backend
+Backend structured using a layered approach in order to organize logic.
+<br/>
+
+<img src="frontend/src/assets/architecture/backend-architecture.svg" />
