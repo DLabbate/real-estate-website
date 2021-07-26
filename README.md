@@ -87,7 +87,7 @@ The overall structure consists of the following models:
 * `Listing`
 * `Note`
 * `Column`
-* `Board` (where a user organizes notes. For instance, reordering, moving to a different column, etc.)
+* `Board` (Where a user organizes notes. For instance, reordering notes within a column, moving to a different column, etc.)
 <br/>
 
 <img src="frontend/src/assets/architecture/uml-architecture.svg" />
